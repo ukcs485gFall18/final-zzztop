@@ -9,15 +9,31 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class MapViewController: UIViewController {
+    
+    let tempLocations = [
+        "rose street": [38.034140, -84.504062],
+        "marksbury": [38.039970, -84.499179]
+    ]
+    let center = [38.030672, -84.504160]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         
         // set initial location to UK
-        let initialLocation = CLLocation(latitude: 38.030672, longitude: -84.504160)
+        let initialLocation = CLLocation(latitude: center[0], longitude: center[1])
         centerMapOnLocation(location: initialLocation)
+        
+        setPins()
+    }
+   
+    func setPins() {
+        for location in tempLocations {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = CLLocationCoordinate2D(latitude: location.value[0], longitude: location.value[1])
+            map.addAnnotation(annotation)
+        }
     }
     
     let regionRadius: CLLocationDistance = 1000
@@ -38,7 +54,6 @@ class ViewController: UIViewController {
     lazy var map: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
-        
         return map
     }()
     
