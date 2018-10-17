@@ -18,6 +18,8 @@ class MapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
+    var pickerUIText = UITextField()
+    var datePicker: UIDatePicker?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,38 @@ class MapViewController: UIViewController {
         setupViews()
         
         setPinsAndOverlays()
+        
+        createPickerView()
+    }
+    
+    func createPickerView(){
+        //create the UI text
+        pickerUIText = UITextField(frame: CGRect(x: 50, y: 800, width: 300, height: 40))
+        pickerUIText.text = "Please Select a Date"
+        pickerUIText.textAlignment = NSTextAlignment.center
+        pickerUIText.font = UIFont.systemFont(ofSize: 25)
+        self.view.addSubview(pickerUIText)
+        //create the DatePicker
+        datePicker = UIDatePicker()
+        datePicker?.datePickerMode = .dateAndTime
+        datePicker?.addTarget(self, action: #selector(MapViewController.dateSelected(datePicker:)), for: .valueChanged)
+        //add the DatePicker to the UITextField
+        pickerUIText.inputView = datePicker
+        //allow the user to get out of the date picker by tapping
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    //allows the user to leave the UI picker by tapping elsewhere
+    @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
+        view.endEditing(true)
+    }
+    
+    //Formats the date selected and places it into the UI Text Field
+    @objc func dateSelected(datePicker: UIDatePicker){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE MM/dd/yyyy hh:mm aaa"
+        pickerUIText.text = dateFormatter.string(from: datePicker.date)
     }
     
     func setPinsAndOverlays() {
@@ -108,3 +142,5 @@ extension MapViewController: CLLocationManagerDelegate {
 // source for creating mkcircle overlay: https://stackoverflow.com/questions/33293075/how-to-create-mkcircle-in-swift
 // source for getting user's current location: https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates
 // source for updating current location: https://stackoverflow.com/questions/25449469/show-current-location-and-update-location-in-mkmapview-in-swift
+//source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
+//source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
