@@ -11,6 +11,7 @@
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
 		806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */; };
+		80EFB1DA2177777000407BC9 /* parkingData.json in Resources */ = {isa = PBXBuildFile; fileRef = 80EFB1D92177777000407BC9 /* parkingData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		806A91DF21729D3C00EDA648 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		806A91E221729D3C00EDA648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		806A91E421729D3C00EDA648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80EFB1D92177777000407BC9 /* parkingData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parkingData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				806A91D821729D3B00EDA648 /* AppDelegate.swift */,
 				806A91DA21729D3B00EDA648 /* MapViewController.swift */,
+				80EFB1D92177777000407BC9 /* parkingData.json */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
@@ -120,6 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */,
+				80EFB1DA2177777000407BC9 /* parkingData.json in Resources */,
 				806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

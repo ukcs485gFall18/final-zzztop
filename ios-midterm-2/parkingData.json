@@ -1,0 +1,43 @@
+{
+    "parking": [
+        {
+            "name": "rose street",
+            "coords": [
+                38.034026,
+                -84.503889
+            ],
+            "time": [
+                {
+                    "name": "E2",
+                    "M-F": "5am-5pm"
+                },
+                {
+                    "name": "R2",
+                    "M-F": "5am-5pm"
+                },
+                {
+                    "name": "Any valid permit",
+                    "M-T": "5pm-7:30pm"
+                },
+                {
+                    "name": "No permit required",
+                    "monday": "7:30pm-5am",
+                    "tuesday": "7:30pm-5am",
+                    "wednesday": "7:30pm-5am",
+                    "thursday": "7:30pm-5am",
+                    "friday": "after 5pm",
+                    "saturday": "all day",
+                    "sunday": "all day"
+                }
+            ]
+        },
+        {
+            "name": "marksbury",
+            "coords": [
+                38.039970,
+                -84.499179
+            ],
+            "time": ""
+        }
+    ]
+}
