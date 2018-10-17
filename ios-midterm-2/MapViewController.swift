@@ -15,29 +15,44 @@ class MapViewController: UIViewController {
         "rose street": [38.034140, -84.504062],
         "marksbury": [38.039970, -84.499179]
     ]
-    let center = [38.030672, -84.504160]
+    
+    let locationManager = CLLocationManager()
+    var currentLocation = CLLocationCoordinate2D()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // used to show user's current location
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        
         setupViews()
         
-        // set initial location to UK
-        let initialLocation = CLLocation(latitude: center[0], longitude: center[1])
-        centerMapOnLocation(location: initialLocation)
-        
-        setPins()
+        setPinsAndOverlays()
     }
-   
-    func setPins() {
+    
+    func setPinsAndOverlays() {
         for location in tempLocations {
+            let latitude = location.value[0]
+            let longitude = location.value[1]
+            
             let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(latitude: location.value[0], longitude: location.value[1])
+            annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             map.addAnnotation(annotation)
+            
+            let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            // FIXME: each location should have it's own radius? or we can have square overlays. to compensate for different lot/location sizes.
+            let radius = CLLocationDistance(70)
+            let circle = MKCircle(center: center, radius: radius)
+            map.addOverlay(circle)
         }
     }
     
-    let regionRadius: CLLocationDistance = 1000
     func centerMapOnLocation(location: CLLocation) {
+        let regionRadius: CLLocationDistance = 1000
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
                                                   latitudinalMeters: regionRadius,
                                                   longitudinalMeters: regionRadius)
@@ -54,6 +69,7 @@ class MapViewController: UIViewController {
     lazy var map: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
+        map.delegate = self
         return map
     }()
     
@@ -61,5 +77,34 @@ class MapViewController: UIViewController {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
+    
 }
 
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        guard let circelOverLay = overlay as? MKCircle else {return MKOverlayRenderer()}
+        
+        let circleRenderer = MKCircleRenderer(circle: circelOverLay)
+        circleRenderer.strokeColor = .blue
+        circleRenderer.fillColor = .blue
+        circleRenderer.alpha = 0.2
+        return circleRenderer
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            self.map.setRegion(region, animated: true)
+            
+            locationManager.stopUpdatingLocation()
+            map.showsUserLocation = true
+        }
+    }
+}
+
+// source for creating mkcircle overlay: https://stackoverflow.com/questions/33293075/how-to-create-mkcircle-in-swift
+// source for getting user's current location: https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates
+// source for updating current location: https://stackoverflow.com/questions/25449469/show-current-location-and-update-location-in-mkmapview-in-swift
