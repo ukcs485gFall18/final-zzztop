@@ -17,9 +17,9 @@ class MapViewController: UIViewController {
     
     // could be an array; users could select multiple pass types
     //            let usersPermit = PassTypes.e2.rawValue // temporary
-//    let usersPermit = PassTypes.r2.rawValue // temporary
+    //    let usersPermit = PassTypes.r2.rawValue // temporary
     //            let usersPermit = PassTypes.anyPermit.rawValue // temporary
-                let usersPermit = PassTypes.noPermitRequired.rawValue // temporary
+    let usersPermit = PassTypes.noPermitRequired.rawValue // temporary
     
     enum PassTypes: String {
         case e2 = "E2"
@@ -60,48 +60,62 @@ class MapViewController: UIViewController {
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday].lowercased()
             
-//            if weekdaystring == WeekDays.friday.rawValue.lowercased() {
-                guard let times = p["time"] as? [Any] else {
-                    return
-                }
-                for t in times {
-                    let newT = t as! NSDictionary
-                    let name = newT["name"] as! String
-                    if name == usersPermit {
-                        let open = newT[weekdaystring] as! NSDictionary
-                        
-                        let now = Date()
-                        
-                        
-                        
-                        let start = open["start"] as! NSDictionary
-                        let startHour = start["hour"] as! Int
-                        let startMinute = start["minute"] as! Int
-                        let startDate = now.dateAt(hours: startHour, minutes: startMinute)
-                        
-                        let end = open["end"] as! NSDictionary
-                        let endHour = end["hour"] as! Int
-                        let endMinute = end["minute"] as! Int
-                        
-                        var endDate = Date()
-                        if end["12hour"] as! String  == "am" { //for pm-am (overnight, usually free, parking)
-                            endDate = now.tomorrow(hour: endHour, minute: endMinute)
-                        } else { //for am-pm/pm-pm (same day)
-                            endDate = now.dateAt(hours: endHour, minutes: endMinute)
-                        }
-                        
-                        print(now, "=now")
-                        print(startDate, "=start")
-                        print(endDate, "=end")
-                        
-                        if (now >= startDate) && (now < endDate) {
-                            print(coords)
-                            setOverlays(dict: coords)
-                        }
+            guard let times = p["time"] as? [Any] else {
+                return
+            }
+            
+            for t in times {
+                let newT = t as! NSDictionary
+                let name = newT["name"] as! String
+                if name == usersPermit {
+                    let open = newT[weekdaystring] as! NSDictionary
+                    
+                    let now = Date()
+                    
+                    let start = open["start"] as! NSDictionary
+                    let startHour = start["hour"] as! Int
+                    let startMinute = start["minute"] as! Int
+                    let startDate = now.dateAt(hours: startHour, minutes: startMinute)
+                    
+                    let end = open["end"] as! NSDictionary
+                    let endHour = end["hour"] as! Int
+                    let endMinute = end["minute"] as! Int
+                    
+                    var endDate = Date()
+                    if end["12hour"] as! String  == "am" { // for pm-am (overnight, usually free, parking)
+                        endDate = now.tomorrow(hour: endHour, minute: endMinute)
+                    } else { // for am-pm/pm-pm (same day)
+                        endDate = now.dateAt(hours: endHour, minutes: endMinute)
+                    }
+                    
+//                    print(now, "=now")
+//                    print(startDate, "=start")
+//                    print(endDate, "=end")
+                    
+//                    print(toGMT(date: now), "=now")
+//                    print(toGMT(date: startDate), "=start")
+//                    print(toGMT(date: endDate), "=end")
+                    
+                    if (now >= startDate) && (now < endDate) {
+                        setOverlays(dict: coords)
                     }
                 }
-//            }
+            }
         }
+    }
+    
+    // for checking that date is right
+    func toGMT(date: Date) -> String {
+        let dateStr = "\(date)"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        var str = String()
+        if let date2 = formatter.date(from: dateStr) {
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+            str = formatter.string(from: date2)
+        }
+        return str
     }
     
     func readJson() {
@@ -216,6 +230,7 @@ extension Date {
         date_components.second = 0
         
         let newDate = calendar.date(from: date_components)!
+        
         return newDate
     }
     
@@ -231,3 +246,4 @@ extension Date {
 // source for getting weekday: https://stackoverflow.com/questions/41068860/get-weekday-from-date-swift-3
 // source for date range check: https://stackoverflow.com/questions/29652771/how-to-check-if-time-is-within-a-specific-range-in-swift/39499504#
 // source for tomorrow date: https://stackoverflow.com/questions/44009804/swift-3-how-to-get-date-for-tomorrow-and-yesterday-take-care-special-case-ne
+// https://stackoverflow.com/questions/32022906/how-can-i-convert-including-timezone-date-in-swift
