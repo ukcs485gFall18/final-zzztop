@@ -72,6 +72,8 @@ class MapViewController: UIViewController {
                         
                         let now = Date()
                         
+                        
+                        
                         let start = open["start"] as! NSDictionary
                         let startHour = start["hour"] as! Int
                         let startMinute = start["minute"] as! Int
@@ -84,16 +86,14 @@ class MapViewController: UIViewController {
                         var endDate = Date()
                         if end["12hour"] as! String  == "am" { //for pm-am (overnight, usually free, parking)
                             endDate = now.tomorrow(hour: endHour, minute: endMinute)
-                            
                         } else { //for am-pm/pm-pm (same day)
                             endDate = now.dateAt(hours: endHour, minutes: endMinute)
                         }
                         
-//                        print(now, "=now")
-//                        print(startDate, "=start")
-//                        print(endDate, "=end")
+                        print(now, "=now")
+                        print(startDate, "=start")
+                        print(endDate, "=end")
                         
-                        // timezone
                         if (now >= startDate) && (now < endDate) {
                             print(coords)
                             setOverlays(dict: coords)

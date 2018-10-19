@@ -68,6 +68,30 @@
                         "minute": 0,
                         "12hour": "pm"
                       }
+                    },
+                    "saturday": {
+                      "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                      },
+                      "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                      }
+                    },
+                    "sunday": {
+                      "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                      },
+                      "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                      }
                     }
                 },
                 {
@@ -129,6 +153,30 @@
                       "end": {
                         "hour": 17,
                         "minute": 0,
+                        "12hour": "pm"
+                      }
+                    },
+                    "saturday": {
+                      "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                      },
+                      "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                      }
+                    },
+                    "sunday": {
+                      "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                      },
+                      "end": {
+                        "hour": 23,
+                        "minute": 59,
                         "12hour": "pm"
                       }
                     }
