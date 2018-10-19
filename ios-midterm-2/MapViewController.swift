@@ -15,12 +15,19 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     
+    // could be an array; users could select multiple pass types
+    //            let usersPermit = PassTypes.e2.rawValue // temporary
+//    let usersPermit = PassTypes.r2.rawValue // temporary
+    //            let usersPermit = PassTypes.anyPermit.rawValue // temporary
+                let usersPermit = PassTypes.noPermitRequired.rawValue // temporary
+    
     enum PassTypes: String {
         case e2 = "E2"
         case r2 = "R2"
         case anyPermit = "Any valid permit"
         case noPermitRequired = "No permit required"
     }
+    
     enum WeekDays: String {
         case monday = "Monday"
         case tuesday = "Tuesday"
@@ -36,7 +43,10 @@ class MapViewController: UIViewController {
         configureLocationManager()
         setupViews()
         readJson()
-        
+        addPinsAndOverlays()
+    }
+    
+    func addPinsAndOverlays() {
         for p in parkingData! {
             let parkingName = p["name"]
             
@@ -44,56 +54,57 @@ class MapViewController: UIViewController {
             let dict = [coords[0], coords[1]]
             setPins(dict: dict)
             
-//            setOverlays(dict: dict)
-            
-//            var alltimes = [Any]()
-            
-            
-            
-            var arrayOfvalidpermittimes = [Any]()
-            let usersPermit = PassTypes.noPermitRequired.rawValue
             let date = Date()
             let calendar = Calendar.current
-            let weekday = calendar.component(.weekday, from: date) - 1
+            let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday].lowercased()
-            if weekdaystring == WeekDays.wednesday.rawValue.lowercased() {
+            
+//            if weekdaystring == WeekDays.friday.rawValue.lowercased() {
                 guard let times = p["time"] as? [Any] else {
                     return
                 }
                 for t in times {
                     let newT = t as! NSDictionary
-//                    alltimes.append(t)
                     let name = newT["name"] as! String
                     if name == usersPermit {
-                        let open = newT[weekdaystring]
-//                        if open is in range {
-//                            setOverlays(dict: coords)
-//                            break;
-//                        }
+                        let open = newT[weekdaystring] as! NSDictionary
                         
+                        let now = Date()
                         
+                        let start = open["start"] as! NSDictionary
+                        let startHour = start["hour"] as! Int
+                        let startMinute = start["minute"] as! Int
+                        let startDate = now.dateAt(hours: startHour, minutes: startMinute)
                         
+                        let end = open["end"] as! NSDictionary
+                        let endHour = end["hour"] as! Int
+                        let endMinute = end["minute"] as! Int
                         
+                        var endDate = Date()
+                        if end["12hour"] as! String  == "am" { //for pm-am (overnight, usually free, parking)
+                            endDate = now.tomorrow(hour: endHour, minute: endMinute)
+                            
+                        } else { //for am-pm/pm-pm (same day)
+                            endDate = now.dateAt(hours: endHour, minutes: endMinute)
+                        }
                         
+//                        print(now, "=now")
+//                        print(startDate, "=start")
+//                        print(endDate, "=end")
                         
-                        
-//                        var dict = [
-//                            "name":parkingName,
-//                            "coords":coords,
-//                            "validtimes": t
-//                        ]
-//                        print(dict)
-//                        arrayOfvalidpermittimes.append(t)
+                        // timezone
+                        if (now >= startDate) && (now < endDate) {
+                            print(coords)
+                            setOverlays(dict: coords)
+                        }
                     }
                 }
-            }
-//            print(arrayOfvalidpermittimes)
-//            print(alltimes)
+//            }
         }
     }
     
-    private func readJson() {
+    func readJson() {
         do {
             if let file = Bundle.main.url(forResource: "parkingData", withExtension: "json") {
                 let data = try Data(contentsOf: file)
@@ -190,8 +201,33 @@ extension MapViewController: CLLocationManagerDelegate {
     }
 }
 
+extension Date {
+    func dateAt(hours: Int, minutes: Int) -> Date {
+        let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        
+        var date_components = calendar.components(
+            [NSCalendar.Unit.year,
+             NSCalendar.Unit.month,
+             NSCalendar.Unit.day],
+            from: self)
+        
+        date_components.hour = hours
+        date_components.minute = minutes
+        date_components.second = 0
+        
+        let newDate = calendar.date(from: date_components)!
+        return newDate
+    }
+    
+    func tomorrow(hour: Int, minute: Int) -> Date {
+        let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: self)!
+        return Calendar.current.date(byAdding: .day, value: 1, to: time)!
+    }
+}
+
 // source for creating mkcircle overlay: https://stackoverflow.com/questions/33293075/how-to-create-mkcircle-in-swift
 // source for getting user's current location: https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates
 // source for updating current location: https://stackoverflow.com/questions/25449469/show-current-location-and-update-location-in-mkmapview-in-swift
-
 // source for getting weekday: https://stackoverflow.com/questions/41068860/get-weekday-from-date-swift-3
+// source for date range check: https://stackoverflow.com/questions/29652771/how-to-check-if-time-is-within-a-specific-range-in-swift/39499504#
+// source for tomorrow date: https://stackoverflow.com/questions/44009804/swift-3-how-to-get-date-for-tomorrow-and-yesterday-take-care-special-case-ne
