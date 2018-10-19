@@ -16,19 +16,16 @@ class MapViewController: UIViewController {
     var currentLocation = CLLocationCoordinate2D()
     
     // could be an array; users could select multiple pass types
-    //            let usersPermit = PassTypes.e2.rawValue // temporary
-    //    let usersPermit = PassTypes.r2.rawValue // temporary
-    //            let usersPermit = PassTypes.anyPermit.rawValue // temporary
-    let usersPermit = PassTypes.noPermitRequired.rawValue // temporary
+    let usersPermit = PassType.noPermitRequired.rawValue // temporary
     
-    enum PassTypes: String {
+    enum PassType: String {
         case e2 = "E2"
         case r2 = "R2"
         case anyPermit = "Any valid permit"
         case noPermitRequired = "No permit required"
     }
     
-    enum WeekDays: String {
+    enum WeekDay: String {
         case monday = "Monday"
         case tuesday = "Tuesday"
         case wednesday = "Wednesday"
@@ -36,6 +33,14 @@ class MapViewController: UIViewController {
         case friday = "Friday"
         case saturday = "Saturday"
         case sunday = "Sunday"
+    }
+    
+    enum Range: String {
+        case mt = "MT"
+        case mf = "MF"
+        case ss = "SS"
+        case f = "F"
+        case ms = "MS"
     }
     
     override func viewDidLoad() {
@@ -48,8 +53,6 @@ class MapViewController: UIViewController {
     
     func addPinsAndOverlays() {
         for p in parkingData! {
-            let parkingName = p["name"]
-            
             let coords = p["coords"] as! [Double]
             let dict = [coords[0], coords[1]]
             setPins(dict: dict)
@@ -58,7 +61,7 @@ class MapViewController: UIViewController {
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
             let f = DateFormatter()
-            let weekdaystring = f.weekdaySymbols[weekday].lowercased()
+            let weekdaystring = f.weekdaySymbols[weekday]
             
             guard let times = p["time"] as? [Any] else {
                 return
@@ -68,39 +71,71 @@ class MapViewController: UIViewController {
                 let newT = t as! NSDictionary
                 let name = newT["name"] as! String
                 if name == usersPermit {
-                    let open = newT[weekdaystring] as! NSDictionary
                     
-                    let now = Date()
+                    let mondaychecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+                    let fridaychecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+                    let saturdaychecks = [Range.ss.rawValue, Range.ms.rawValue]
                     
-                    let start = open["start"] as! NSDictionary
-                    let startHour = start["hour"] as! Int
-                    let startMinute = start["minute"] as! Int
-                    let startDate = now.dateAt(hours: startHour, minutes: startMinute)
-                    
-                    let end = open["end"] as! NSDictionary
-                    let endHour = end["hour"] as! Int
-                    let endMinute = end["minute"] as! Int
-                    
-                    var endDate = Date()
-                    if end["12hour"] as! String  == "am" { // for pm-am (overnight, usually free, parking)
-                        endDate = now.tomorrow(hour: endHour, minute: endMinute)
-                    } else { // for am-pm/pm-pm (same day)
-                        endDate = now.dateAt(hours: endHour, minutes: endMinute)
+                    if (weekdaystring == WeekDay.monday.rawValue) ||
+                        (weekdaystring == WeekDay.tuesday.rawValue) ||
+                        (weekdaystring == WeekDay.wednesday.rawValue) ||
+                        (weekdaystring == WeekDay.thursday.rawValue) {
+                        for c in mondaychecks {
+                            if let range = newT[c] {
+                                checkRange(open: range as! NSDictionary, coords: coords)
+                                break
+                            }
+                        }
+                    } else if weekdaystring == WeekDay.friday.rawValue {
+                        for c in fridaychecks {
+                            if let range = newT[c] {
+                                checkRange(open: range as! NSDictionary, coords: coords)
+                                break
+                            }
+                        }
+                    } else {
+                        for c in saturdaychecks {
+                            if let range = newT[c] {
+                                checkRange(open: range as! NSDictionary, coords: coords)
+                                break
+                            }
+                        }
                     }
                     
-//                    print(now, "=now")
-//                    print(startDate, "=start")
-//                    print(endDate, "=end")
-                    
-//                    print(toGMT(date: now), "=now")
-//                    print(toGMT(date: startDate), "=start")
-//                    print(toGMT(date: endDate), "=end")
-                    
-                    if (now >= startDate) && (now < endDate) {
-                        setOverlays(dict: coords)
-                    }
                 }
             }
+        }
+    }
+    
+    func checkRange(open: NSDictionary, coords: [Double]) {
+        let now = Date() // temp; based on user's selected time
+        
+        let start = open["start"] as! NSDictionary
+        let startHour = start["hour"] as! Int
+        let startMinute = start["minute"] as! Int
+        let startDate = now.dateAt(hours: startHour, minutes: startMinute)
+        
+        let end = open["end"] as! NSDictionary
+        let endHour = end["hour"] as! Int
+        let endMinute = end["minute"] as! Int
+        
+        var endDate = Date()
+        if end["12hour"] as! String  == "am" { // for pm-am (overnight, usually free, parking)
+            endDate = now.tomorrow(hour: endHour, minute: endMinute)
+        } else { // for am-pm/pm-pm (same day)
+            endDate = now.dateAt(hours: endHour, minutes: endMinute)
+        }
+        
+//        print(now, "=now")
+//        print(startDate, "=start")
+//        print(endDate, "=end")
+//
+//        print(toGMT(date: now), "=now")
+//        print(toGMT(date: startDate), "=start")
+//        print(toGMT(date: endDate), "=end")
+        
+        if (now >= startDate) && (now < endDate) {
+            setOverlays(dict: coords)
         }
     }
     

@@ -8,351 +8,42 @@
             ],
             "time": [
                 {
-                    "name": "E2",
-                    "monday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "tuesday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "wednesday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "thursday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "friday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "saturday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    },
-                    "sunday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    }
-                },
-                {
-                    "name": "R2",
-                    "monday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "tuesday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "wednesday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "thursday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "friday": {
-                      "start": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      }
-                    },
-                    "saturday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    },
-                    "sunday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    }
-                },
-                {
-                    "name": "Any valid permit",
-                    "monday": {
-                      "start": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
-                    },
-                    "tuesday": {
-                      "start": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
-                    },
-                    "wednesday": {
-                      "start": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
-                    },
-                    "thursday": {
-                      "start": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
-                    },
-                    "friday": {
-                      "start": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    },
-                    "saturday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    },
-                    "sunday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    }
-                },
-                {
                     "name": "No permit required",
-                    "monday": {
-                      "start": {
-                        "hour": 19,
-                        "minute": 30,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
+                    "MT": {
+                        "start": {
+                            "hour": 19,
+                            "minute": 30,
+                            "12hour": "pm"
+                        },
+                        "end": {
+                            "hour": 5,
+                            "minute": 0,
+                            "12hour": "am"
+                        }
                     },
-                    "tuesday": {
-                      "start": {
-                        "hour": 19,
-                        "minute": 30,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
+                    "F": {
+                        "start": {
+                            "hour": 17,
+                            "minute": 0,
+                            "12hour": "pm"
+                        },
+                        "end": {
+                            "hour": 23,
+                            "minute": 59,
+                            "12hour": "pm"
+                        }
                     },
-                    "wednesday": {
-                      "start": {
-                        "hour": 19,
-                        "minute": 30,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
-                    },
-                    "thursday": {
-                      "start": {
-                        "hour": 19,
-                        "minute": 30,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 5,
-                        "minute": 0,
-                        "12hour": "am"
-                      }
-                    },
-                    "friday": {
-                      "start": {
-                        "hour": 17,
-                        "minute": 0,
-                        "12hour": "pm"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    },
-                    "saturday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
-                    },
-                    "sunday": {
-                      "start": {
-                        "hour": 0,
-                        "minute": 0,
-                        "12hour": "am"
-                      },
-                      "end": {
-                        "hour": 23,
-                        "minute": 59,
-                        "12hour": "pm"
-                      }
+                    "SS": {
+                        "start": {
+                            "hour": 0,
+                            "minute": 0,
+                            "12hour": "am"
+                        },
+                        "end": {
+                            "hour": 23,
+                            "minute": 59,
+                            "12hour": "pm"
+                        }
                     }
                 }
             ]
