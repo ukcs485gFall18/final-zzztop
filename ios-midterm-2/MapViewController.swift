@@ -67,47 +67,40 @@ class MapViewController: UIViewController {
                 return
             }
             
-            for t in times {
-                let newT = t as! NSDictionary
-                let name = newT["name"] as! String
+            for time in times {
+                let timeDict = time as! NSDictionary
+                let name = timeDict["name"] as! String
                 if name == usersPermit {
                     
-                    let mondaychecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-                    let fridaychecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-                    let saturdaychecks = [Range.ss.rawValue, Range.ms.rawValue]
+                    let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+                    let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+                    let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
                     
                     if (weekdaystring == WeekDay.monday.rawValue) ||
                         (weekdaystring == WeekDay.tuesday.rawValue) ||
                         (weekdaystring == WeekDay.wednesday.rawValue) ||
                         (weekdaystring == WeekDay.thursday.rawValue) {
-                        for c in mondaychecks {
-                            if let range = newT[c] {
-                                checkRange(open: range as! NSDictionary, coords: coords)
-                                break
-                            }
-                        }
+                        rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords)
                     } else if weekdaystring == WeekDay.friday.rawValue {
-                        for c in fridaychecks {
-                            if let range = newT[c] {
-                                checkRange(open: range as! NSDictionary, coords: coords)
-                                break
-                            }
-                        }
+                        rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords)
                     } else {
-                        for c in saturdaychecks {
-                            if let range = newT[c] {
-                                checkRange(open: range as! NSDictionary, coords: coords)
-                                break
-                            }
-                        }
+                        rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords)
                     }
-                    
                 }
             }
         }
     }
     
-    func checkRange(open: NSDictionary, coords: [Double]) {
+    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double]) {
+        for c in check {
+            if let range = timeDict[c] {
+                checkDateRange(open: range as! NSDictionary, coords: coords)
+                break
+            }
+        }
+    }
+    
+    func checkDateRange(open: NSDictionary, coords: [Double]) {
         let now = Date() // temp; based on user's selected time
         
         let start = open["start"] as! NSDictionary
@@ -120,19 +113,11 @@ class MapViewController: UIViewController {
         let endMinute = end["minute"] as! Int
         
         var endDate = Date()
-        if end["12hour"] as! String  == "am" { // for pm-am (overnight, usually free, parking)
+        if end["12hour"] as! String  == "am" { // for pm-am (overnight parking)
             endDate = now.tomorrow(hour: endHour, minute: endMinute)
         } else { // for am-pm/pm-pm (same day)
             endDate = now.dateAt(hours: endHour, minutes: endMinute)
         }
-        
-//        print(now, "=now")
-//        print(startDate, "=start")
-//        print(endDate, "=end")
-//
-//        print(toGMT(date: now), "=now")
-//        print(toGMT(date: startDate), "=start")
-//        print(toGMT(date: endDate), "=end")
         
         if (now >= startDate) && (now < endDate) {
             setOverlays(dict: coords)
@@ -274,11 +259,3 @@ extension Date {
         return Calendar.current.date(byAdding: .day, value: 1, to: time)!
     }
 }
-
-// source for creating mkcircle overlay: https://stackoverflow.com/questions/33293075/how-to-create-mkcircle-in-swift
-// source for getting user's current location: https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates
-// source for updating current location: https://stackoverflow.com/questions/25449469/show-current-location-and-update-location-in-mkmapview-in-swift
-// source for getting weekday: https://stackoverflow.com/questions/41068860/get-weekday-from-date-swift-3
-// source for date range check: https://stackoverflow.com/questions/29652771/how-to-check-if-time-is-within-a-specific-range-in-swift/39499504#
-// source for tomorrow date: https://stackoverflow.com/questions/44009804/swift-3-how-to-get-date-for-tomorrow-and-yesterday-take-care-special-case-ne
-// https://stackoverflow.com/questions/32022906/how-can-i-convert-including-timezone-date-in-swift
