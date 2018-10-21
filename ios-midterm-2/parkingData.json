@@ -1,0 +1,60 @@
+{
+    "parking": [
+        {
+            "name": "rose street",
+            "coords": [
+                38.034026,
+                -84.503889
+            ],
+            "time": [
+                {
+                    "name": "No permit required",
+                    "MT": {
+                        "start": {
+                            "hour": 19,
+                            "minute": 30,
+                            "12hour": "pm"
+                        },
+                        "end": {
+                            "hour": 5,
+                            "minute": 0,
+                            "12hour": "am"
+                        }
+                    },
+                    "F": {
+                        "start": {
+                            "hour": 17,
+                            "minute": 0,
+                            "12hour": "pm"
+                        },
+                        "end": {
+                            "hour": 23,
+                            "minute": 59,
+                            "12hour": "pm"
+                        }
+                    },
+                    "SS": {
+                        "start": {
+                            "hour": 0,
+                            "minute": 0,
+                            "12hour": "am"
+                        },
+                        "end": {
+                            "hour": 23,
+                            "minute": 59,
+                            "12hour": "pm"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "marksbury",
+            "coords": [
+                38.039970,
+                -84.499179
+            ],
+            "time": ""
+        }
+    ]
+}
