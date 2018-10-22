@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let firstChoosePassView = ChoosePassViewController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         window?.rootViewController = UINavigationController(rootViewController: MapViewController())
+        
+        if UserDefaults.standard.array(forKey: "userPasses") == nil {
+            window?.rootViewController?.present(firstChoosePassView, animated: true, completion: nil)
+        }
         
         return true
     }

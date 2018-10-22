@@ -17,6 +17,12 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "passCell", for: indexPath as IndexPath)
         cell.textLabel!.text = "\(kPassTypes[indexPath.row])"
+        if userPasses.contains(cell.textLabel?.text ?? "") {
+            cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+        }
+        else{
+            cell.accessoryType = UITableViewCell.AccessoryType.none
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -37,6 +43,12 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (UserDefaults.standard.array(forKey: "userPasses") != nil){
+            userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        }
+        else{
+            userPasses = [kPassTypes[21]]
+        }
         let barHeight:CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
