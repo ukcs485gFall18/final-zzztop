@@ -16,6 +16,7 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVc = ChoosePassViewController()
+    var detailsView = UIView();
     
 // could be an array; users could select multiple pass types
 //    let usersPermit = PassType.noPermitRequired.rawValue // temporary
@@ -203,7 +204,6 @@ class MapViewController: UIViewController {
     func setPins(dict: [Double], title: String) {
         let latitude = dict[0]
         let longitude = dict[1]
-        
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         annotation.title = title;
@@ -233,6 +233,10 @@ class MapViewController: UIViewController {
     
     func setupViews() {
         view.addSubview(map)
+        detailsView = UIView(frame: CGRect(x:0, y:view.frame.height-view.frame.height/3 , width:view.frame.width, height:view.frame.height/2))
+        detailsView.backgroundColor = .white
+        view.addSubview(detailsView)
+        detailsView.isHidden = true
         let button = UIButton(frame: CGRect(x: 300, y: 100, width: 100, height: 50))
         button.layer.cornerRadius = 5
         button.backgroundColor = .blue
@@ -269,6 +273,26 @@ extension MapViewController: MKMapViewDelegate {
         circleRenderer.fillColor = .blue
         circleRenderer.alpha = 0.2
         return circleRenderer
+    }
+    
+    func map(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "Annotation"
+        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+        
+        return annotationView
+    }
+    
+    func mapView(_ map: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        detailsView.isHidden = false
     }
 }
 

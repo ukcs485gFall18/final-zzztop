@@ -19,6 +19,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         cell.textLabel!.text = "\(kPassTypes[indexPath.row])"
         if userPasses.contains(cell.textLabel?.text ?? "") {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
         else{
             cell.accessoryType = UITableViewCell.AccessoryType.none
@@ -27,8 +28,10 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.checkmark
-        userPasses.append(kPassTypes[indexPath.row])
-        UserDefaults.standard.set(userPasses, forKey:"userPasses")
+        if !userPasses.contains(kPassTypes[indexPath.row]) {
+            userPasses.append(kPassTypes[indexPath.row])
+            UserDefaults.standard.set(userPasses, forKey:"userPasses")
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
