@@ -16,31 +16,6 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
-
-//    enum PassType: String {
-//        case e = "E"
-//        case e2 = "E2"
-//        case e20 = "E20"
-//        case e26 = "E26"
-//        case e28 = "E28"
-//        case e27 = "E27"
-//        case r2 = "R2"
-//        case r7 = "R7"
-//        case r17 = "R17"
-//        case r19 = "R19"
-//        case r29 = "R29"
-//        case r30 = "R30"
-//        case c5 = "C5"
-//        case c9 = "C9"
-//        case c16 = "C16"
-//        case k = "K"
-//        case ek = "EK"
-//        case ck = "CK"
-//        case x = "X"
-//        case a = "Authorized parking only"
-//        case anyPermit = "Any valid permit"
-//        case noPermitRequired = "No permit required"
-//    }
     
     enum WeekDay: String {
         case monday = "Monday"
@@ -72,24 +47,19 @@ class MapViewController: UIViewController {
             let dict = [coords[0], coords[1]]
             setPins(dict: dict, title: p["name"] as! String)
         }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
-        //add pins and overlays??
-        
-//        usersPermits = [kNoPermitRequired, kE]
-        usersPermits = [kNoPermitRequired]
-        addPinsAndOverlays()
+        usersPermits = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+//        usersPermits = [kNoPermitRequired, kE] //temp
+//        usersPermits = [kNoPermitRequired] //temp
+        print(usersPermits) //temp
+        accessDataForOverlays()
     }
     
-    func addPinsAndOverlays() {
+    func accessDataForOverlays() {
         for p in parkingData! {
             let coords = p["coords"] as! [Double]
-//            let dict = [coords[0], coords[1]]
-//            setPins(dict: dict, title: p["name"] as! String)
             
             let date = Date()
             let calendar = Calendar.current
