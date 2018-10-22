@@ -72,6 +72,3 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     }
     
 }
-
-
-

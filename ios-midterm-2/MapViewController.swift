@@ -12,7 +12,7 @@ import MapKit
 class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
-    var usersPermit: [String] = []
+    var usersPermits: [String] = []
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
@@ -73,18 +73,20 @@ class MapViewController: UIViewController {
             setPins(dict: dict, title: p["name"] as! String)
         }
         
-        usersPermit = ["No permit required"]
-        addPinsAndOverlays()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
 //        userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         //add pins and overlays??
+        
+//        usersPermits = [kNoPermitRequired, kE]
+        usersPermits = [kNoPermitRequired]
+        addPinsAndOverlays()
     }
     
     func addPinsAndOverlays() {
         for p in parkingData! {
-//            print(p)
             let coords = p["coords"] as! [Double]
 //            let dict = [coords[0], coords[1]]
 //            setPins(dict: dict, title: p["name"] as! String)
@@ -95,14 +97,14 @@ class MapViewController: UIViewController {
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday]
             
-            guard let times = p["time"] as? [Any] else {
+            guard let times = p["times"] as? [Any] else {
                 return
             }
             
             for time in times {
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
-                for permit in usersPermit {
+                for permit in usersPermits {
                     if name == permit {
                         let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
                         let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
@@ -146,14 +148,13 @@ class MapViewController: UIViewController {
         let endMinute = end["minute"] as! Int
         
         var endDate = Date()
-        if end["12hour"] as! String  == "am" { // for pm-am (overnight parking)
+        if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
             endDate = now.tomorrow(hour: endHour, minute: endMinute)
         } else { // for am-pm/pm-pm (same day)
             endDate = now.dateAt(hours: endHour, minutes: endMinute)
         }
         
         if (now >= startDate) && (now < endDate) {
-            print(coords)
             setOverlays(dict: coords)
         }
     }
@@ -161,14 +162,17 @@ class MapViewController: UIViewController {
     // for checking that date is right
     func toGMT(date: Date) -> String {
         let dateStr = "\(date)"
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
         formatter.locale = Locale(identifier: "en_US_POSIX")
+        
         var str = String()
         if let date2 = formatter.date(from: dateStr) {
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
             str = formatter.string(from: date2)
         }
+        
         return str
     }
     
