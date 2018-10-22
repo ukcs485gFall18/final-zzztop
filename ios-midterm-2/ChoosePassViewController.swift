@@ -43,7 +43,12 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        if (UserDefaults.standard.array(forKey: "userPasses") != nil){
+            userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        }
+        else{
+            userPasses = [kPassTypes[21]]
+        }
         let barHeight:CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height

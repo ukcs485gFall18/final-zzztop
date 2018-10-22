@@ -17,7 +17,7 @@ class MapViewController: UIViewController {
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVc = ChoosePassViewController()
     
-    // could be an array; users could select multiple pass types
+// could be an array; users could select multiple pass types
 //    let usersPermit = PassType.noPermitRequired.rawValue // temporary
 //    let usersPermit = PassType.noPermitRequired.rawValue // temporary
 
@@ -79,7 +79,12 @@ class MapViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        if UserDefaults.standard.array(forKey: "userPasses") != nil {
+            userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        }
+        else{
+            userPermit = [PassType.noPermitRequired.rawValue]
+        }
         //add pins and overlays??
     }
     
