@@ -21,7 +21,9 @@ class MapViewController: UIViewController {
     var pickedDate: Date?
     var pickerUIText = UITextField()
     var datePicker: UIDatePicker?
-
+    
+    var spots = [String]()
+    
     enum PassType: String {
         case e = "E"
         case e2 = "E2"
@@ -89,11 +91,11 @@ class MapViewController: UIViewController {
         if UserDefaults.standard.array(forKey: "userPasses") != nil {
             usersPermits = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         }
-        else{
+        else {
             usersPermits = [PassType.noPermitRequired.rawValue]
         }
         print(usersPermits)
-//        print(pickerUIText.text!)
+        //        print(pickerUIText.text!)
         //        if usersPermits.isEmpty {
         //            map.removeOverlays(map.overlays) // remove previous overlays
         //        } else {
@@ -105,9 +107,9 @@ class MapViewController: UIViewController {
         map.removeOverlays(map.overlays) // remove previous overlays
         
         for p in parkingData! {
-            let coords = p["coords"] as! [Double]
-            
+            let spotName = p["name"] as! String
             let radius = p["radius"] as! Int
+            let coords = p["coords"] as! [Double]
             
             let date = Date()
             let calendar = Calendar.current
@@ -122,21 +124,28 @@ class MapViewController: UIViewController {
             for time in times {
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
-                for permit in usersPermits {
-                    if name == permit {
-                        let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-                        let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-                        let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-                        
-                        if (weekdaystring == WeekDay.monday.rawValue) ||
-                            (weekdaystring == WeekDay.tuesday.rawValue) ||
-                            (weekdaystring == WeekDay.wednesday.rawValue) ||
-                            (weekdaystring == WeekDay.thursday.rawValue) {
-                            rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius)
-                        } else if weekdaystring == WeekDay.friday.rawValue {
-                            rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius)
-                        } else {
-                            rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                
+                if spots.contains(spotName) {
+                    continue
+                } else {
+                    spots.append(spotName)
+                    
+                    for permit in usersPermits {
+                        if name == permit {
+                            let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+                            let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+                            let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
+                            
+                            if (weekdaystring == WeekDay.monday.rawValue) ||
+                                (weekdaystring == WeekDay.tuesday.rawValue) ||
+                                (weekdaystring == WeekDay.wednesday.rawValue) ||
+                                (weekdaystring == WeekDay.thursday.rawValue) {
+                                rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                            } else if weekdaystring == WeekDay.friday.rawValue {
+                                rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                            } else {
+                                rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                            }
                         }
                     }
                 }
@@ -154,9 +163,9 @@ class MapViewController: UIViewController {
     }
     
     func checkDateRange(open: NSDictionary, coords: [Double], radius: Int) {
-//        change now var name
+        //        change now var name
         if let now = pickedDate {
-//            print(toGMT(date: now))
+            //            print(toGMT(date: now))
             
             let start = open["start"] as! NSDictionary
             let startHour = start["hour"] as! Int
@@ -259,7 +268,7 @@ class MapViewController: UIViewController {
         pickerUIText.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
-//        map.removeOverlays(map.overlays) // remove previous overlays
+        //        map.removeOverlays(map.overlays) // remove previous overlays
         accessDataForOverlays()
     }
     
@@ -287,12 +296,12 @@ class MapViewController: UIViewController {
     func setupViews() {
         view.addSubview(map)
         setupMap()
-
+        
         detailsView = UIView(frame: CGRect(x:0, y:view.frame.height-view.frame.height/3 , width:view.frame.width, height:view.frame.height/2))
         detailsView.backgroundColor = .white
         view.addSubview(detailsView)
         detailsView.isHidden = true
-
+        
         let button = UIButton(frame: CGRect(x: 300, y: 100, width: 100, height: 50))
         button.layer.cornerRadius = 5
         button.backgroundColor = .blue

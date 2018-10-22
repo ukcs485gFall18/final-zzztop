@@ -99,7 +99,7 @@
       "radius": 70,
       "coords": [
         38.033142,
-        -84.500285
+        -84.500280
       ],
       "times": [
         {
@@ -177,8 +177,8 @@
       "name": "Small Library Lot",
       "radius": 70,
       "coords": [
-        38.033142,
-        -84.500285
+        38.033899,
+        -84.501199
       ],
       "times": [
         {
@@ -2137,61 +2137,6 @@
       ]
     },
     {
-      "name": "Orange Lot",
-      "radius": 70,
-      "coords": [
-        38.0234362,
-        -84.5131464
-      ],
-      "times": [
-        {
-          "pass": "EK",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        },
-        {
-          "pass": "CK",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MF": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
-    },
-    {
       "name": "Cliff Hagan Lot",
       "radius": 70,
       "coords": [
@@ -2254,46 +2199,6 @@
             }
           }
         },
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MF": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cliff Hagan Lot",
-      "radius": 70,
-      "coords": [
-        38.026148,
-        -84.501002
-      ],
-      "times": [
         {
           "pass": "E",
           "MF": {
