@@ -10,7 +10,6 @@
 		0FB9F04C217D0A2000752425 /* parkingData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0FB9F04B217D0A2000752425 /* parkingData.json */; };
 		0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */; };
 		0FB9F050217D2CE500752425 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04F217D2CE500752425 /* constants.swift */; };
-		0FB9F07B217D3CAE00752425 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F07A217D3CAE00752425 /* Checkbox.swift */; };
 		806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91D821729D3B00EDA648 /* AppDelegate.swift */; };
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
@@ -21,7 +20,6 @@
 		0FB9F04B217D0A2000752425 /* parkingData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = parkingData.json; path = "../../../final-zzztop/parkingData.json"; sourceTree = "<group>"; };
 		0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassViewController.swift; sourceTree = "<group>"; };
 		0FB9F04F217D2CE500752425 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
-		0FB9F07A217D3CAE00752425 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Checkbox.swift; path = "../../../../../../../final-zzztop/ios-midterm-2/SimpleCheckbox/checkbox/Checkbox.swift"; sourceTree = "<group>"; };
 		806A91D521729D3B00EDA648 /* ios-midterm-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-midterm-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		806A91D821729D3B00EDA648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		806A91DA21729D3B00EDA648 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -60,7 +58,6 @@
 		806A91D721729D3B00EDA648 /* ios-midterm-2 */ = {
 			isa = PBXGroup;
 			children = (
-				0FB9F07A217D3CAE00752425 /* Checkbox.swift */,
 				806A91D821729D3B00EDA648 /* AppDelegate.swift */,
 				0FB9F04F217D2CE500752425 /* constants.swift */,
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
@@ -148,7 +145,6 @@
 				0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */,
 				806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */,
 				0FB9F050217D2CE500752425 /* constants.swift in Sources */,
-				0FB9F07B217D3CAE00752425 /* Checkbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
