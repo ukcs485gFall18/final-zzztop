@@ -105,6 +105,7 @@ class MapViewController: UIViewController {
     
     func accessDataForOverlays() {
         map.removeOverlays(map.overlays) // remove previous overlays
+        spots = []
         
         for p in parkingData! {
             let spotName = p["name"] as! String
@@ -151,6 +152,8 @@ class MapViewController: UIViewController {
                 }
             }
         }
+//        print(spots)
+//        print(spots.count)
     }
     
     func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int) {
