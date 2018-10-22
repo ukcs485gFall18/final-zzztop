@@ -1,0 +1,6 @@
+[submodule "ios-midterm-2/M13Checkbox"]
+	path = ios-midterm-2/M13Checkbox
+	url = https://github.com/Marxon13/M13Checkbox
+[submodule "ios-midterm-2/SimpleCheckbox"]
+	path = ios-midterm-2/SimpleCheckbox
+	url = https://github.com/BeauNouvelle/SimpleCheckbox.git
