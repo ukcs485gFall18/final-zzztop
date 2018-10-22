@@ -12,15 +12,36 @@ import MapKit
 class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
+    var userPermit:[String] = []
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
+    let choosePassVc = ChoosePassViewController()
     
     // could be an array; users could select multiple pass types
-    let usersPermit = PassType.noPermitRequired.rawValue // temporary
-    
+//    let usersPermit = PassType.noPermitRequired.rawValue // temporary
+//    let usersPermit = PassType.noPermitRequired.rawValue // temporary
+
     enum PassType: String {
+        case e = "E"
         case e2 = "E2"
+        case e20 = "E20"
+        case e26 = "E26"
+        case e28 = "E28"
+        case e27 = "E27"
         case r2 = "R2"
+        case r7 = "R7"
+        case r17 = "R17"
+        case r19 = "R19"
+        case r29 = "R29"
+        case r30 = "R30"
+        case c5 = "C5"
+        case c9 = "C9"
+        case c16 = "C16"
+        case k = "K"
+        case ek = "EK"
+        case ck = "CK"
+        case x = "X"
+        case a = "Authorized parking only"
         case anyPermit = "Any valid permit"
         case noPermitRequired = "No permit required"
     }
@@ -45,17 +66,28 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureLocationManager()
         setupViews()
         readJson()
+        for p in parkingData! {
+            let coords = p["coords"] as! [Double]
+            let dict = [coords[0], coords[1]]
+            setPins(dict: dict, title: p["name"] as! String)
+        }
         addPinsAndOverlays()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        //add pins and overlays??
     }
     
     func addPinsAndOverlays() {
         for p in parkingData! {
             let coords = p["coords"] as! [Double]
-            let dict = [coords[0], coords[1]]
-            setPins(dict: dict)
+//            let dict = [coords[0], coords[1]]
+//            setPins(dict: dict, title: p["name"] as! String)
             
             let date = Date()
             let calendar = Calendar.current
@@ -69,22 +101,24 @@ class MapViewController: UIViewController {
             
             for time in times {
                 let timeDict = time as! NSDictionary
-                let name = timeDict["name"] as! String
-                if name == usersPermit {
-                    
-                    let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-                    let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-                    let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-                    
-                    if (weekdaystring == WeekDay.monday.rawValue) ||
-                        (weekdaystring == WeekDay.tuesday.rawValue) ||
-                        (weekdaystring == WeekDay.wednesday.rawValue) ||
-                        (weekdaystring == WeekDay.thursday.rawValue) {
-                        rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords)
-                    } else if weekdaystring == WeekDay.friday.rawValue {
-                        rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords)
-                    } else {
-                        rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords)
+                let name = timeDict["pass"] as! String
+                for permit in userPermit {
+                    if name == permit {
+                        
+                        let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+                        let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+                        let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
+                        
+                        if (weekdaystring == WeekDay.monday.rawValue) ||
+                            (weekdaystring == WeekDay.tuesday.rawValue) ||
+                            (weekdaystring == WeekDay.wednesday.rawValue) ||
+                            (weekdaystring == WeekDay.thursday.rawValue) {
+                            rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords)
+                        } else if weekdaystring == WeekDay.friday.rawValue {
+                            rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords)
+                        } else {
+                            rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords)
+                        }
                     }
                 }
             }
@@ -161,12 +195,13 @@ class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
     }
     
-    func setPins(dict: [Double]) {
+    func setPins(dict: [Double], title: String) {
         let latitude = dict[0]
         let longitude = dict[1]
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        annotation.title = title;
         map.addAnnotation(annotation)
     }
     
@@ -193,6 +228,12 @@ class MapViewController: UIViewController {
     
     func setupViews() {
         view.addSubview(map)
+        let button = UIButton(frame: CGRect(x: 300, y: 100, width: 100, height: 50))
+        button.layer.cornerRadius = 5
+        button.backgroundColor = .blue
+        button.setTitle("Passes", for: .normal)
+        button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
+        view.addSubview(button)
         setupMap()
     }
     
@@ -206,6 +247,10 @@ class MapViewController: UIViewController {
     func setupMap() {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    }
+    
+    @objc func choosePassTouched() {
+        self.present(choosePassVc, animated: true, completion: nil)
     }
     
 }
