@@ -12,39 +12,35 @@ import MapKit
 class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
-    var userPermit:[String] = []
+    var usersPermit: [String] = []
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
-    let choosePassVc = ChoosePassViewController()
-    
-    // could be an array; users could select multiple pass types
-//    let usersPermit = PassType.noPermitRequired.rawValue // temporary
-//    let usersPermit = PassType.noPermitRequired.rawValue // temporary
+    let choosePassVC = ChoosePassViewController()
 
-    enum PassType: String {
-        case e = "E"
-        case e2 = "E2"
-        case e20 = "E20"
-        case e26 = "E26"
-        case e28 = "E28"
-        case e27 = "E27"
-        case r2 = "R2"
-        case r7 = "R7"
-        case r17 = "R17"
-        case r19 = "R19"
-        case r29 = "R29"
-        case r30 = "R30"
-        case c5 = "C5"
-        case c9 = "C9"
-        case c16 = "C16"
-        case k = "K"
-        case ek = "EK"
-        case ck = "CK"
-        case x = "X"
-        case a = "Authorized parking only"
-        case anyPermit = "Any valid permit"
-        case noPermitRequired = "No permit required"
-    }
+//    enum PassType: String {
+//        case e = "E"
+//        case e2 = "E2"
+//        case e20 = "E20"
+//        case e26 = "E26"
+//        case e28 = "E28"
+//        case e27 = "E27"
+//        case r2 = "R2"
+//        case r7 = "R7"
+//        case r17 = "R17"
+//        case r19 = "R19"
+//        case r29 = "R29"
+//        case r30 = "R30"
+//        case c5 = "C5"
+//        case c9 = "C9"
+//        case c16 = "C16"
+//        case k = "K"
+//        case ek = "EK"
+//        case ck = "CK"
+//        case x = "X"
+//        case a = "Authorized parking only"
+//        case anyPermit = "Any valid permit"
+//        case noPermitRequired = "No permit required"
+//    }
     
     enum WeekDay: String {
         case monday = "Monday"
@@ -70,21 +66,25 @@ class MapViewController: UIViewController {
         configureLocationManager()
         setupViews()
         readJson()
+        
         for p in parkingData! {
             let coords = p["coords"] as! [Double]
             let dict = [coords[0], coords[1]]
             setPins(dict: dict, title: p["name"] as! String)
         }
+        
+        usersPermit = ["No permit required"]
         addPinsAndOverlays()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+//        userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         //add pins and overlays??
     }
     
     func addPinsAndOverlays() {
         for p in parkingData! {
+//            print(p)
             let coords = p["coords"] as! [Double]
 //            let dict = [coords[0], coords[1]]
 //            setPins(dict: dict, title: p["name"] as! String)
@@ -102,9 +102,8 @@ class MapViewController: UIViewController {
             for time in times {
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
-                for permit in userPermit {
+                for permit in usersPermit {
                     if name == permit {
-                        
                         let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
                         let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
                         let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
@@ -154,6 +153,7 @@ class MapViewController: UIViewController {
         }
         
         if (now >= startDate) && (now < endDate) {
+            print(coords)
             setOverlays(dict: coords)
         }
     }
@@ -228,13 +228,14 @@ class MapViewController: UIViewController {
     
     func setupViews() {
         view.addSubview(map)
+        setupMap()
+        
         let button = UIButton(frame: CGRect(x: 300, y: 100, width: 100, height: 50))
         button.layer.cornerRadius = 5
         button.backgroundColor = .blue
         button.setTitle("Passes", for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         view.addSubview(button)
-        setupMap()
     }
     
     lazy var map: MKMapView = {
@@ -250,7 +251,7 @@ class MapViewController: UIViewController {
     }
     
     @objc func choosePassTouched() {
-        self.present(choosePassVc, animated: true, completion: nil)
+        self.present(choosePassVC, animated: true, completion: nil)
     }
     
 }
