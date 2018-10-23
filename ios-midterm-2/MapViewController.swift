@@ -83,7 +83,7 @@ class MapViewController: UIViewController {
         createPickerView()
         pickedDate = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE MM/dd/yyyy hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
         pickerUIText.text = dateFormatter.string(from: pickedDate!)
     }
     
@@ -113,13 +113,10 @@ class MapViewController: UIViewController {
             let coords = p["coords"] as! [Double]
             
             let date = pickedDate
-            print(pickedDate)
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
-            print(weekday)
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday]
-            print(weekdaystring)
             
             guard let times = p["times"] as? [Any] else {
                 return
@@ -250,6 +247,10 @@ class MapViewController: UIViewController {
         pickerUIText.text = "Please Select a Date"
         pickerUIText.textAlignment = NSTextAlignment.center
         pickerUIText.font = UIFont.systemFont(ofSize: 25)
+        pickerUIText.backgroundColor = UIColor.blue
+        pickerUIText.textColor = UIColor.white
+        pickerUIText.borderStyle = UITextField.BorderStyle.none
+        pickerUIText.layer.cornerRadius = 5
         self.view.addSubview(pickerUIText)
         // create the DatePicker
         datePicker = UIDatePicker()
@@ -407,3 +408,4 @@ extension Date {
 
 // source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
 // source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
+// source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
