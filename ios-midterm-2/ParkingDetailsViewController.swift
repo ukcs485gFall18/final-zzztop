@@ -10,8 +10,13 @@ import UIKit
 
 class ParkingDetailsViewController: UIViewController {
     var pTitle=String()
+    
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
+        let textBox =  UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 40))
+        textBox.text = "Hello World"
+        textBox.textColor = UIColor.white
+        self.view.addSubview(textBox)
     }
 
 }
