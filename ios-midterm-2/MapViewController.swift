@@ -347,6 +347,7 @@ class MapViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
         pickerUIText.text = dateFormatter.string(from: Date())
+        accessDataForOverlays(pickedDate: Date())
     }
     
 }
