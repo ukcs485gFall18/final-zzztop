@@ -16,18 +16,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     var displayWidth = CGFloat()
     var displayHeight = CGFloat()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
-            userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
-        } else {
-            userPasses = [kPassTypes[21]]
-        }
-        
-        setupViews()
-    }
-    
     func setupViews() {
         displayWidth = self.view.frame.width
         displayHeight = self.view.frame.height
@@ -108,9 +96,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         UserDefaults.standard.set(userPasses, forKey: "userPasses")
     }
     
-    var tableView: UITableView!
-    var userPasses: [String] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (UserDefaults.standard.array(forKey: "userPasses") != nil){
@@ -159,7 +144,4 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         self.view.addSubview(applyButton)
     }
     
-    @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
-    }
 }
