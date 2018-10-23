@@ -99,11 +99,11 @@ class MapViewController: UIViewController {
         //        if usersPermits.isEmpty {
         //            map.removeOverlays(map.overlays) // remove previous overlays
         //        } else {
-        accessDataForOverlays()
+        accessDataForOverlays(pickedDate: Date())
         //        }
     }
     
-    func accessDataForOverlays() {
+    func accessDataForOverlays(pickedDate: Date) {
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         
@@ -112,11 +112,14 @@ class MapViewController: UIViewController {
             let radius = p["radius"] as! Int
             let coords = p["coords"] as! [Double]
             
-            let date = Date()
+            let date = pickedDate
+            print(pickedDate)
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
+            print(weekday)
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday]
+            print(weekdaystring)
             
             guard let times = p["times"] as? [Any] else {
                 return
@@ -272,7 +275,7 @@ class MapViewController: UIViewController {
         
         pickedDate = datePicker.date
         //        map.removeOverlays(map.overlays) // remove previous overlays
-        accessDataForOverlays()
+        accessDataForOverlays(pickedDate: pickedDate!)
     }
     
     func setOverlays(dict: [Double], radius: Int) {
