@@ -21,6 +21,7 @@ class MapViewController: UIViewController {
     var pickedDate: Date?
     var pickerUIText = UITextField()
     var datePicker: UIDatePicker?
+    var didSelectDate:Bool = false
     
     var spots = [String]()
     
@@ -83,7 +84,7 @@ class MapViewController: UIViewController {
         createPickerView()
         pickedDate = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE MM/dd/yyyy hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
         pickerUIText.text = dateFormatter.string(from: pickedDate!)
     }
     
@@ -99,11 +100,11 @@ class MapViewController: UIViewController {
         //        if usersPermits.isEmpty {
         //            map.removeOverlays(map.overlays) // remove previous overlays
         //        } else {
-        accessDataForOverlays()
+        accessDataForOverlays(pickedDate: Date())
         //        }
     }
     
-    func accessDataForOverlays() {
+    func accessDataForOverlays(pickedDate: Date) {
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         
@@ -112,7 +113,7 @@ class MapViewController: UIViewController {
             let radius = p["radius"] as! Int
             let coords = p["coords"] as! [Double]
             
-            let date = Date()
+            let date = pickedDate
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
             let f = DateFormatter()
@@ -245,9 +246,12 @@ class MapViewController: UIViewController {
     func createPickerView(){
         // create the UI text
         pickerUIText = UITextField(frame: CGRect(x: 50, y: 800, width: 300, height: 40))
-        pickerUIText.text = "Please Select a Date"
         pickerUIText.textAlignment = NSTextAlignment.center
         pickerUIText.font = UIFont.systemFont(ofSize: 25)
+        pickerUIText.backgroundColor = UIColor.blue
+        pickerUIText.textColor = UIColor.white
+        pickerUIText.borderStyle = UITextField.BorderStyle.none
+        pickerUIText.layer.cornerRadius = 5
         self.view.addSubview(pickerUIText)
         // create the DatePicker
         datePicker = UIDatePicker()
@@ -263,17 +267,18 @@ class MapViewController: UIViewController {
     // allows the user to leave the UI picker by tapping elsewhere
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
+        didSelectDate = true
     }
     
     // formats the date selected and places it into the UI Text Field
     @objc func dateSelected(datePicker: UIDatePicker){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE MM/dd/yyyy hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
         pickerUIText.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
         //        map.removeOverlays(map.overlays) // remove previous overlays
-        accessDataForOverlays()
+        accessDataForOverlays(pickedDate: pickedDate!)
     }
     
     func setOverlays(dict: [Double], radius: Int) {
@@ -303,13 +308,22 @@ class MapViewController: UIViewController {
         let headerHeight = self.navigationController?.navigationBar.frame.size.height
 
         let button = UIButton(frame: CGRect(x: view.frame.width-110, y: barheight+headerHeight!+10, width: 100, height: 50))
-        let button = UIButton(frame: CGRect(x: 300, y: 100, width: 100, height: 50))
+        //button to display passes screen
+        let button = UIButton(frame: CGRect(x: 285, y: 100, width: 120, height: 50))
         button.layer.cornerRadius = 5
         button.backgroundColor = .blue
         button.setTitle("Passes", for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         view.addSubview(button)
         setupMap()
+        
+        //button to reset
+        let resetButton = UIButton(frame: CGRect(x: 10, y: 100, width: 120, height: 50))
+        resetButton.layer.cornerRadius = 5
+        resetButton.backgroundColor = .blue
+        resetButton.setTitle("Current Time", for: .normal)
+        resetButton.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
+        view.addSubview(resetButton)
     }
     
     lazy var map: MKMapView = {
@@ -326,6 +340,13 @@ class MapViewController: UIViewController {
     
     @objc func choosePassTouched() {
         self.present(choosePassVC, animated: true, completion: nil)
+    }
+    
+    @objc func resetDateTime(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        pickerUIText.text = dateFormatter.string(from: Date())
+        accessDataForOverlays(pickedDate: Date())
     }
     
 }
@@ -403,3 +424,4 @@ extension Date {
 
 // source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
 // source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
+// source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
