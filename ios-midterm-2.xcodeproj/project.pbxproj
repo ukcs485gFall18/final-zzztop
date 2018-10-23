@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FA24148217E365700CF4CB8 /* ParkingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */; };
 		0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */; };
 		0FB9F050217D2CE500752425 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04F217D2CE500752425 /* constants.swift */; };
 		0FB9F07D217D531200752425 /* parkingData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0FB9F07C217D531200752425 /* parkingData.json */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingDetailsViewController.swift; sourceTree = "<group>"; };
 		0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassViewController.swift; sourceTree = "<group>"; };
 		0FB9F04F217D2CE500752425 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		0FB9F07C217D531200752425 /* parkingData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parkingData.json; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				806A91D821729D3B00EDA648 /* AppDelegate.swift */,
 				0FB9F04F217D2CE500752425 /* constants.swift */,
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
+				0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */,
 				806A91DA21729D3B00EDA648 /* MapViewController.swift */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
@@ -145,6 +148,7 @@
 				0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */,
 				806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */,
 				0FB9F050217D2CE500752425 /* constants.swift in Sources */,
+				0FA24148217E365700CF4CB8 /* ParkingDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

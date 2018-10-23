@@ -61,6 +61,16 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         backButton.backgroundColor = .blue
         backButton.setTitle("Back", for: .normal)
         
+        let headerLabel = UILabel(frame: CGRect(x:headerView.center.x, y:headerView.center.y, width:200, height:50))
+        headerLabel.center.x = headerView.center.x
+        headerLabel.center.y = headerView.center.y
+        headerLabel.text = "Add Your Passes"
+        headerLabel.textAlignment = .center
+        headerLabel.backgroundColor = .blue
+        headerLabel.font = headerLabel.font.withSize(25)
+        headerLabel.textColor = .white
+        view.addSubview(headerLabel)
+
         let applyButton = UIButton(frame: CGRect(x: 25, y: displayHeight-80, width: displayWidth-50, height: 50))
         applyButton.layer.cornerRadius = 5
         applyButton.backgroundColor = .blue

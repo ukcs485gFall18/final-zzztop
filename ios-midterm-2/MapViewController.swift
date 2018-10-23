@@ -16,7 +16,7 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVc = ChoosePassViewController()
-    var detailsView = UIView();
+    let detailsVc = ParkingDetailsViewController()
     
 // could be an array; users could select multiple pass types
 //    let usersPermit = PassType.noPermitRequired.rawValue // temporary
@@ -67,7 +67,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        map.delegate = self
         configureLocationManager()
         setupViews()
         readJson()
@@ -207,7 +207,8 @@ class MapViewController: UIViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         annotation.title = title;
-        map.addAnnotation(annotation)
+        self.map.addAnnotation(annotation)
+
     }
     
     func setOverlays(dict: [Double]) {
@@ -233,11 +234,10 @@ class MapViewController: UIViewController {
     
     func setupViews() {
         view.addSubview(map)
-        detailsView = UIView(frame: CGRect(x:0, y:view.frame.height-view.frame.height/3 , width:view.frame.width, height:view.frame.height/2))
-        detailsView.backgroundColor = .white
-        view.addSubview(detailsView)
-        detailsView.isHidden = true
-        let button = UIButton(frame: CGRect(x: 300, y: 100, width: 100, height: 50))
+        let barheight = UIApplication.shared.statusBarFrame.size.height
+        let headerHeight = self.navigationController?.navigationBar.frame.size.height
+
+        let button = UIButton(frame: CGRect(x: view.frame.width-110, y: barheight+headerHeight!+10, width: 100, height: 50))
         button.layer.cornerRadius = 5
         button.backgroundColor = .blue
         button.setTitle("Passes", for: .normal)
@@ -291,8 +291,8 @@ extension MapViewController: MKMapViewDelegate {
         return annotationView
     }
     
-    func mapView(_ map: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        detailsView.isHidden = false
+    func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
+        self.present(detailsVc,animated: true, completion: nil)
     }
 }
 
