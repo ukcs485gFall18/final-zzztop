@@ -18,10 +18,10 @@ class ParkingDetailsViewController: UIViewController {
         let vc = MapViewController(nibName: "MapViewController", bundle: nil)
         vc.detailsVC = self
         
-        let textBox =  UITextField(frame: CGRect(x: 30, y: 100, width: 300, height: 40))
+        let textBox =  UITextField(frame: CGRect(x: 30, y: 100, width: 300, height: 100))
         textBox.text = ("Hello \(passedTitle)")
         textBox.textColor = UIColor.white
-        let textBox2 =  UITextField(frame: CGRect(x: 30, y: 300, width: 300, height: 40))
+        let textBox2 =  UITextField(frame: CGRect(x: 30, y: 300, width: 300, height: 100))
         textBox2.text = "Hello World"
         textBox2.textColor = UIColor.white
         
@@ -29,12 +29,12 @@ class ParkingDetailsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func onUserAction(data: String)
+    func onUserAction(title: String, hours: String)
     {
-        print("Data received: \(data)")
-        let textBox =  UITextField(frame: CGRect(x: 30, y: 100, width: 300, height: 40))
-        textBox.text = ("Hello \(data)")
+        let textBox =  UITextView(frame: CGRect(x: 30, y: 100, width: 400, height: 700))
+        textBox.text = ("Parking Location: \n\(title) \nHours: \n\(hours)")
         textBox.textColor = UIColor.white
+        textBox.backgroundColor = UIColor.black
         self.view.addSubview(textBox)
     }
 

@@ -401,9 +401,7 @@ extension MapViewController: MKMapViewDelegate {
                 detailsVC.passedTitle = pinTitle
                 print(pinTitle)
                 print(detailsVC.passedTitle)
-                //let navView = UINavigationController(rootViewController: self)
-                //navView.pushViewController(detailsVC, animated: true)
-                detailsVC.onUserAction(data: pinTitle)
+                detailsVC.onUserAction(title: pinTitle, hours: "M-F 3:30-5:00 PM")
             }
         }
     }
