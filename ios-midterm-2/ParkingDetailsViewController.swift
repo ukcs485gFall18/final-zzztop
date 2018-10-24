@@ -11,18 +11,31 @@ import UIKit
 class ParkingDetailsViewController: UIViewController {
 
     var passedTitle:String = ""
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let vc = MapViewController(nibName: "MapViewController", bundle: nil)
+        vc.detailsVC = self
+        
         let textBox =  UITextField(frame: CGRect(x: 30, y: 100, width: 300, height: 40))
         textBox.text = ("Hello \(passedTitle)")
         textBox.textColor = UIColor.white
         let textBox2 =  UITextField(frame: CGRect(x: 30, y: 300, width: 300, height: 40))
         textBox2.text = "Hello World"
         textBox2.textColor = UIColor.white
-        self.view.addSubview(textBox)
+        
         self.view.addSubview(textBox2)
         // Do any additional setup after loading the view.
+    }
+    
+    func onUserAction(data: String)
+    {
+        print("Data received: \(data)")
+        let textBox =  UITextField(frame: CGRect(x: 30, y: 100, width: 300, height: 40))
+        textBox.text = ("Hello \(data)")
+        textBox.textColor = UIColor.white
+        self.view.addSubview(textBox)
     }
 
 

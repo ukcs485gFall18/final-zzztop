@@ -16,7 +16,7 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
-    let detailsVC = ParkingDetailsViewController()
+    var detailsVC = ParkingDetailsViewController()
     var pickedDate: Date?
     var didSelectDate: Bool = false
     var spots = [String]()
@@ -401,8 +401,9 @@ extension MapViewController: MKMapViewDelegate {
                 detailsVC.passedTitle = pinTitle
                 print(pinTitle)
                 print(detailsVC.passedTitle)
-                let navView = UINavigationController(rootViewController: self)
-                navView.pushViewController(detailsVC, animated: true)
+                //let navView = UINavigationController(rootViewController: self)
+                //navView.pushViewController(detailsVC, animated: true)
+                detailsVC.onUserAction(data: pinTitle)
             }
         }
     }
