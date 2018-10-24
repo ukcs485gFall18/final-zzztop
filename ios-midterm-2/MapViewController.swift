@@ -21,6 +21,8 @@ class MapViewController: UIViewController {
     var didSelectDate: Bool = false
     var spots = [String]()
     let now = Date()
+    var barHeight = CGFloat()
+    var headerHeight = CGFloat()
     
     enum PassType: String {
         case e = "E"
@@ -68,6 +70,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        barHeight = UIApplication.shared.statusBarFrame.size.height
+        headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
+        
         map.delegate = self
         configureLocationManager()
         
@@ -100,6 +105,18 @@ class MapViewController: UIViewController {
     
     @objc func choosePassTouched() {
         self.present(choosePassVC, animated: true, completion: nil)
+    }
+    
+    @objc func zoomToCurrentLocation() {
+        // zoom to user location
+        if let userLocation = locationManager.location?.coordinate {
+            let viewRegion = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            map.setRegion(viewRegion, animated: false)
+        }
+        
+        DispatchQueue.main.async {
+            self.locationManager.startUpdatingLocation()
+        }
     }
     
     @objc func resetDateTime(){
@@ -270,14 +287,6 @@ class MapViewController: UIViewController {
         map.addOverlay(circle)
     }
     
-    func centerMapOnLocation(location: CLLocation) {
-        let regionRadius: CLLocationDistance = 1000
-        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
-                                                  latitudinalMeters: regionRadius,
-                                                  longitudinalMeters: regionRadius)
-        map.setRegion(coordinateRegion, animated: true)
-    }
-    
     // used to show user's current location
     func configureLocationManager() {
         locationManager.delegate = self
@@ -295,8 +304,10 @@ class MapViewController: UIViewController {
         detailsView.isHidden = true
         view.addSubview(passButton)
         view.addSubview(resetButton)
+        view.addSubview(zoomButton)
         
         setupMap()
+        setupZoomButton()
     }
     
     // create the UI text field
@@ -320,21 +331,15 @@ class MapViewController: UIViewController {
     }()
     
     lazy var detailsView: UIView = {
-        let barheight = UIApplication.shared.statusBarFrame.size.height
-        let headerHeight = self.navigationController?.navigationBar.frame.size.height
-        
         let view = UIView(frame: CGRect(x: 0, y: self.view.frame.height-self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height/2))
         view.backgroundColor = .white
         return view
     }()
     
+    // button to display passes screen
     lazy var passButton: UIButton = {
-        let barheight = UIApplication.shared.statusBarFrame.size.height
-        let headerHeight = self.navigationController?.navigationBar.frame.size.height
-        
-        //button to display passes screen
-        //        let button = UIButton(frame: CGRect(x: 285, y: 100, width: 120, height: 50))
-        let button = UIButton(frame: CGRect(x: view.frame.width-110, y: barheight+headerHeight!+10, width: 100, height: 50))
+//                let button = UIButton(frame: CGRect(x: 285, y: 100, width: 120, height: 50))
+        let button = UIButton(frame: CGRect(x: view.frame.width-110, y: barHeight+headerHeight+10, width: 100, height: 50))
         button.layer.cornerRadius = 5
         button.backgroundColor = .blue
         button.setTitle("Passes", for: .normal)
@@ -342,7 +347,7 @@ class MapViewController: UIViewController {
         return button
     }()
     
-    // button to reset
+    // button to reset the time to the current time
     lazy var resetButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 10, y: 100, width: 120, height: 50))
         button.layer.cornerRadius = 5
@@ -351,6 +356,31 @@ class MapViewController: UIViewController {
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
     }()
+    
+    lazy var zoomButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+//        let img = UIImage(named: "location-arrow")
+//        button.setImage(img, for: .normal)
+        
+        button.setTitle("Zoom", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .blue
+        button.layer.cornerRadius = 5
+        
+        button.addTarget(self, action: #selector(zoomToCurrentLocation), for: .touchUpInside)
+        return button
+    }()
+    
+    func setupZoomButton() {
+        zoomButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        zoomButton.topAnchor.constraint(equalTo: view.topAnchor, constant: barHeight+headerHeight+10).isActive = true
+        zoomButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+//        zoomButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        zoomButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+    }
     
     lazy var map: MKMapView = {
         let map = MKMapView()
