@@ -12,16 +12,16 @@ import MapKit
 class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
-    var userPermit:[String] = []
+    var usersPermits: [String] = []
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
-    let choosePassVc = ChoosePassViewController()
-    let detailsVc = ParkingDetailsViewController()
+    let choosePassVC = ChoosePassViewController()
+    let detailsVC = ParkingDetailsViewController()
+    var pickedDate: Date?
+    var didSelectDate: Bool = false
+    var spots = [String]()
+    let now = Date()
     
-// could be an array; users could select multiple pass types
-//    let usersPermit = PassType.noPermitRequired.rawValue // temporary
-//    let usersPermit = PassType.noPermitRequired.rawValue // temporary
-
     enum PassType: String {
         case e = "E"
         case e2 = "E2"
@@ -67,63 +67,119 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         map.delegate = self
         configureLocationManager()
+        
         setupViews()
         readJson()
+        
         for p in parkingData! {
             let coords = p["coords"] as! [Double]
             let dict = [coords[0], coords[1]]
             setPins(dict: dict, title: p["name"] as! String)
         }
-        addPinsAndOverlays()
+        
+        createPickerView()
+        
+        pickedDate = now
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        pickerTextField.text = dateFormatter.string(from: pickedDate!)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaults.standard.array(forKey: "userPasses") != nil {
-            userPermit = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+            usersPermits = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        } else {
+            usersPermits = [PassType.noPermitRequired.rawValue]
         }
-        else{
-            userPermit = [PassType.noPermitRequired.rawValue]
-        }
-        //add pins and overlays??
+        accessDataForOverlays(pickedDate: now)
     }
     
-    func addPinsAndOverlays() {
+    @objc func choosePassTouched() {
+        self.present(choosePassVC, animated: true, completion: nil)
+    }
+    
+    @objc func resetDateTime(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        pickerTextField.text = dateFormatter.string(from: now)
+        accessDataForOverlays(pickedDate: now)
+    }
+    
+    func createPickerView() {
+        view.addSubview(pickerTextField)
+        
+        // add the DatePicker to the UITextField
+        pickerTextField.inputView = datePicker
+        
+        // allow the user to get out of the date picker by tapping
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // allows the user to leave the UI picker by tapping elsewhere
+    @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
+        view.endEditing(true)
+        didSelectDate = true
+    }
+    
+    // formats the date selected and places it into the UI Text Field
+    @objc func dateSelected(datePicker: UIDatePicker){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        pickerTextField.text = dateFormatter.string(from: datePicker.date)
+        
+        pickedDate = datePicker.date
+        accessDataForOverlays(pickedDate: pickedDate!)
+    }
+    
+    func accessDataForOverlays(pickedDate: Date) {
+        map.removeOverlays(map.overlays) // remove previous overlays
+        spots = []
+        
         for p in parkingData! {
+            let spotName = p["name"] as! String
+            let radius = p["radius"] as! Int
             let coords = p["coords"] as! [Double]
-//            let dict = [coords[0], coords[1]]
-//            setPins(dict: dict, title: p["name"] as! String)
             
-            let date = Date()
+            let date = pickedDate
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday]
             
-            guard let times = p["time"] as? [Any] else {
+            guard let times = p["times"] as? [Any] else {
                 return
             }
             
             for time in times {
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
-                for permit in userPermit {
-                    if name == permit {
-                        
-                        let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-                        let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-                        let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-                        
-                        if (weekdaystring == WeekDay.monday.rawValue) ||
-                            (weekdaystring == WeekDay.tuesday.rawValue) ||
-                            (weekdaystring == WeekDay.wednesday.rawValue) ||
-                            (weekdaystring == WeekDay.thursday.rawValue) {
-                            rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords)
-                        } else if weekdaystring == WeekDay.friday.rawValue {
-                            rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords)
-                        } else {
-                            rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords)
+                
+                if spots.contains(spotName) {
+                    continue
+                } else {
+                    spots.append(spotName)
+                    
+                    for permit in usersPermits {
+                        if name == permit {
+                            let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+                            let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+                            let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
+                            
+                            if (weekdaystring == WeekDay.monday.rawValue) ||
+                                (weekdaystring == WeekDay.tuesday.rawValue) ||
+                                (weekdaystring == WeekDay.wednesday.rawValue) ||
+                                (weekdaystring == WeekDay.thursday.rawValue) {
+                                rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                            } else if weekdaystring == WeekDay.friday.rawValue {
+                                rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                            } else {
+                                rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                            }
                         }
                     }
                 }
@@ -131,51 +187,37 @@ class MapViewController: UIViewController {
         }
     }
     
-    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double]) {
+    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int) {
         for c in check {
             if let range = timeDict[c] {
-                checkDateRange(open: range as! NSDictionary, coords: coords)
+                checkDateRange(open: range as! NSDictionary, coords: coords, radius: radius)
                 break
             }
         }
     }
     
-    func checkDateRange(open: NSDictionary, coords: [Double]) {
-        let now = Date() // temp; based on user's selected time
-        
-        let start = open["start"] as! NSDictionary
-        let startHour = start["hour"] as! Int
-        let startMinute = start["minute"] as! Int
-        let startDate = now.dateAt(hours: startHour, minutes: startMinute)
-        
-        let end = open["end"] as! NSDictionary
-        let endHour = end["hour"] as! Int
-        let endMinute = end["minute"] as! Int
-        
-        var endDate = Date()
-        if end["12hour"] as! String  == "am" { // for pm-am (overnight parking)
-            endDate = now.tomorrow(hour: endHour, minute: endMinute)
-        } else { // for am-pm/pm-pm (same day)
-            endDate = now.dateAt(hours: endHour, minutes: endMinute)
+    func checkDateRange(open: NSDictionary, coords: [Double], radius: Int) {
+        if let time = pickedDate {
+            let start = open["start"] as! NSDictionary
+            let startHour = start["hour"] as! Int
+            let startMinute = start["minute"] as! Int
+            let startDate = time.dateAt(hours: startHour, minutes: startMinute)
+            
+            let end = open["end"] as! NSDictionary
+            let endHour = end["hour"] as! Int
+            let endMinute = end["minute"] as! Int
+            
+            var endDate = Date()
+            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+                endDate = time.tomorrow(hour: endHour, minute: endMinute)
+            } else { // for am-pm/pm-pm (same day)
+                endDate = time.dateAt(hours: endHour, minutes: endMinute)
+            }
+            
+            if (time >= startDate) && (time < endDate) {
+                setOverlays(dict: coords, radius: radius)
+            }
         }
-        
-        if (now >= startDate) && (now < endDate) {
-            setOverlays(dict: coords)
-        }
-    }
-    
-    // for checking that date is right
-    func toGMT(date: Date) -> String {
-        let dateStr = "\(date)"
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        var str = String()
-        if let date2 = formatter.date(from: dateStr) {
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
-            str = formatter.string(from: date2)
-        }
-        return str
     }
     
     func readJson() {
@@ -185,20 +227,28 @@ class MapViewController: UIViewController {
                 let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 parkingData = jsonResult["parking"] as? [NSDictionary]
             } else {
-                print("no file")
+                print("no json file")
             }
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    func configureLocationManager() {
-        // used to show user's current location
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
+    // for checking that date is right
+    func toGMT(date: Date) -> String {
+        let dateStr = "\(date)"
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        var str = String()
+        if let date2 = formatter.date(from: dateStr) {
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+            str = formatter.string(from: date2)
+        }
+        
+        return str
     }
     
     func setPins(dict: [Double], title: String) {
@@ -208,16 +258,14 @@ class MapViewController: UIViewController {
         annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         annotation.title = title;
         self.map.addAnnotation(annotation)
-
     }
     
-    func setOverlays(dict: [Double]) {
+    func setOverlays(dict: [Double], radius: Int) {
         let latitude = dict[0]
         let longitude = dict[1]
         
         let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        // FIXME: each location should have it's own radius? or we can have square overlays. to compensate for different lot/location sizes.
-        let radius = CLLocationDistance(70)
+        let radius = CLLocationDistance(radius)
         let circle = MKCircle(center: center, radius: radius)
         map.addOverlay(circle)
     }
@@ -230,21 +278,79 @@ class MapViewController: UIViewController {
         map.setRegion(coordinateRegion, animated: true)
     }
     
+    // used to show user's current location
+    func configureLocationManager() {
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+    }
+    
     // MARK: - views
     
     func setupViews() {
         view.addSubview(map)
+        view.addSubview(detailsView)
+        detailsView.isHidden = true
+        view.addSubview(passButton)
+        view.addSubview(resetButton)
+        
+        setupMap()
+    }
+    
+    // create the UI text field
+    lazy var pickerTextField: UITextField = {
+        let textField = UITextField(frame: CGRect(x: 50, y: 800, width: 300, height: 40))
+        textField.textAlignment = NSTextAlignment.center
+        textField.font = UIFont.systemFont(ofSize: 25)
+        textField.backgroundColor = UIColor.blue
+        textField.textColor = UIColor.white
+        textField.borderStyle = UITextField.BorderStyle.none
+        textField.layer.cornerRadius = 5
+        return textField
+    }()
+    
+    // create the DatePicker
+    lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.addTarget(self, action: #selector(MapViewController.dateSelected(datePicker:)), for: .valueChanged)
+        return datePicker
+    }()
+    
+    lazy var detailsView: UIView = {
         let barheight = UIApplication.shared.statusBarFrame.size.height
         let headerHeight = self.navigationController?.navigationBar.frame.size.height
-
+        
+        let view = UIView(frame: CGRect(x: 0, y: self.view.frame.height-self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height/2))
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var passButton: UIButton = {
+        let barheight = UIApplication.shared.statusBarFrame.size.height
+        let headerHeight = self.navigationController?.navigationBar.frame.size.height
+        
+        //button to display passes screen
+        //        let button = UIButton(frame: CGRect(x: 285, y: 100, width: 120, height: 50))
         let button = UIButton(frame: CGRect(x: view.frame.width-110, y: barheight+headerHeight!+10, width: 100, height: 50))
         button.layer.cornerRadius = 5
         button.backgroundColor = .blue
         button.setTitle("Passes", for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
-        view.addSubview(button)
-        setupMap()
-    }
+        return button
+    }()
+    
+    // button to reset
+    lazy var resetButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 10, y: 100, width: 120, height: 50))
+        button.layer.cornerRadius = 5
+        button.backgroundColor = .blue
+        button.setTitle("Current Time", for: .normal)
+        button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
+        return button
+    }()
     
     lazy var map: MKMapView = {
         let map = MKMapView()
@@ -256,10 +362,6 @@ class MapViewController: UIViewController {
     func setupMap() {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-    }
-    
-    @objc func choosePassTouched() {
-        self.present(choosePassVc, animated: true, completion: nil)
     }
     
 }
@@ -292,7 +394,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
-        self.present(detailsVc,animated: true, completion: nil)
+        self.present(detailsVC,animated: true, completion: nil)
     }
 }
 
@@ -329,7 +431,12 @@ extension Date {
     }
     
     func tomorrow(hour: Int, minute: Int) -> Date {
-        let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: self)!
+        let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)!
         return Calendar.current.date(byAdding: .day, value: 1, to: time)!
     }
 }
+
+
+// source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
+// source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
+// source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue

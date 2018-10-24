@@ -15,6 +15,7 @@
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
 		806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */; };
+		A34E7211217FBB3B00DDA616 /* ParkingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34E7210217FBB3B00DDA616 /* ParkingInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		806A91DF21729D3C00EDA648 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		806A91E221729D3C00EDA648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		806A91E421729D3C00EDA648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A34E7210217FBB3B00DDA616 /* ParkingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +65,9 @@
 				806A91D821729D3B00EDA648 /* AppDelegate.swift */,
 				0FB9F04F217D2CE500752425 /* constants.swift */,
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
-				0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */,
 				806A91DA21729D3B00EDA648 /* MapViewController.swift */,
+				0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */,
+				A34E7210217FBB3B00DDA616 /* ParkingInfoViewController.swift */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
@@ -105,6 +108,11 @@
 				TargetAttributes = {
 					806A91D421729D3B00EDA648 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -145,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */,
+				A34E7211217FBB3B00DDA616 /* ParkingInfoViewController.swift in Sources */,
 				0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */,
 				806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */,
 				0FB9F050217D2CE500752425 /* constants.swift in Sources */,

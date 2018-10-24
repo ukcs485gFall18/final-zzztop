@@ -1,2475 +1,2366 @@
 {
-  "parking":[
+  "parking": [
     {
-      "name":"Rose Street Garage",
-      "radis":70,
+      "name": "Rose Street Garage",
+      "radius": 70,
       "coords": [
         38.034046,
         -84.503911
       ],
-      "time":[
+      "times": [
         {
           "pass": "No permit required",
-          "MT":{
-            "start":{
-              "hour":7,
-              "minute":30,
-              "12hour":"pm"
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":17,
-              "minute":0,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":24,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           }
         },
         {
           "pass": "Any valid permit",
-          "MT":{
-            "start":{
-              "hour":17,
-              "minute":0,
-              "12hour":"pm"
+          "MT": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"E2",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E2",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":17,
-              "minute":0,
-              "12hour":"pm"
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"R2",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "R2",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":17,
-              "minute":0,
-              "12hour":"pm"
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"Columbia Ave East Lot",
-      "radis":70,
+      "name": "Columbia Ave East Lot",
+      "radius": 70,
       "coords": [
         38.033142,
-        -84.500285
+        -84.500280
       ],
-      "time":[
+      "times": [
         {
           "pass": "No permit required",
-          "MT":{
-            "start":{
-              "hour":7,
-              "minute":30,
-              "12hour":"pm"
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           }
         },
         {
           "pass": "Any valid permit",
-          "MT":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "MT": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":7,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":3,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"Small Library Lot",
-      "radis":70,
-      "coords":[
-        38.033142,
-        -84.500285
+      "name": "Small Library Lot",
+      "radius": 70,
+      "coords": [
+        38.033899,
+        -84.501199
       ],
-      "times":[
-      {
-        "pass":"E",
-        "MS":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "MS":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":17,
-            "minute":0,
-            "12hour":"am"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name": "Singletary Center Lot",
-    "radis":70,
-    "coords":[
-      38.037564,
-      -84.501824
-    ],
-    "times":[
-      {
-        "pass":"Authorized parking only",
-        "MS":{
-          "start":{
-            "hour":0,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":23,
-            "minute":59,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Linden Walk Lot",
-    "radis":70,
-    "coords":[
-      38.036385,
-      -84.499425
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "MS":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Schmidt/Career Center/King Alumni Lot",
-    "radis":70,
-    "coords":[
-      38.036698,
-      -84.500159
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MS":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name": "Coliseum Lot",
-    "radis":70,
-    "coords":[
-      38.039896,
-      -84.499121
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-          "pass":"Any valid permit",
-          "MS":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+      "times": [
+        {
+          "pass": "E",
+          "MS": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        }
-      ]
-  },
-  {
-    "name":"College View Lot",
-    "radis":70,
-    "coords":[
-      38.038731,
-      -84.499105
-    ],
-    "times":[
-      {
-        "pass":"R17",
-        "MS":{
-          "start":{
-            "hour":0,
-            "minute":0,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":23,
-            "minute":59,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Scott Street Lot",
-    "radis":70,
-    "coords":[
-      38.040128,
-      -84.508570
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"C9",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Reynolds Lot",
-    "radis":70,
-    "coords":[
-      38.041723,
-      -84.509166,
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"C9",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Reynolds Warehouse Area",
-    "radis":70,
-    "coords":[
-      38.042595,
-      -84.508156,
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"IRIS Lot",
-    "radis":70,
-    "coords":[
-      38.043063,
-      -84.507573
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Bolivar Lot",
-    "radis":70,
-    "coords":[
-      38.042900,
-      -84.507051
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Whalen Lot (not sure)",
-    "radis":70,
-    "coords":[
-      38.038906,
-      -84.507388
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Taylor/Dickey Lot",
-    "radis":70,
-    "coords":[
-      38.041259,
-      -84.507565
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"C9",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Prall Street Lot",
-    "radis":70,
-    "coords":[
-      38.037662,
-      -84.507724
-    ],
-    "times":[
-      {
-        "pass":"E28",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "":{
-          "start":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Seminary Drive (not sure)",
-    "radis":70,
-    "coords":[
-      38.037406,
-      -84.508447
-    ],
-    "times":[
-      {
-        "pass":"E28",
-        "MT":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        },
-        "F":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          }
-        },
-        "MT":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"No permit required",
-        "MT":{
-          "start":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          }
-        },
-        "F":{
-          "start":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":24,
-            "minute":59,
-            "12hour":"pm"
-          }
-        },
-        "SS":{
-          "start":{
-            "hour":0,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Mandrell Hall Lot/Seminary Apartments",
-    "radis":70,
-    "coords":[
-      38.037415,
-      -84.509753
-    ],
-    "times":[
-      {
-        "pass":"R29",
-        "MS":{
-          "start":{
-            "hour":0,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":23,
-            "minute":59,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Townhouse Village Lot",
-    "radis":70,
-    "coords":[
-      38.036799,
-      -84.510021
-    ],
-    "times":[
-      {
-        "pass":"R30",
-        "MF":{
-          "start":{
-            "hour":0,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":23,
-            "minute":59,
-            "12hour":"pm"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Calahan Alley (not sure)",
-    "radis":70,
-    "coords":[
-      38.036527,
-      -84.509642
-    ],
-    "times":[
-      {
-        "pass":"E",
-        "MT":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        },
-        "F":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          }
-        },
-        "MT":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"No permit required",
-        "MT":{
-          "start":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          }
-        },
-        "F":{
-          "start":{
-            "hour":15,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":24,
-            "minute":59,
-            "12hour":"pm"
-          }
-        },
-        "SS":{
-          "start":{
-            "hour":0,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am (until mon 5am)"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Press Avenue North Lot (not sure)",
-    "radis":70,
-    "coords":[
-      38.034536,
-      -84.509586
-    ],
-    "times":[
-      {
-        "pass":"E27",
-        "MT":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        },
-        "F":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          }
-        },
-        "MT":{
-          "start":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"No permit required",
-        "MT":{
-          "start":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          }
-        },
-        "F":{
-          "start":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          },
-          "end":{
-            "hour":23,
-            "minute":59,
-            "12hour":"pm"
-          }
-        },
-        "SS":{
-          "start":{
-            "hour":0,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "name":"Leader Avenue Lot (not sure)",
-    "radis":70,
-    "coords":[
-      38.034067,
-      -84.511418
-    ],
-    "times":[
-      {
-        "pass":"E27",
-        "MT":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":19,
-            "minute":30,
-            "12hour":"pm"
-          }
-        },
-        "F":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-          "end":{
-            "hour":17,
-            "minute":0,
-            "12hour":"pm"
-          }
-        }
-      },
-      {
-        "pass":"Any valid permit",
-        "MF":{
-          "start":{
-            "hour":5,
-            "minute":0,
-            "12hour":"am"
-          },
-            "end":{
-              "hour":17,
-              "minute":0,
-              "12hour":"pm"
-            }
-          },
-          "MT":{
-            "start":{
-              "hour":17,
-              "minute":0,
-              "12hour":"pm"
-            },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "Any valid permit",
+          "MS": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
-            }
-          },
-          "F":{
-            "start":{
-              "hour":17,
-              "minute":0,
-              "12hour":"pm"
-            },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
-            }
-          },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Elizabeth Street Lot",
-      "radis":70,
-      "coords":[
+      "name": "Singletary Center Lot",
+      "radius": 70,
+      "coords": [
+        38.037564,
+        -84.501824
+      ],
+      "times": [
+        {
+          "pass": "Authorized parking only",
+          "MS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Linden Walk Lot",
+      "radius": 70,
+      "coords": [
+        38.036385,
+        -84.499425
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MS": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Schmidt/Career Center/King Alumni Lot",
+      "radius": 70,
+      "coords": [
+        38.036698,
+        -84.500159
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MS": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Coliseum Lot",
+      "radius": 70,
+      "coords": [
+        38.039896,
+        -84.499121
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MS": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "College View Lot",
+      "radius": 70,
+      "coords": [
+        38.038731,
+        -84.499105
+      ],
+      "times": [
+        {
+          "pass": "R17",
+          "MS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scott Street Lot",
+      "radius": 70,
+      "coords": [
+        38.040128,
+        -84.50857
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "C9",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reynolds Lot",
+      "radius": 70,
+      "coords": [
+        38.041723,
+        -84.509166
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "C9",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reynolds Warehouse Area",
+      "radius": 70,
+      "coords": [
+        38.042595,
+        -84.508156
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "IRIS Lot",
+      "radius": 70,
+      "coords": [
+        38.043063,
+        -84.507573
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bolivar Lot",
+      "radius": 70,
+      "coords": [
+        38.0429,
+        -84.507051
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Whalen Lot (not sure)",
+      "radius": 70,
+      "coords": [
+        38.038906,
+        -84.507388
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Taylor/Dickey Lot",
+      "radius": 70,
+      "coords": [
+        38.041259,
+        -84.507565
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "C9",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prall Street Lot",
+      "radius": 70,
+      "coords": [
+        38.037662,
+        -84.507724
+      ],
+      "times": [
+        {
+          "pass": "E28",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Seminary Drive (not sure)",
+      "radius": 70,
+      "coords": [
+        38.037406,
+        -84.508447
+      ],
+      "times": [
+        {
+          "pass": "E28",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            }
+          },
+          "MT": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          },
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mandrell Hall Lot/Seminary Apartments",
+      "radius": 70,
+      "coords": [
+        38.037415,
+        -84.509753
+      ],
+      "times": [
+        {
+          "pass": "R29",
+          "MS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Townhouse Village Lot",
+      "radius": 70,
+      "coords": [
+        38.036799,
+        -84.510021
+      ],
+      "times": [
+        {
+          "pass": "R30",
+          "MF": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Calahan Alley (not sure)",
+      "radius": 70,
+      "coords": [
+        38.036527,
+        -84.509642
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          },
+          "MT": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          },
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am (until mon 5am)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Press Avenue North Lot (not sure)",
+      "radius": 70,
+      "coords": [
+        38.034536,
+        -84.509586
+      ],
+      "times": [
+        {
+          "pass": "E27",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            }
+          },
+          "MT": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          },
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leader Avenue Lot (not sure)",
+      "radius": 70,
+      "coords": [
+        38.034067,
+        -84.511418
+      ],
+      "times": [
+        {
+          "pass": "E27",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            }
+          },
+          "MT": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          },
+          "F": {
+            "start": {
+              "hour": 17,
+              "minute": 0,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          },
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Elizabeth Street Lot",
+      "radius": 70,
+      "coords": [
         38.032007,
         -84.512311
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":17,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 17,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MT":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "Any valid permit",
+          "MT": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"Transcript Ave Lot(coordinates??)",
-      "radis":70,
-      "coords":[
+      "name": "Transcript Ave Lot(coordinates??)",
+      "radius": 70,
+      "coords": [
         38.032943,
         -84.513439
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MT":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "Any valid permit",
+          "MT": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"am"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Press Ave South Lot (RECHECK)",
-      "radis":70,
-      "coords":[
+      "name": "Press Ave South Lot (RECHECK)",
+      "radius": 70,
+      "coords": [
         38.033468,
         -84.513029
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":17,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 17,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "MT":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "MT": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Press Avenue Parking Garage (not sure)",
-      "radis":70,
-      "coords":[
+      "name": "Press Avenue Parking Garage (not sure)",
+      "radius": 70,
+      "coords": [
         38.034999,
         -84.511997
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MT":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "F":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "F": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "MT":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
-            },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Gazette Avenue Lot",
-      "radis":70,
-      "coords":[
+      "name": "Gazette Avenue Lot",
+      "radius": 70,
+      "coords": [
         38.033007,
         -84.510596
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E26",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E26",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"South Limestone Garage (not sure)",
-      "radis":70,
-      "coords":[
+      "name": "South Limestone Garage (not sure)",
+      "radius": 70,
+      "coords": [
         38.041367,
-        -84.505200
+        -84.5052
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MT":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "F":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "F": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"C5",
-          "MT":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "C5",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "F":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "F": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Administration Drive (South)",
-      "radis":70,
-      "coords":[
+      "name": "Administration Drive (South)",
+      "radius": 70,
+      "coords": [
         38.038722,
         -84.506128
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E20",
-          "MT":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E20",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "F":{
-            "start":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+          "F": {
+            "start": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Administration Drive (North)",
-      "radis":70,
-      "coords":[
+      "name": "Administration Drive (North)",
+      "radius": 70,
+      "coords": [
         38.040369,
-        -84.504530
+        -84.50453
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E20",
-          "MT":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E20",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "F":{
-            "start":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+          "F": {
+            "start": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Patterson Drive (West)",
-      "radis":70,
-      "coords":[
+      "name": "Patterson Drive (West)",
+      "radius": 70,
+      "coords": [
         38.039077,
         -84.504296
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E20",
-          "MT":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E20",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "F":{
-            "start":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+          "F": {
+            "start": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"Patterson Drive (East)",
-      "radis":70,
-      "coords":[
+      "name": "Patterson Drive (East)",
+      "radius": 70,
+      "coords": [
         38.038141,
         -84.503083
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E20",
-          "MT":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E20",
+          "MT": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           },
-          "F":{
-            "start":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+          "F": {
+            "start": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             }
-          },
+          }
         },
         {
-          "pass":"No permit required",
-          "MT":{
-            "start":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "No permit required",
+          "MT": {
+            "start": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "F":{
-            "start":{
-              "hour":16,
-              "minute":30,
-              "12hour":"pm"
+          "F": {
+            "start": {
+              "hour": 16,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":7,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 7,
+              "minute": 0,
+              "12hour": "am"
             }
           }
         }
       ]
     },
     {
-      "name":"University Drive Garage",
-      "radis":70,
-      "coords":[
+      "name": "University Drive Garage",
+      "radius": 70,
+      "coords": [
         38.027632,
         -84.506164
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MT":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "Any valid permit",
+          "MT": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"University Drive Street Parking",
-      "radis":70,
-      "coords":[
+      "name": "University Drive Street Parking",
+      "radius": 70,
+      "coords": [
         38.029075,
         -84.505348
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+            "end": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             }
           },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"K-Lot Street Parking",
-      "radis":70,
-      "coords":[
+      "name": "K-Lot Street Parking",
+      "radius": 70,
+      "coords": [
+        38.0245978,
+        -84.5071858
+      ],
+      "times": [
+        {
+          "pass": "K",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          },
+          "SS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Greg Page Apartments",
+      "radius": 70,
+      "coords": [
+        38.018266,
+        -84.50701
+      ],
+      "times": [
+        {
+          "pass": "X",
+          "MS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "R19",
+          "MS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cliff Hagan Lot",
+      "radius": 70,
+      "coords": [
+        38.026148,
+        -84.501002
+      ],
+      "times": [
+        {
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "am"
+            },
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Red Lot",
+      "radius": 70,
+      "coords": [
         38.0243599,
         -84.5088182
       ],
-      "times":[
+      "times": [
         {
-          "pass":"K",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "K",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
-          },
-          "SS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          }
+        },
+        {
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "am"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"Greg Page Apartments",
-      "radis":70,
-      "coords":[
-        38.018266,
-        -84.507010
-      ],
-      "times":[
-        {
-          "pass":"X",
-          "MS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"R19",
-          "MS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name":"Orange Lot",
-      "radis":70,
-      "coords":[
-        38.0234362,
-        -84.5131464
-      ],
-      "times":[
-        {
-          "pass":"EK",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"CK",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name":"Cliff Hagan Lot",
-      "radis":70,
-      "coords":[
-        38.026148,
-        -84.501002
-      ],
-      "times":[
-        {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name":"Red Lot",
-      "radis":70,
-      "coords":[
-        38.0234362,
-        -84.5131464
-      ],
-      "times":[
-        {
-          "pass":"K",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name":"Cliff Hagan Lot",
-      "radis":70,
-      "coords":[
-        38.026148,
-        -84.501002
-      ],
-      "times":[
-        {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        },
-        {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"am"
-            },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name":"Sports Center Garage",
-      "radis":70,
-      "coords":[
+      "name": "Sports Center Garage",
+      "radius": 70,
+      "coords": [
         38.0290412,
         -84.5032723
       ],
-      "times":[
+      "times": [
         {
-          "pass":"R7",
-          "MS":{
-            "start":{
-              "hour":0,
-              "minute":0,
-              "12hour":"am"
+          "pass": "R7",
+          "MS": {
+            "start": {
+              "hour": 0,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":23,
-              "minute":59,
-              "12hour":"pm"
+            "end": {
+              "hour": 23,
+              "minute": 59,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"am"
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "am"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"Sports Center North Lot",
-      "radis":70,
-      "coords":[
+      "name": "Sports Center North Lot",
+      "radius": 70,
+      "coords": [
         38.0279686,
         -84.4997028
       ],
-      "times":[
+      "times": [
         {
-          "pass":"E",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "E",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MS":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "Any valid permit",
+          "MS": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         }
       ]
     },
     {
-      "name":"Track Lot",
-      "radis":70,
-      "coords":[
+      "name": "Track Lot",
+      "radius": 70,
+      "coords": [
         38.028582,
         -84.4986657
       ],
-      "times":[
+      "times": [
         {
-          "pass":"C16",
-          "MF":{
-            "start":{
-              "hour":5,
-              "minute":0,
-              "12hour":"am"
+          "pass": "C16",
+          "MF": {
+            "start": {
+              "hour": 5,
+              "minute": 0,
+              "12hour": "am"
             },
-            "end":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         },
         {
-          "pass":"Any valid permit",
-          "MF":{
-            "start":{
-              "hour":15,
-              "minute":30,
-              "12hour":"pm"
+          "pass": "Any valid permit",
+          "MF": {
+            "start": {
+              "hour": 15,
+              "minute": 30,
+              "12hour": "pm"
             },
-            "end":{
-              "hour":19,
-              "minute":30,
-              "12hour":"pm"
+            "end": {
+              "hour": 19,
+              "minute": 30,
+              "12hour": "pm"
             }
           }
         }
