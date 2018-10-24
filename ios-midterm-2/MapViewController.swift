@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     var pickedDate: Date?
     var didSelectDate: Bool = false
     var spots = [String]()
+    var passedText = ""
     let now = Date()
     
     enum PassType: String {
@@ -397,13 +398,13 @@ extension MapViewController: MKMapViewDelegate {
         self.present(detailsVC,animated: true, completion: nil)
         if let pin = view.annotation as? MKPointAnnotation {
             if let pinTitle = pin.title{
-                detailsVC.pTitle = pinTitle
+                detailsVC.passedTitle = pinTitle
                 print(pinTitle)
-                print(detailsVC.pTitle)
+                print(detailsVC.passedTitle)
+                let navView = UINavigationController(rootViewController: self)
+                navView.pushViewController(detailsVC, animated: true)
             }
         }
-        let navView = UINavigationController(rootViewController: detailsVC)
-        navView.pushViewController(self, animated: true)
     }
 }
 
