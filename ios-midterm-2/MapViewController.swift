@@ -395,6 +395,15 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
         self.present(detailsVC,animated: true, completion: nil)
+        if let pin = view.annotation as? MKPointAnnotation {
+            if let pinTitle = pin.title{
+                detailsVC.pTitle = pinTitle
+                print(pinTitle)
+                print(detailsVC.pTitle)
+            }
+        }
+        let navView = UINavigationController(rootViewController: detailsVC)
+        navView.pushViewController(self, animated: true)
     }
 }
 
@@ -440,3 +449,4 @@ extension Date {
 // source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
 // source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
 // source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
+//source for viewing annotation titles: https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked
