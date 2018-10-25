@@ -6,9 +6,6 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-//source for checkmarks on table view
-//https://www.youtube.com/watch?v=5MZ-WJuSdpg
-
 import UIKit
 
 class ChoosePassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -20,8 +17,8 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     var displayHeight = CGFloat()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         
+        super.viewDidLoad()
         if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
             userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         } else {
@@ -29,6 +26,10 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         setupViews()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     func setupViews() {
@@ -66,7 +67,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     }()
     
     lazy var applyButton: UIButton = {
-        let applyButton = UIButton(frame: CGRect(x: 0, y: barHeight+headerHeight+tableView.frame.height, width: displayWidth-buttonWidth, height: buttonHeight))
+        let applyButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: displayWidth-xPadding*2, height: buttonHeight))
         applyButton.center.x = view.center.x
         applyButton.layer.cornerRadius = 5
         applyButton.backgroundColor = .blue
@@ -133,3 +134,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         UserDefaults.standard.set(userPasses, forKey: "userPasses")
     }
 }
+
+//source for checkmarks on table view: https://www.youtube.com/watch?v=5MZ-WJuSdpg
+//source for making status bar icons white: https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3
