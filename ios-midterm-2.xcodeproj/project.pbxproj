@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F6C98F32180F36C00F4ECAC /* permitIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F6C98F22180F36C00F4ECAC /* permitIcon.png */; };
+		0F6C98F72180F9B000F4ECAC /* refreshIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F6C98F62180F9B000F4ECAC /* refreshIcon.jpg */; };
+		0F6C98FE2181492600F4ECAC /* backIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F6C98FD2181492600F4ECAC /* backIcon.png */; };
 		0FA24148217E365700CF4CB8 /* ParkingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */; };
 		0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */; };
 		0FB9F050217D2CE500752425 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04F217D2CE500752425 /* constants.swift */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F6C98F22180F36C00F4ECAC /* permitIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = permitIcon.png; path = ../../../../../../Desktop/permitIcon.png; sourceTree = "<group>"; };
+		0F6C98F62180F9B000F4ECAC /* refreshIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = refreshIcon.jpg; path = ../../../../../../Desktop/refreshIcon.jpg; sourceTree = "<group>"; };
+		0F6C98FD2181492600F4ECAC /* backIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backIcon.png; path = "../../../../../BlueFrame/musco-admin/Musco/Assets/backIcon.png"; sourceTree = "<group>"; };
 		0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingDetailsViewController.swift; sourceTree = "<group>"; };
 		0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassViewController.swift; sourceTree = "<group>"; };
 		0FB9F04F217D2CE500752425 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -43,6 +49,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F6C98FF21814AA700F4ECAC /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		806A91CC21729D3B00EDA648 = {
 			isa = PBXGroup;
 			children = (
@@ -66,8 +79,12 @@
 				0FB9F04F217D2CE500752425 /* constants.swift */,
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
 				806A91DA21729D3B00EDA648 /* MapViewController.swift */,
+				0F6C98FD2181492600F4ECAC /* backIcon.png */,
+				0F6C98F62180F9B000F4ECAC /* refreshIcon.jpg */,
+				0F6C98F22180F36C00F4ECAC /* permitIcon.png */,
 				0FA24147217E365700CF4CB8 /* ParkingDetailsViewController.swift */,
 				A34E7210217FBB3B00DDA616 /* ParkingInfoViewController.swift */,
+				0F6C98FF21814AA700F4ECAC /* Assets */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
@@ -139,9 +156,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F6C98FE2181492600F4ECAC /* backIcon.png in Resources */,
 				806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */,
 				806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */,
 				0FB9F07D217D531200752425 /* parkingData.json in Resources */,
+				0F6C98F72180F9B000F4ECAC /* refreshIcon.jpg in Resources */,
+				0F6C98F32180F36C00F4ECAC /* permitIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

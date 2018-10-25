@@ -6,6 +6,9 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
+//source for checkmarks on table view
+//https://www.youtube.com/watch?v=5MZ-WJuSdpg
+
 import UIKit
 
 class ChoosePassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -33,16 +36,17 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         displayHeight = self.view.frame.height
         barHeight =  UIApplication.shared.statusBarFrame.size.height
         
-        let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: 50))
-        
+        let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
+        headerView.backgroundColor = .black
         view.addSubview(tableView)
         view.addSubview(applyButton)
         view.addSubview(headerView)
+        headerView.addSubview(addPassesLabel)
         headerView.addSubview(backButton)
     }
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: barHeight+50, width: displayWidth, height: displayHeight-2*barHeight-100))
+        let tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight-buttonHeight-barHeight*2))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier:"passCell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -51,22 +55,43 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     }()
     
     lazy var backButton: UIButton = {
-        let backButton = UIButton(frame: CGRect(x: 20, y: 5, width: 60, height: 30))
+        let backButton = UIButton(frame: CGRect(x: xPadding, y: ynavPadding*2, width: navButtonW/2, height: navButtonH))
         backButton.layer.cornerRadius = 5
-        backButton.backgroundColor = .blue
-        backButton.setTitle("Back", for: .normal)
+        let backIcon = UIImage(named: "backIcon.png")
+        backButton.setImage(backIcon, for: .normal)
+//        backButton.backgroundColor = .blue
+//        backButton.setTitle("Back", for: .normal)
         backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         return backButton
     }()
     
     lazy var applyButton: UIButton = {
-        let applyButton = UIButton(frame: CGRect(x: 25, y: displayHeight-80, width: displayWidth-50, height: 50))
+        let applyButton = UIButton(frame: CGRect(x: 0, y: barHeight+headerHeight+tableView.frame.height, width: displayWidth-buttonWidth, height: buttonHeight))
+        applyButton.center.x = view.center.x
         applyButton.layer.cornerRadius = 5
         applyButton.backgroundColor = .blue
         applyButton.setTitle("Apply", for: .normal)
         applyButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         return applyButton
     }()
+    
+    lazy var addPassesLabel: UILabel = {
+        let addPassesLabel = UILabel(frame: CGRect(x: 0, y: ynavPadding, width: displayWidth-buttonWidth, height: buttonHeight))
+        addPassesLabel.center.x = view.center.x
+        addPassesLabel.text = "Add Passes"
+        addPassesLabel.font = addPassesLabel.font.withSize(headerFontSize)
+        addPassesLabel.textAlignment = NSTextAlignment.center
+        addPassesLabel.textColor = .white
+        return addPassesLabel
+    }()
+    
+//    lazy var dividerView: UIView = {
+//        let dividerView = UIView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: view.frame.width, height: 1.0))
+//        dividerView.layer.borderWidth = 1.0
+//        dividerView.layer.borderColor = UIColor.gray.cgColor
+//        return dividerView
+////        dividerView.borderColor = .black
+//    }()
     
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
@@ -106,60 +131,5 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         let removeIndex = userPasses.firstIndex(of:kPassTypes[indexPath.row])
         userPasses.remove(at: removeIndex!)
         UserDefaults.standard.set(userPasses, forKey: "userPasses")
-    }
-    
-    var tableView: UITableView!
-    var userPasses: [String] = []
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if (UserDefaults.standard.array(forKey: "userPasses") != nil){
-            userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
-        }
-        else{
-            userPasses = [kPassTypes[21]]
-        }
-        let barHeight:CGFloat = UIApplication.shared.statusBarFrame.size.height
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
-        let headerView = UIView(frame: CGRect(x:0, y:barHeight, width:displayWidth, height:50))
-        let backButton = UIButton(frame: CGRect(x: 20, y: 5, width: 60, height: 30))
-        backButton.layer.cornerRadius = 5
-        backButton.backgroundColor = .blue
-        backButton.setTitle("Back", for: .normal)
-        
-        let headerLabel = UILabel(frame: CGRect(x:headerView.center.x, y:headerView.center.y, width:200, height:50))
-        headerLabel.center.x = headerView.center.x
-        headerLabel.center.y = headerView.center.y
-        headerLabel.text = "Add Your Passes"
-        headerLabel.textAlignment = .center
-        headerLabel.backgroundColor = .blue
-        headerLabel.font = headerLabel.font.withSize(25)
-        headerLabel.textColor = .white
-        view.addSubview(headerLabel)
-
-        let applyButton = UIButton(frame: CGRect(x: 25, y: displayHeight-80, width: displayWidth-50, height: 50))
-        applyButton.layer.cornerRadius = 5
-        applyButton.backgroundColor = .blue
-        applyButton.setTitle("Apply", for: .normal)
-
-        backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-        
-        applyButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-        
-        tableView = UITableView(frame: CGRect(x:0, y:barHeight+50, width:displayWidth, height:displayHeight-2*barHeight-100))
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier:"passCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.allowsMultipleSelection = true
-//        let choosePassView = UIView(frame: CGRect(x: 10, y: 100, width: 300, height: 200))
-        self.view.addSubview(self.tableView)
-        headerView.addSubview(backButton)
-        self.view.addSubview(headerView)
-        self.view.addSubview(applyButton)
-    }
-    
-    @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
     }
 }

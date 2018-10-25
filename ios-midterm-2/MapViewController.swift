@@ -291,23 +291,25 @@ class MapViewController: UIViewController {
     
     func setupViews() {
         view.addSubview(map)
-        view.addSubview(detailsView)
-        detailsView.isHidden = true
-        view.addSubview(passButton)
-        view.addSubview(resetButton)
+        self.navigationController?.navigationBar.addSubview(passButton)
+//        view.addSubview(passButton)
+//        view.addSubview(resetButton)
+        self.navigationController?.navigationBar.addSubview(resetButton)
         
         setupMap()
     }
     
     // create the UI text field
     lazy var pickerTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 50, y: 800, width: 300, height: 40))
+        let textField = UITextField(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+        textField.center.x = view.center.x
         textField.textAlignment = NSTextAlignment.center
-        textField.font = UIFont.systemFont(ofSize: 25)
-        textField.backgroundColor = UIColor.blue
-        textField.textColor = UIColor.white
+        textField.font = UIFont.systemFont(ofSize: regFontSize)
+        textField.backgroundColor = .white
+        textField.textColor = .black
         textField.borderStyle = UITextField.BorderStyle.none
         textField.layer.cornerRadius = 5
+        textField.alpha = 0.8
         return textField
     }()
     
@@ -319,35 +321,25 @@ class MapViewController: UIViewController {
         return datePicker
     }()
     
-    lazy var detailsView: UIView = {
-        let barheight = UIApplication.shared.statusBarFrame.size.height
-        let headerHeight = self.navigationController?.navigationBar.frame.size.height
-        
-        let view = UIView(frame: CGRect(x: 0, y: self.view.frame.height-self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height/2))
-        view.backgroundColor = .white
-        return view
-    }()
-    
     lazy var passButton: UIButton = {
-        let barheight = UIApplication.shared.statusBarFrame.size.height
-        let headerHeight = self.navigationController?.navigationBar.frame.size.height
-        
-        //button to display passes screen
-        //        let button = UIButton(frame: CGRect(x: 285, y: 100, width: 120, height: 50))
-        let button = UIButton(frame: CGRect(x: view.frame.width-110, y: barheight+headerHeight!+10, width: 100, height: 50))
+        let passesImage = UIImage(named: "permitIcon.png")
+        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.layer.cornerRadius = 5
-        button.backgroundColor = .blue
-        button.setTitle("Passes", for: .normal)
+        button.setImage(passesImage, for: .normal)
+//        button.backgroundColor = .blue
+//        button.setTitle("Passes", for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         return button
     }()
     
     // button to reset
     lazy var resetButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 10, y: 100, width: 120, height: 50))
+        let refreshIcon = UIImage(named: "refreshIcon.jpg")
+        let button = UIButton(frame: CGRect(x: xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.layer.cornerRadius = 5
-        button.backgroundColor = .blue
-        button.setTitle("Current Time", for: .normal)
+        button.setImage(refreshIcon, for: .normal)
+//        button.backgroundColor = .blue
+//        button.setTitle("Current Time", for: .normal)
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
     }()
@@ -440,3 +432,4 @@ extension Date {
 // source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
 // source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
 // source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
+// source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
