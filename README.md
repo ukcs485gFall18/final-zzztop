@@ -2,10 +2,9 @@ UK coords: 38.036872, -84.502224
 
 <hr>
 
-# To do
+## To do
 
 ### Jordan
-- Do we need .gitmodules?
 - Zoom button
 
 ### Before due date
