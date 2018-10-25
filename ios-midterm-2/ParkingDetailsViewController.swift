@@ -46,7 +46,6 @@ class ParkingDetailsViewController: UIViewController {
     }
 
     func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String{
-        print("I made it here")
         var time = Date()
         let startHour = start["hour"] as! Int
         print(startHour)

@@ -224,23 +224,37 @@ class MapViewController: UIViewController {
     }
     
     func addToDictionary(spotName: String, timeDict: NSDictionary){
+        print(spotName)
         var timeCategories: [NSDictionary] = []
         if let MT = timeDict["MT"]{
             timeCategories.append(MT as! NSDictionary)
+            print(MT)
         }
         if let MF = timeDict["MF"]{
             timeCategories.append(MF as! NSDictionary)
+            print(MF)
         }
         if let MS = timeDict["MS"]{
             timeCategories.append(MS as! NSDictionary)
+            print(MS)
         }
         if let F = timeDict["F"]{
             timeCategories.append(F as! NSDictionary)
+            print(F)
         }
         if let SS = timeDict["SS"]{
             timeCategories.append(SS as! NSDictionary)
+            print(SS)
         }
-        spotsAndTimes[spotName] = timeCategories
+        if(spotsAndTimes[spotName] == nil){
+            spotsAndTimes[spotName] = timeCategories
+        }else{
+            var existingDictArray = spotsAndTimes[spotName]
+            for time in timeCategories{
+                existingDictArray?.append(time)
+            }
+        }
+        
     }
     
     func readJson() {
@@ -421,9 +435,6 @@ extension MapViewController: MKMapViewDelegate {
         if let pin = view.annotation as? MKPointAnnotation {
             if let pinTitle = pin.title{
                 detailsVC.passedTitle = pinTitle
-                print(pinTitle)
-                print(detailsVC.passedTitle)
-                //where are times stored???
                 if let hours = spotsAndTimes[pinTitle]{
                     detailsVC.onUserAction(title: pinTitle, hours: hours)
                 }
