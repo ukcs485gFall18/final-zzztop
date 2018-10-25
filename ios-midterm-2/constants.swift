@@ -23,4 +23,3 @@ let headerFontSize: CGFloat = 25
 let regFontSize: CGFloat = 20
 
 let barHeight = UIApplication.shared.statusBarFrame.size.height
-

@@ -105,8 +105,8 @@ class MapViewController: UIViewController {
         self.present(choosePassVC, animated: true, completion: nil)
     }
     
+    // zoom to user location
     @objc func zoomToCurrentLocation() {
-        // zoom to user location
         if let userLocation = locationManager.location?.coordinate {
             let viewRegion = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             map.setRegion(viewRegion, animated: false)
@@ -299,10 +299,7 @@ class MapViewController: UIViewController {
     func setupViews() {
         view.addSubview(map)
         self.navigationController?.navigationBar.addSubview(passButton)
-//        view.addSubview(passButton)
-//        view.addSubview(resetButton)
         self.navigationController?.navigationBar.addSubview(resetButton)
-        
         setupMap()
         setupZoomButton()
     }
@@ -341,8 +338,6 @@ class MapViewController: UIViewController {
         let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.layer.cornerRadius = 5
         button.setImage(passesImage, for: .normal)
-//        button.backgroundColor = .blue
-//        button.setTitle("Passes", for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         return button
     }()
@@ -353,8 +348,6 @@ class MapViewController: UIViewController {
         let button = UIButton(frame: CGRect(x: xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.layer.cornerRadius = 5
         button.setImage(refreshIcon, for: .normal)
-//        button.backgroundColor = .blue
-//        button.setTitle("Current Time", for: .normal)
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
     }()
@@ -362,15 +355,9 @@ class MapViewController: UIViewController {
     lazy var zoomButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         let img = UIImage(named: "location-arrow")
         button.setImage(img, for: .normal)
-        
-//        button.setTitle("Zoom", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.backgroundColor = .blue
         button.layer.cornerRadius = 5
-        
         button.addTarget(self, action: #selector(zoomToCurrentLocation), for: .touchUpInside)
         return button
     }()
@@ -380,8 +367,6 @@ class MapViewController: UIViewController {
         zoomButton.centerXAnchor.constraint(equalTo: (navigationController?.navigationBar.centerXAnchor)!).isActive = true
         zoomButton.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: ynavPadding).isActive = true
         zoomButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
-//        zoomButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         zoomButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
