@@ -160,7 +160,7 @@ class MapViewController: UIViewController {
             for time in times {
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
-                addToDictionary(spotName: spotName, timeDict: timeDict)
+                addToDictionary(pass: name, spotName: spotName, timeDict: timeDict)
                 
                 if spots.contains(spotName) {
                     continue
@@ -223,7 +223,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    func addToDictionary(spotName: String, timeDict: NSDictionary){
+    func addToDictionary(pass: String, spotName: String, timeDict: NSDictionary){
         var timeCategories: [String:[NSDictionary]] = [:]
         if let MT = timeDict["MT"]{
             if(timeCategories["MT"] == nil){

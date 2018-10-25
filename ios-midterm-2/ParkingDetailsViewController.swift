@@ -29,6 +29,7 @@ class ParkingDetailsViewController: UIViewController {
         var textToDisplay = ""
         for (key,value) in hours{
             textToDisplay += key
+            textToDisplay += ": "
             var counter = 0
             while(counter < value.count){
                 let set:NSDictionary = value[counter]
@@ -48,7 +49,7 @@ class ParkingDetailsViewController: UIViewController {
     }
 
     func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String{
-        var time = Date()
+        let time = Date()
         let startHour = start["hour"] as! Int
         let startMinute = start["minute"] as! Int
         let startDate = time.dateAt(hours: startHour, minutes: startMinute)
