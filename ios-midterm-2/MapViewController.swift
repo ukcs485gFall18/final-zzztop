@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
     var usersPermits: [String] = []
-    var spotsAndTimes: [String:[NSDictionary]] = [:]
+    var spotsAndTimes: [String:[String:[NSDictionary]]] = [:]
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
@@ -224,34 +224,53 @@ class MapViewController: UIViewController {
     }
     
     func addToDictionary(spotName: String, timeDict: NSDictionary){
-        print(spotName)
-        var timeCategories: [NSDictionary] = []
+        var timeCategories: [String:[NSDictionary]] = [:]
         if let MT = timeDict["MT"]{
-            timeCategories.append(MT as! NSDictionary)
-            print(MT)
+            if(timeCategories["MT"] == nil){
+                timeCategories["MT"] = [MT as! NSDictionary]
+            }else{
+                var existingMTDict = timeCategories["MT"]
+                existingMTDict?.append(MT as! NSDictionary)
+            }
         }
         if let MF = timeDict["MF"]{
-            timeCategories.append(MF as! NSDictionary)
-            print(MF)
+            if(timeCategories["MF"] == nil){
+                timeCategories["MF"] = [MF as! NSDictionary]
+            }else{
+                var existingMFDict = timeCategories["MF"]
+                existingMFDict?.append(MF as! NSDictionary)
+            }
         }
         if let MS = timeDict["MS"]{
-            timeCategories.append(MS as! NSDictionary)
-            print(MS)
+            if(timeCategories["MS"] == nil){
+                timeCategories["MS"] = [MS as! NSDictionary]
+            }else{
+                var existingMSDict = timeCategories["MS"]
+                existingMSDict?.append(MS as! NSDictionary)
+            }
         }
         if let F = timeDict["F"]{
-            timeCategories.append(F as! NSDictionary)
-            print(F)
+            if(timeCategories["F"] == nil){
+                timeCategories["F"] = [F as! NSDictionary]
+            }else{
+                var existingFDict = timeCategories["F"]
+                existingFDict?.append(F as! NSDictionary)
+            }
         }
         if let SS = timeDict["SS"]{
-            timeCategories.append(SS as! NSDictionary)
-            print(SS)
+            if(timeCategories["SS"] == nil){
+                timeCategories["SS"] = [SS as! NSDictionary]
+            }else{
+                var existingSSDict = timeCategories["SS"]
+                existingSSDict?.append(SS as! NSDictionary)
+            }
         }
         if(spotsAndTimes[spotName] == nil){
             spotsAndTimes[spotName] = timeCategories
         }else{
-            var existingDictArray = spotsAndTimes[spotName]
-            for time in timeCategories{
-                existingDictArray?.append(time)
+            var existingDict = spotsAndTimes[spotName]
+            for (key,value) in timeCategories{
+                existingDict?[key] = value;
             }
         }
         

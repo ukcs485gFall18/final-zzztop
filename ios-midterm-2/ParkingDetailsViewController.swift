@@ -22,20 +22,22 @@ class ParkingDetailsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func onUserAction(title: String, hours: [NSDictionary])
+    func onUserAction(title: String, hours: [String: [NSDictionary]])
     {
         //using a UITextView to enable multiline
         let textBox =  UITextView(frame: CGRect(x: 30, y: 100, width: 400, height: 700))
         var textToDisplay = ""
-        var counter = 0
-        while(counter < hours.count){
-            print("loop # \(counter)")
-            let set:NSDictionary = hours[counter]
-            let start = set.object(forKey: "start") as! NSDictionary
-            let end = set.object(forKey: "end") as! NSDictionary
-            textToDisplay += makeDateFromData(start: start, end: end)
-            textToDisplay += "\n"
-            counter+=1
+        for (key,value) in hours{
+            textToDisplay += key
+            var counter = 0
+            while(counter < value.count){
+                let set:NSDictionary = value[counter]
+                let start = set.object(forKey: "start") as! NSDictionary
+                let end = set.object(forKey: "end") as! NSDictionary
+                textToDisplay += makeDateFromData(start: start, end: end)
+                textToDisplay += "\n"
+                counter+=1
+            }
         }
         textBox.text = ("Parking Location: \n\(title) \nHours: \n\(textToDisplay)")
         textBox.textColor = UIColor.black
@@ -48,7 +50,6 @@ class ParkingDetailsViewController: UIViewController {
     func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String{
         var time = Date()
         let startHour = start["hour"] as! Int
-        print(startHour)
         let startMinute = start["minute"] as! Int
         let startDate = time.dateAt(hours: startHour, minutes: startMinute)
         let endHour = end["hour"] as! Int
