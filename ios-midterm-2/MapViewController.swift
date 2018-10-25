@@ -425,7 +425,9 @@ extension MapViewController: MKMapViewDelegate {
                 print(pinTitle)
                 print(detailsVC.passedTitle)
                 //where are times stored???
-                detailsVC.onUserAction(title: pinTitle, hours: spotsAndTimes)
+                if let hours = spotsAndTimes[pinTitle]{
+                    detailsVC.onUserAction(title: pinTitle, hours: hours)
+                }
             }
         }
     }
