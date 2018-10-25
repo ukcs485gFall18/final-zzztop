@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
     var usersPermits: [String] = []
-    var spotsAndTimes: [String:[Any]] = [:]
+    var spotsAndTimes: [String:[NSDictionary]] = [:]
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
@@ -205,7 +205,6 @@ class MapViewController: UIViewController {
             let startHour = start["hour"] as! Int
             let startMinute = start["minute"] as! Int
             let startDate = time.dateAt(hours: startHour, minutes: startMinute)
-            print(startDate)
             
             let end = open["end"] as! NSDictionary
             let endHour = end["hour"] as! Int
@@ -225,21 +224,21 @@ class MapViewController: UIViewController {
     }
     
     func addToDictionary(spotName: String, timeDict: NSDictionary){
-        var timeCategories: [Any] = []
+        var timeCategories: [NSDictionary] = []
         if let MT = timeDict["MT"]{
-            timeCategories.append(MT)
+            timeCategories.append(MT as! NSDictionary)
         }
         if let MF = timeDict["MF"]{
-            timeCategories.append(MF)
+            timeCategories.append(MF as! NSDictionary)
         }
         if let MS = timeDict["MS"]{
-            timeCategories.append(MS)
+            timeCategories.append(MS as! NSDictionary)
         }
         if let F = timeDict["F"]{
-            timeCategories.append(F)
+            timeCategories.append(F as! NSDictionary)
         }
         if let SS = timeDict["SS"]{
-            timeCategories.append(SS)
+            timeCategories.append(SS as! NSDictionary)
         }
         spotsAndTimes[spotName] = timeCategories
     }

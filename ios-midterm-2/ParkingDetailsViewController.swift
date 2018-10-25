@@ -22,16 +22,22 @@ class ParkingDetailsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func onUserAction(title: String, hours: [Any])
+    func onUserAction(title: String, hours: [NSDictionary])
     {
         //using a UITextView to enable multiline
         let textBox =  UITextView(frame: CGRect(x: 30, y: 100, width: 400, height: 700))
         var textToDisplay = ""
-        for i in 0 ..< hours.count{
-            textToDisplay += hours[i] as! String
+        var counter = 0
+        while(counter < hours.count){
+            print("loop # \(counter)")
+            let set:NSDictionary = hours[counter]
+            let start = set.object(forKey: "start") as! NSDictionary
+            let end = set.object(forKey: "end") as! NSDictionary
+            textToDisplay += makeDateFromData(start: start, end: end)
             textToDisplay += "\n"
+            counter+=1
         }
-        textBox.text = ("Parking Location: \n\(title) \nHours: \n \(textToDisplay)")
+        textBox.text = ("Parking Location: \n\(title) \nHours: \n\(textToDisplay)")
         textBox.textColor = UIColor.black
         textBox.font = .systemFont(ofSize: 16)
         //ensure that no one can edit the UITextView
@@ -39,6 +45,26 @@ class ParkingDetailsViewController: UIViewController {
         self.view.addSubview(textBox)
     }
 
+    func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String{
+        print("I made it here")
+        var time = Date()
+        let startHour = start["hour"] as! Int
+        print(startHour)
+        let startMinute = start["minute"] as! Int
+        let startDate = time.dateAt(hours: startHour, minutes: startMinute)
+        let endHour = end["hour"] as! Int
+        let endMinute = end["minute"] as! Int
+        
+        var endDate = Date()
+        if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+            endDate = time.tomorrow(hour: endHour, minute: endMinute)
+        } else { // for am-pm/pm-pm (same day)
+            endDate = time.dateAt(hours: endHour, minutes: endMinute)
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm aaa"
+        return "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
+    }
 
     /*
     // MARK: - Navigation
