@@ -21,7 +21,6 @@ class MapViewController: UIViewController {
     var didSelectDate: Bool = false
     var spots = [String]()
     let now = Date()
-    var barHeight = CGFloat()
     var headerHeight = CGFloat()
     
     enum PassType: String {
@@ -70,7 +69,6 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        barHeight = UIApplication.shared.statusBarFrame.size.height
         headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
         
         map.delegate = self
@@ -365,12 +363,12 @@ class MapViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         
-//        let img = UIImage(named: "location-arrow")
-//        button.setImage(img, for: .normal)
+        let img = UIImage(named: "location-arrow")
+        button.setImage(img, for: .normal)
         
-        button.setTitle("Zoom", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .blue
+//        button.setTitle("Zoom", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        button.backgroundColor = .blue
         button.layer.cornerRadius = 5
         
         button.addTarget(self, action: #selector(zoomToCurrentLocation), for: .touchUpInside)
@@ -378,12 +376,13 @@ class MapViewController: UIViewController {
     }()
     
     func setupZoomButton() {
-        zoomButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        zoomButton.topAnchor.constraint(equalTo: view.topAnchor, constant: barHeight+headerHeight+10).isActive = true
-        zoomButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        navigationController?.navigationBar.addSubview(zoomButton)
+        zoomButton.centerXAnchor.constraint(equalTo: (navigationController?.navigationBar.centerXAnchor)!).isActive = true
+        zoomButton.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: ynavPadding).isActive = true
+        zoomButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
 //        zoomButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        zoomButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        zoomButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
     lazy var map: MKMapView = {
