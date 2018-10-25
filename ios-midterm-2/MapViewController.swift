@@ -13,6 +13,7 @@ class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
     var usersPermits: [String] = []
+    var spotsAndTimes: [String:[Any]] = [:]
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
@@ -159,6 +160,7 @@ class MapViewController: UIViewController {
             for time in times {
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
+                addToDictionary(spotName: spotName, timeDict: timeDict)
                 
                 if spots.contains(spotName) {
                     continue
@@ -203,6 +205,7 @@ class MapViewController: UIViewController {
             let startHour = start["hour"] as! Int
             let startMinute = start["minute"] as! Int
             let startDate = time.dateAt(hours: startHour, minutes: startMinute)
+            print(startDate)
             
             let end = open["end"] as! NSDictionary
             let endHour = end["hour"] as! Int
@@ -219,6 +222,26 @@ class MapViewController: UIViewController {
                 setOverlays(dict: coords, radius: radius)
             }
         }
+    }
+    
+    func addToDictionary(spotName: String, timeDict: NSDictionary){
+        var timeCategories: [Any] = []
+        if let MT = timeDict["MT"]{
+            timeCategories.append(MT)
+        }
+        if let MF = timeDict["MF"]{
+            timeCategories.append(MF)
+        }
+        if let MS = timeDict["MS"]{
+            timeCategories.append(MS)
+        }
+        if let F = timeDict["F"]{
+            timeCategories.append(F)
+        }
+        if let SS = timeDict["SS"]{
+            timeCategories.append(SS)
+        }
+        spotsAndTimes[spotName] = timeCategories
     }
     
     func readJson() {
@@ -401,7 +424,8 @@ extension MapViewController: MKMapViewDelegate {
                 detailsVC.passedTitle = pinTitle
                 print(pinTitle)
                 print(detailsVC.passedTitle)
-                detailsVC.onUserAction(title: pinTitle, hours: "M-F 3:30-5:00 PM")
+                //where are times stored???
+                detailsVC.onUserAction(title: pinTitle, hours: spotsAndTimes)
             }
         }
     }
