@@ -68,9 +68,11 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     
     lazy var applyButton: UIButton = {
         let applyButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: displayWidth-xPadding*2, height: buttonHeight))
+        applyButton.setTitleColor(.black, for: .normal)
+        applyButton.alpha = 0.8
         applyButton.center.x = view.center.x
         applyButton.layer.cornerRadius = 5
-        applyButton.backgroundColor = .blue
+        applyButton.backgroundColor = .white
         applyButton.setTitle("Apply", for: .normal)
         applyButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         return applyButton
