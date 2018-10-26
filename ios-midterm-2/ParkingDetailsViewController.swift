@@ -26,8 +26,9 @@ class ParkingDetailsViewController: UIViewController {
     {
         //using a UITextView to enable multiline
         let textBox =  UITextView(frame: CGRect(x: 30, y: 100, width: 400, height: 700))
+        let hoursSorted = hours.sorted(by: ==)
         var textToDisplay = ""
-        for (key,value) in hours{
+        for (key,value) in hoursSorted{
             for (k,v) in key{
                 textToDisplay += k
                 textToDisplay += "\n"

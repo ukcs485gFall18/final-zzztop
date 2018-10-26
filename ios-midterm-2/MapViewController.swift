@@ -87,7 +87,7 @@ class MapViewController: UIViewController {
         pickedDate = now
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: pickedDate!)
     }
     
@@ -106,7 +106,7 @@ class MapViewController: UIViewController {
     
     @objc func resetDateTime(){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: now)
         accessDataForOverlays(pickedDate: now)
     }
@@ -131,7 +131,7 @@ class MapViewController: UIViewController {
     // formats the date selected and places it into the UI Text Field
     @objc func dateSelected(datePicker: UIDatePicker){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
@@ -268,8 +268,6 @@ class MapViewController: UIViewController {
         if(spotsAndTimes[spotName] == nil){
             spotsAndTimes[spotName] = timeCategories
         }else{
-            print("--------")
-            print(spotName)
             for (key,value) in timeCategories{
                 spotsAndTimes[spotName]?[key] = value;
             }
