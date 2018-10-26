@@ -22,13 +22,17 @@ class ParkingDetailsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func onUserAction(title: String, hours: [String: [NSDictionary]])
+    func onUserAction(title: String, hours: [[String:String]: [NSDictionary]])
     {
         //using a UITextView to enable multiline
         let textBox =  UITextView(frame: CGRect(x: 30, y: 100, width: 400, height: 700))
         var textToDisplay = ""
         for (key,value) in hours{
-            textToDisplay += key
+            for (k,v) in key{
+                textToDisplay += k
+                textToDisplay += "\n"
+                textToDisplay += v
+            }
             textToDisplay += ": "
             var counter = 0
             while(counter < value.count){
