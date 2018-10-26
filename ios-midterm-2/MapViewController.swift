@@ -268,9 +268,10 @@ class MapViewController: UIViewController {
         if(spotsAndTimes[spotName] == nil){
             spotsAndTimes[spotName] = timeCategories
         }else{
-            var existingDict = spotsAndTimes[spotName]
+            print("--------")
+            print(spotName)
             for (key,value) in timeCategories{
-                existingDict?[key] = value;
+                spotsAndTimes[spotName]?[key] = value;
             }
         }
         
@@ -450,6 +451,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
+        print(spotsAndTimes)
         self.present(detailsVC,animated: true, completion: nil)
         if let pin = view.annotation as? MKPointAnnotation {
             if let pinTitle = pin.title{
