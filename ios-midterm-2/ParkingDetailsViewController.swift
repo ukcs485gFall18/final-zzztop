@@ -30,22 +30,19 @@ class ParkingDetailsViewController: UIViewController {
         var textToDisplay = ""
         for (key,value) in hoursSorted{
             for (k,v) in key{
-                textToDisplay += k
-                textToDisplay += "\n"
-                textToDisplay += v
+                textToDisplay += "Days: \(v)\nPass: \(k)\n"
             }
-            textToDisplay += ": "
             var counter = 0
             while(counter < value.count){
                 let set:NSDictionary = value[counter]
                 let start = set.object(forKey: "start") as! NSDictionary
                 let end = set.object(forKey: "end") as! NSDictionary
                 textToDisplay += makeDateFromData(start: start, end: end)
-                textToDisplay += "\n"
+                textToDisplay += "\n\n"
                 counter+=1
             }
         }
-        textBox.text = ("Parking Location: \n\(title) \nHours: \n\(textToDisplay)")
+        textBox.text = ("Parking Location: \n\(title) \n\n\(textToDisplay)")
         textBox.textColor = UIColor.black
         textBox.font = .systemFont(ofSize: 16)
         //ensure that no one can edit the UITextView
@@ -68,7 +65,7 @@ class ParkingDetailsViewController: UIViewController {
             endDate = time.dateAt(hours: endHour, minutes: endMinute)
         }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm aaa"
+        dateFormatter.dateFormat = "h:mm aaa"
         return "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
     }
 
