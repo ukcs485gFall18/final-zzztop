@@ -44,7 +44,7 @@ class ParkingDetailsViewController: UIViewController {
         }
         textBox.text = ("Parking Location: \n\(title) \n\n\(textToDisplay)")
         textBox.textColor = UIColor.black
-        textBox.font = .systemFont(ofSize: 16)
+        textBox.font = .systemFont(ofSize: 18)
         //ensure that no one can edit the UITextView
         textBox.isUserInteractionEnabled = false
         self.view.addSubview(textBox)
