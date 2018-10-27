@@ -19,7 +19,18 @@ class ParkingDetailsViewController: UIViewController {
         vc.detailsVC = self
         
         view.backgroundColor = .white
+        
+        let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 60, height: 30))
+        backButton.layer.cornerRadius = 5
+        backButton.backgroundColor = .blue
+        backButton.setTitle("Back", for: .normal)
+        backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        view.addSubview(backButton)
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func onUserAction(title: String, hours: [[String:String]: [NSDictionary]])

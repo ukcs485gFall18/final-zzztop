@@ -449,7 +449,6 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
-        print(spotsAndTimes)
         self.present(detailsVC,animated: true, completion: nil)
         if let pin = view.annotation as? MKPointAnnotation {
             if let pinTitle = pin.title{
