@@ -23,6 +23,7 @@ class MapViewController: UIViewController {
     var spots = [String]()
     var passedText = ""
     let now = Date()
+    var headerHeight = CGFloat()
     
     enum PassType: String {
         case e = "E"
@@ -70,6 +71,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
+        
         map.delegate = self
         configureLocationManager()
         
@@ -102,6 +105,18 @@ class MapViewController: UIViewController {
     
     @objc func choosePassTouched() {
         self.present(choosePassVC, animated: true, completion: nil)
+    }
+    
+    // zoom to user location
+    @objc func zoomToCurrentLocation() {
+        if let userLocation = locationManager.location?.coordinate {
+            let viewRegion = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            map.setRegion(viewRegion, animated: false)
+        }
+        
+        DispatchQueue.main.async {
+            self.locationManager.startUpdatingLocation()
+        }
     }
     
     @objc func resetDateTime(){
@@ -325,14 +340,6 @@ class MapViewController: UIViewController {
         map.addOverlay(circle)
     }
     
-    func centerMapOnLocation(location: CLLocation) {
-        let regionRadius: CLLocationDistance = 1000
-        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
-                                                  latitudinalMeters: regionRadius,
-                                                  longitudinalMeters: regionRadius)
-        map.setRegion(coordinateRegion, animated: true)
-    }
-    
     // used to show user's current location
     func configureLocationManager() {
         locationManager.delegate = self
@@ -346,23 +353,23 @@ class MapViewController: UIViewController {
     
     func setupViews() {
         view.addSubview(map)
-        view.addSubview(detailsView)
-        detailsView.isHidden = true
-        view.addSubview(passButton)
-        view.addSubview(resetButton)
-        
+        self.navigationController?.navigationBar.addSubview(passButton)
+        self.navigationController?.navigationBar.addSubview(resetButton)
         setupMap()
+        setupZoomButton()
     }
     
     // create the UI text field
     lazy var pickerTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 50, y: 800, width: 300, height: 40))
+        let textField = UITextField(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+        textField.center.x = view.center.x
         textField.textAlignment = NSTextAlignment.center
-        textField.font = UIFont.systemFont(ofSize: 25)
-        textField.backgroundColor = UIColor.blue
-        textField.textColor = UIColor.white
+        textField.font = UIFont.systemFont(ofSize: regFontSize)
+        textField.backgroundColor = .white
+        textField.textColor = .black
         textField.borderStyle = UITextField.BorderStyle.none
         textField.layer.cornerRadius = 5
+        textField.alpha = 0.8
         return textField
     }()
     
@@ -375,37 +382,48 @@ class MapViewController: UIViewController {
     }()
     
     lazy var detailsView: UIView = {
-        let barheight = UIApplication.shared.statusBarFrame.size.height
-        let headerHeight = self.navigationController?.navigationBar.frame.size.height
-        
         let view = UIView(frame: CGRect(x: 0, y: self.view.frame.height-self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height/2))
         view.backgroundColor = .white
         return view
     }()
     
+    // button to display passes screen
     lazy var passButton: UIButton = {
-        let barheight = UIApplication.shared.statusBarFrame.size.height
-        let headerHeight = self.navigationController?.navigationBar.frame.size.height
-        
-        //button to display passes screen
-        //        let button = UIButton(frame: CGRect(x: 285, y: 100, width: 120, height: 50))
-        let button = UIButton(frame: CGRect(x: view.frame.width-110, y: barheight+headerHeight!+10, width: 100, height: 50))
+        let passesImage = UIImage(named: "permitIcon.png")
+        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.layer.cornerRadius = 5
-        button.backgroundColor = .blue
-        button.setTitle("Passes", for: .normal)
+        button.setImage(passesImage, for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         return button
     }()
     
-    // button to reset
+    // button to reset the time to the current time
     lazy var resetButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 10, y: 100, width: 120, height: 50))
+        let refreshIcon = UIImage(named: "refreshIcon.jpg")
+        let button = UIButton(frame: CGRect(x: xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.layer.cornerRadius = 5
-        button.backgroundColor = .blue
-        button.setTitle("Current Time", for: .normal)
+        button.setImage(refreshIcon, for: .normal)
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
     }()
+    
+    lazy var zoomButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let img = UIImage(named: "location-arrow")
+        button.setImage(img, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(zoomToCurrentLocation), for: .touchUpInside)
+        return button
+    }()
+    
+    func setupZoomButton() {
+        navigationController?.navigationBar.addSubview(zoomButton)
+        zoomButton.centerXAnchor.constraint(equalTo: (navigationController?.navigationBar.centerXAnchor)!).isActive = true
+        zoomButton.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: ynavPadding).isActive = true
+        zoomButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        zoomButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+    }
     
     lazy var map: MKMapView = {
         let map = MKMapView()
@@ -504,3 +522,4 @@ extension Date {
 // source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
 // source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
 //source for viewing annotation titles: https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked
+// source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
