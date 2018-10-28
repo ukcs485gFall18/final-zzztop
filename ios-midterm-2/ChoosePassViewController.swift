@@ -16,18 +16,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     var displayWidth = CGFloat()
     var displayHeight = CGFloat()
     
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
-            userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
-        } else {
-            userPasses = [kPassTypes[21]]
-        }
-        
-        setupViews()
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -144,29 +132,12 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         else{
             userPasses = [kPassTypes[21]]
         }
+        
+        setupViews()
         let barHeight:CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
         let headerView = UIView(frame: CGRect(x:0, y:barHeight, width:displayWidth, height:50))
-        let backButton = UIButton(frame: CGRect(x: 20, y: 5, width: 60, height: 30))
-        backButton.layer.cornerRadius = 5
-        backButton.backgroundColor = .blue
-        backButton.setTitle("Back", for: .normal)
-        
-        let headerLabel = UILabel(frame: CGRect(x:headerView.center.x, y:headerView.center.y, width:200, height:50))
-        headerLabel.center.x = headerView.center.x
-        headerLabel.center.y = headerView.center.y
-        headerLabel.text = "Add Your Passes"
-        headerLabel.textAlignment = .center
-        headerLabel.backgroundColor = .blue
-        headerLabel.font = headerLabel.font.withSize(25)
-        headerLabel.textColor = .white
-        view.addSubview(headerLabel)
-
-        let applyButton = UIButton(frame: CGRect(x: 25, y: displayHeight-80, width: displayWidth-50, height: 50))
-        applyButton.layer.cornerRadius = 5
-        applyButton.backgroundColor = .blue
-        applyButton.setTitle("Apply", for: .normal)
 
         backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         
@@ -177,7 +148,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelection = true
-//        let choosePassView = UIView(frame: CGRect(x: 10, y: 100, width: 300, height: 200))
         self.view.addSubview(self.tableView)
         headerView.addSubview(backButton)
         self.view.addSubview(headerView)
