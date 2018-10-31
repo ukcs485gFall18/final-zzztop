@@ -11,30 +11,29 @@ import UIKit
 class ChoosePassViewController: UIViewController, UITableViewDataSource {
 
     var userPasses: [String] = []
-
     var displayWidth = CGFloat()
     var displayHeight = CGFloat()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
             userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         } else {
             userPasses = [kPassTypes[21]]
         }
-
+        
         setupViews()
+    }
+    
+    @objc func dismissView() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
-    @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
-    }
-
+    
     func setupViews() {
         displayWidth = self.view.frame.width
         displayHeight = self.view.frame.height
@@ -63,8 +62,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         backButton.layer.cornerRadius = 5
         let backIcon = UIImage(named: "backIcon.png")
         backButton.setImage(backIcon, for: .normal)
-//        backButton.backgroundColor = .blue
-//        backButton.setTitle("Back", for: .normal)
         backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         return backButton
     }()
@@ -90,14 +87,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         addPassesLabel.textColor = .white
         return addPassesLabel
     }()
-
-//    lazy var dividerView: UIView = {
-//        let dividerView = UIView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: view.frame.width, height: 1.0))
-//        dividerView.layer.borderWidth = 1.0
-//        dividerView.layer.borderColor = UIColor.gray.cgColor
-//        return dividerView
-////        dividerView.borderColor = .black
-//    }()
 
 }
 
@@ -135,37 +124,6 @@ extension ChoosePassViewController: UITableViewDelegate {
         userPasses.remove(at: removeIndex!)
         UserDefaults.standard.set(userPasses, forKey: "userPasses")
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if (UserDefaults.standard.array(forKey: "userPasses") != nil){
-            userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
-        }
-        else{
-            userPasses = [kPassTypes[21]]
-        }
-
-        setupViews()
-        let barHeight:CGFloat = UIApplication.shared.statusBarFrame.size.height
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
-        let headerView = UIView(frame: CGRect(x:0, y:barHeight, width:displayWidth, height:50))
-
-        backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-        
-        applyButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-
-        tableView = UITableView(frame: CGRect(x:0, y:barHeight+50, width:displayWidth, height:displayHeight-2*barHeight-100))
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier:"passCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.allowsMultipleSelection = true
-        self.view.addSubview(self.tableView)
-        headerView.addSubview(backButton)
-        self.view.addSubview(headerView)
-        self.view.addSubview(applyButton)
-    }
-
 }
 
 // source for checkmarks on table view: https://www.youtube.com/watch?v=5MZ-WJuSdpg
