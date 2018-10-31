@@ -13,13 +13,15 @@ class MapViewController: UIViewController {
     
     var parkingData: [NSDictionary]?
     var usersPermits: [String] = []
+    var spotsAndTimes: [String:[[String:String]:[NSDictionary]]] = [:]
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
-    let detailsVC = ParkingDetailsViewController()
+    var detailsVC = ParkingDetailsViewController()
     var pickedDate: Date?
     var didSelectDate: Bool = false
     var spots = [String]()
+    var passedText = ""
     let now = Date()
     var headerHeight = CGFloat()
     
@@ -88,7 +90,7 @@ class MapViewController: UIViewController {
         pickedDate = now
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: pickedDate!)
     }
     
@@ -119,7 +121,7 @@ class MapViewController: UIViewController {
     
     @objc func resetDateTime(){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: now)
         accessDataForOverlays(pickedDate: now)
     }
@@ -144,7 +146,7 @@ class MapViewController: UIViewController {
     // formats the date selected and places it into the UI Text Field
     @objc func dateSelected(datePicker: UIDatePicker){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd hh:mm aaa"
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
@@ -173,6 +175,7 @@ class MapViewController: UIViewController {
             for time in times {
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
+                addToDictionary(pass: name, spotName: spotName, timeDict: timeDict)
                 
                 if spots.contains(spotName) {
                     continue
@@ -233,6 +236,58 @@ class MapViewController: UIViewController {
                 setOverlays(dict: coords, radius: radius)
             }
         }
+    }
+    
+    func addToDictionary(pass: String, spotName: String, timeDict: NSDictionary){
+        var timeCategories: [[String:String]:[NSDictionary]] = [:]
+        if let MT = timeDict["MT"]{
+            if(timeCategories[[pass:"MT"]] == nil){
+                timeCategories[[pass:"MT"]] = [MT as! NSDictionary]
+            }else{
+                var existingMTDict = timeCategories[[pass:"MT"]]
+                existingMTDict?.append(MT as! NSDictionary)
+            }
+        }
+        if let MF = timeDict["MF"]{
+            if(timeCategories[[pass:"MF"]] == nil){
+                timeCategories[[pass:"MF"]] = [MF as! NSDictionary]
+            }else{
+                var existingMFDict = timeCategories[[pass:"MF"]]
+                existingMFDict?.append(MF as! NSDictionary)
+            }
+        }
+        if let MS = timeDict["MS"]{
+            if(timeCategories[[pass:"MS"]] == nil){
+                timeCategories[[pass:"MS"]] = [MS as! NSDictionary]
+            }else{
+                var existingMSDict = timeCategories[[pass:"MS"]]
+                existingMSDict?.append(MS as! NSDictionary)
+            }
+        }
+        if let F = timeDict["F"]{
+            if(timeCategories[[pass:"F"]] == nil){
+                timeCategories[[pass:"F"]] = [F as! NSDictionary]
+            }else{
+                var existingFDict = timeCategories[[pass:"F"]]
+                existingFDict?.append(F as! NSDictionary)
+            }
+        }
+        if let SS = timeDict["SS"]{
+            if(timeCategories[[pass:"SS"]] == nil){
+                timeCategories[[pass:"SS"]] = [SS as! NSDictionary]
+            }else{
+                var existingSSDict = timeCategories[[pass:"SS"]]
+                existingSSDict?.append(SS as! NSDictionary)
+            }
+        }
+        if(spotsAndTimes[spotName] == nil){
+            spotsAndTimes[spotName] = timeCategories
+        }else{
+            for (key,value) in timeCategories{
+                spotsAndTimes[spotName]?[key] = value;
+            }
+        }
+        
     }
     
     func readJson() {
@@ -413,6 +468,14 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
         self.present(detailsVC,animated: true, completion: nil)
+        if let pin = view.annotation as? MKPointAnnotation {
+            if let pinTitle = pin.title{
+                detailsVC.passedTitle = pinTitle
+                if let hours = spotsAndTimes[pinTitle]{
+                    detailsVC.onUserAction(title: pinTitle, hours: hours)
+                }
+            }
+        }
     }
 }
 
@@ -457,4 +520,5 @@ extension Date {
 // source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
 // source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
 // source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
+//source for viewing annotation titles: https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked
 // source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
