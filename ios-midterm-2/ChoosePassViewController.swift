@@ -8,17 +8,16 @@
 
 import UIKit
 
-class ChoosePassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ChoosePassViewController: UIViewController, UITableViewDataSource {
     
     var userPasses: [String] = []
     
-    var barHeight = CGFloat()
     var displayWidth = CGFloat()
     var displayHeight = CGFloat()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        
         if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
             userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         } else {
@@ -32,15 +31,19 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
         return .lightContent
     }
     
+    @objc func dismissView() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func setupViews() {
         displayWidth = self.view.frame.width
         displayHeight = self.view.frame.height
-        barHeight =  UIApplication.shared.statusBarFrame.size.height
+
+        view.addSubview(tableView)
+        view.addSubview(applyButton)
         
         let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
         headerView.backgroundColor = .black
-        view.addSubview(tableView)
-        view.addSubview(applyButton)
         view.addSubview(headerView)
         headerView.addSubview(addPassesLabel)
         headerView.addSubview(backButton)
@@ -96,12 +99,9 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
 ////        dividerView.borderColor = .black
 //    }()
     
-    @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: - tableView functions
-    
+}
+
+extension ChoosePassViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kPassTypes.count
     }
@@ -137,5 +137,5 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource, UITable
     }
 }
 
-//source for checkmarks on table view: https://www.youtube.com/watch?v=5MZ-WJuSdpg
-//source for making status bar icons white: https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3
+// source for checkmarks on table view: https://www.youtube.com/watch?v=5MZ-WJuSdpg
+// source for making status bar icons white: https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3
