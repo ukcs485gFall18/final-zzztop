@@ -23,13 +23,16 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
             userPasses = [kPassTypes[21]]
         }
         
+        // designes and positions views
         setupViews()
     }
     
+    // dismisses a view
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
     }
 
+    // changes status bar style to be light instead of dark
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -48,6 +51,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         headerView.addSubview(backButton)
     }
 
+    // creates table view
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight-buttonHeight-barHeight*2))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier:"passCell")
@@ -57,6 +61,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         return tableView
     }()
 
+    // creates back button
     lazy var backButton: UIButton = {
         let backButton = UIButton(frame: CGRect(x: xPadding, y: ynavPadding*2, width: navButtonW/2, height: navButtonH))
         backButton.layer.cornerRadius = 5
@@ -66,6 +71,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         return backButton
     }()
 
+    // creates apply button
     lazy var applyButton: UIButton = {
         let applyButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: displayWidth-xPadding*2, height: buttonHeight))
         applyButton.setTitleColor(.black, for: .normal)
@@ -78,6 +84,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         return applyButton
     }()
 
+    // creates add pass label
     lazy var addPassesLabel: UILabel = {
         let addPassesLabel = UILabel(frame: CGRect(x: 0, y: ynavPadding, width: displayWidth-buttonWidth, height: buttonHeight))
         addPassesLabel.center.x = view.center.x
@@ -90,6 +97,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
 
 }
 
+// overrides table view functions
 extension ChoosePassViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kPassTypes.count

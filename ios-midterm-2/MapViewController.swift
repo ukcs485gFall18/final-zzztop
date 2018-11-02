@@ -407,6 +407,7 @@ class MapViewController: UIViewController {
         return button
     }()
     
+    // creates the zoom button
     lazy var zoomButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -417,6 +418,7 @@ class MapViewController: UIViewController {
         return button
     }()
     
+    // position the zoom button
     func setupZoomButton() {
         navigationController?.navigationBar.addSubview(zoomButton)
         zoomButton.centerXAnchor.constraint(equalTo: (navigationController?.navigationBar.centerXAnchor)!).isActive = true
@@ -425,6 +427,7 @@ class MapViewController: UIViewController {
         zoomButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
+    // creates the map
     lazy var map: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
@@ -432,6 +435,7 @@ class MapViewController: UIViewController {
         return map
     }()
     
+    // positions the map to fill most of the view
     func setupMap() {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
@@ -439,7 +443,9 @@ class MapViewController: UIViewController {
     
 }
 
+// overrides map view functions
 extension MapViewController: MKMapViewDelegate {
+    // circle overlays
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         guard let circelOverLay = overlay as? MKCircle else {return MKOverlayRenderer()}
         
@@ -450,6 +456,7 @@ extension MapViewController: MKMapViewDelegate {
         return circleRenderer
     }
     
+    // annotations
     func map(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         
@@ -479,6 +486,7 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
+// gets users current location
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
@@ -492,6 +500,7 @@ extension MapViewController: CLLocationManagerDelegate {
     }
 }
 
+// for date range checking
 extension Date {
     func dateAt(hours: Int, minutes: Int) -> Date {
         let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
@@ -511,8 +520,9 @@ extension Date {
         return newDate
     }
     
+    // get date for tomorrow
     func tomorrow(hour: Int, minute: Int) -> Date {
-        let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)!
+        let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)! // misses 1 second
         return Calendar.current.date(byAdding: .day, value: 1, to: time)!
     }
 }
