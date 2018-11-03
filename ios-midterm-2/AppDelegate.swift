@@ -16,17 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        // allows for progammatically creating views
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = UINavigationController(rootViewController: MapViewController())
+        // set app to open to the map
+        let nav = UINavigationController(rootViewController: MapViewController())
+        window?.rootViewController = nav
         
         if UserDefaults.standard.array(forKey: "userPasses") == nil {
             window?.rootViewController?.present(firstChoosePassView, animated: true, completion: nil)
         }
         
-        //source: https://developer.apple.com/documentation/uikit/core_app/managing_your_app_s_life_cycle/preparing_your_app_to_run_in_the_background/updating_your_app_with_background_app_refresh
-        //UIApplication.shared.setMinimumBackgroundFetchInterval(300)
+        // source: https://developer.apple.com/documentation/uikit/core_app/managing_your_app_s_life_cycle/preparing_your_app_to_run_in_the_background/updating_your_app_with_background_app_refresh
+//        UIApplication.shared.setMinimumBackgroundFetchInterval(300)
         
         return true
     }

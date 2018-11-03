@@ -1,11 +1,7 @@
-UK coords: 38.036872, -84.502224
-
-<hr>
-
 ## To do
 
 ### Jordan
-- Zoom button
+- do we need `.gitmodules`?
 
 ### Before due date
 - Where to put sources?
