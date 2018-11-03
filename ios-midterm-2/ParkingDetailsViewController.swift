@@ -9,12 +9,11 @@
 import UIKit
 
 class ParkingDetailsViewController: UIViewController {
-
-    var passedTitle:String = ""
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //links the Parking Details View Controller to the Map View Controller
         let vc = MapViewController(nibName: "MapViewController", bundle: nil)
         vc.detailsVC = self
         
@@ -27,6 +26,7 @@ class ParkingDetailsViewController: UIViewController {
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         view.addSubview(backButton)
         // Do any additional setup after loading the view.
+        
     }
     
     @objc func closeView() {
