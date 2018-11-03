@@ -11,7 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController {
     
-    //declaration of public variables
+    // declaration of public variables
     var parkingData: [NSDictionary]?
     var usersPermits: [String] = []
     var spotsAndTimes: [String:[[String:String]:[NSDictionary]]] = [:]
@@ -26,7 +26,7 @@ class MapViewController: UIViewController {
     let now = Date()
     var headerHeight = CGFloat()
     
-    //enum of all pass types in the JSON file
+    // enum of all pass types in the JSON file
     enum PassType: String {
         case e = "E"
         case e2 = "E2"
@@ -52,7 +52,7 @@ class MapViewController: UIViewController {
         case noPermitRequired = "No permit required"
     }
     
-    //enum of all possible weekdays in the JSON file
+    // enum of all possible weekdays in the JSON file
     enum WeekDay: String {
         case monday = "Monday"
         case tuesday = "Tuesday"
@@ -63,7 +63,7 @@ class MapViewController: UIViewController {
         case sunday = "Sunday"
     }
     
-    //enum of all date ranges used in the JSON file
+    // enum of all date ranges used in the JSON file
     enum Range: String {
         case mt = "MT"
         case mf = "MF"
@@ -75,7 +75,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //setting up the view 
+        // setting up the view
         headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
         
         map.delegate = self
@@ -90,7 +90,7 @@ class MapViewController: UIViewController {
             setPins(dict: dict, title: p["name"] as! String)
         }
         
-        //format the PickerView
+        // format the PickerView
         createPickerView()
         pickedDate = now
         let dateFormatter = DateFormatter()
@@ -112,7 +112,7 @@ class MapViewController: UIViewController {
         } else {
             usersPermits = [PassType.noPermitRequired.rawValue]
         }
-        //place the pins in the correct places
+        // place the pins in the correct places
         accessDataForOverlays(pickedDate: now)
     }
     
@@ -140,7 +140,7 @@ class MapViewController: UIViewController {
             map.setRegion(viewRegion, animated: false)
         }
         
-        //send updating to a background thread
+        // send updating to a background thread
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
@@ -157,7 +157,8 @@ class MapViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: now)
-        //update map after reset
+        
+        // update map after reset
         accessDataForOverlays(pickedDate: now)
     }
     
@@ -219,41 +220,41 @@ class MapViewController: UIViewController {
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         
-        //go through each collection in the JSON file
+        // go through each collection in the JSON file
         for p in parkingData! {
-            //get the spot name, circle radius, and coordinates
+            // get the spot name, circle radius, and coordinates
             let spotName = p["name"] as! String
             let radius = p["radius"] as! Int
             let coords = p["coords"] as! [Double]
             
-            //Get the current user settings for dates
+            // get the current user settings for dates
             let date = pickedDate
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday]
             
-            //unwrap all of the times
+            // unwrap all of the times
             guard let times = p["times"] as? [Any] else {
                 return
             }
             
-            //go through all of the times
+            // go through all of the times
             for time in times {
-                //store the times as a NSDictionary
+                // store the times as a NSDictionary
                 let timeDict = time as! NSDictionary
                 let name = timeDict["pass"] as! String
                 addToDictionary(pass: name, spotName: spotName, timeDict: timeDict)
                 
-                //store all of the parking spots and their names
+                // store all of the parking spots and their names
                 if spots.contains(spotName) {
                     continue
                 } else {
                     spots.append(spotName)
                     
-                    //go through all of the permits possible
+                    // go through all of the permits possible
                     for permit in usersPermits {
-                        //if the permit name is a match, check the date ranges and format them
+                        // if the permit name is a match, check the date ranges and format them
                         if name == permit {
                             let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
                             let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
@@ -331,58 +332,59 @@ class MapViewController: UIViewController {
     // Pre: requires the pass name, spot name, and
     // the time range as a NSDictionary
     //-----------------------------------------------
-    func addToDictionary(pass: String, spotName: String, timeDict: NSDictionary){
-        var timeCategories: [[String:String]:[NSDictionary]] = [:]
-        //go through each day range and add to dictionary if not previously appended
-        if let MT = timeDict["MT"]{
-            if(timeCategories[[pass:"MT"]] == nil){
+    func addToDictionary(pass: String, spotName: String, timeDict: NSDictionary) {
+        var timeCategories: [[String:String]: [NSDictionary]] = [:]
+        
+        // go through each day range and add to dictionary if not previously appended
+        if let MT = timeDict["MT"] {
+            if (timeCategories[[pass:"MT"]] == nil) {
                 timeCategories[[pass:"MT"]] = [MT as! NSDictionary]
-            }else{
+            } else {
                 var existingMTDict = timeCategories[[pass:"MT"]]
                 existingMTDict?.append(MT as! NSDictionary)
             }
         }
-        if let MF = timeDict["MF"]{
-            if(timeCategories[[pass:"MF"]] == nil){
+        if let MF = timeDict["MF"] {
+            if (timeCategories[[pass:"MF"]] == nil) {
                 timeCategories[[pass:"MF"]] = [MF as! NSDictionary]
-            }else{
+            } else {
                 var existingMFDict = timeCategories[[pass:"MF"]]
                 existingMFDict?.append(MF as! NSDictionary)
             }
         }
-        if let MS = timeDict["MS"]{
-            if(timeCategories[[pass:"MS"]] == nil){
+        if let MS = timeDict["MS"] {
+            if (timeCategories[[pass:"MS"]] == nil) {
                 timeCategories[[pass:"MS"]] = [MS as! NSDictionary]
-            }else{
+            } else {
                 var existingMSDict = timeCategories[[pass:"MS"]]
                 existingMSDict?.append(MS as! NSDictionary)
             }
         }
-        if let F = timeDict["F"]{
-            if(timeCategories[[pass:"F"]] == nil){
+        if let F = timeDict["F"] {
+            if (timeCategories[[pass:"F"]] == nil) {
                 timeCategories[[pass:"F"]] = [F as! NSDictionary]
-            }else{
+            } else {
                 var existingFDict = timeCategories[[pass:"F"]]
                 existingFDict?.append(F as! NSDictionary)
             }
         }
-        if let SS = timeDict["SS"]{
-            if(timeCategories[[pass:"SS"]] == nil){
+        if let SS = timeDict["SS"] {
+            if (timeCategories[[pass:"SS"]] == nil) {
                 timeCategories[[pass:"SS"]] = [SS as! NSDictionary]
-            }else{
+            } else {
                 var existingSSDict = timeCategories[[pass:"SS"]]
                 existingSSDict?.append(SS as! NSDictionary)
             }
         }
-        //add all of the timeCategories to the appropriate spot in the dictionary
-        if(spotsAndTimes[spotName] == nil){
+        
+        // add all of the timeCategories to the appropriate spot in the dictionary
+        if (spotsAndTimes[spotName] == nil) {
             spotsAndTimes[spotName] = timeCategories
-        }else{//if the spot already exists, append the time discovered to the existing entry
-            for (key,value) in timeCategories{
+        } else { // if the spot already exists, append the time discovered to the existing entry
+            for (key,value) in timeCategories {
                 spotsAndTimes[spotName]?[key] = value;
             }
         }
-        
     }
     
     //-----------------------------------------------
@@ -437,11 +439,13 @@ class MapViewController: UIViewController {
     func setPins(dict: [Double], title: String) {
         let latitude = dict[0]
         let longitude = dict[1]
-        //creating a blank pin
+        
+        // creating a blank pin
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         annotation.title = title;
-        //adding pin to the map
+        
+        // adding pin to the map
         self.map.addAnnotation(annotation)
     }
     
@@ -453,10 +457,11 @@ class MapViewController: UIViewController {
     // radius of the circle
     //-----------------------------------------------
     func setOverlays(dict: [Double], radius: Int) {
-        //get the long and latitude that the circle centers on
+        // get the long and latitude that the circle centers on
         let latitude = dict[0]
         let longitude = dict[1]
-        //creating a circle annotation around the pin set earlier
+        
+        // creating a circle annotation around the pin set earlier
         let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let radius = CLLocationDistance(radius)
         let circle = MKCircle(center: center, radius: radius)
@@ -628,7 +633,7 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
-// gets users current location
+// gets user's current location
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
@@ -669,9 +674,11 @@ extension Date {
     }
 }
 
-//Sources for this file:
+// Sources for this file:
 // source for creating a UITextField programmatically: https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically
 // source for UI Date Picker View implementation: https://www.youtube.com/watch?v=aa-lNWUVY7g
 // source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
-//source for viewing annotation titles: https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked
+// source for viewing annotation titles: https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked
 // source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
+// source for date range check: https://stackoverflow.com/questions/29652771/how-to-check-if-time-is-within-a-specific-range-in-swift/39499504#
+// source for tomorrow date: https://stackoverflow.com/questions/44009804/swift-3-how-to-get-date-for-tomorrow-and-yesterday-take-care-special-case-ne

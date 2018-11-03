@@ -29,15 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // source: https://developer.apple.com/documentation/uikit/core_app/managing_your_app_s_life_cycle/preparing_your_app_to_run_in_the_background/updating_your_app_with_background_app_refresh
-//        UIApplication.shared.setMinimumBackgroundFetchInterval(300)
         
         return true
     }
-
-    /*func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler:
-        @escaping (UIBackgroundFetchResult) -> Void) {
-       
-    }*/
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
