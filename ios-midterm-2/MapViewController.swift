@@ -479,6 +479,12 @@ class MapViewController: UIViewController {
     
     // MARK: - views
     
+    //-----------------------------------------------
+    // setupViews()
+    //-----------------------------------------------
+    // Add the map, navigationcotnroller, and zoom
+    // button to the view
+    //-----------------------------------------------
     func setupViews() {
         view.addSubview(map)
         self.navigationController?.navigationBar.addSubview(passButton)
@@ -573,7 +579,7 @@ class MapViewController: UIViewController {
 
 // overrides map view functions
 extension MapViewController: MKMapViewDelegate {
-    // circle overlays
+    // sets the circle overlays
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         guard let circelOverLay = overlay as? MKCircle else {return MKOverlayRenderer()}
         
@@ -584,7 +590,7 @@ extension MapViewController: MKMapViewDelegate {
         return circleRenderer
     }
     
-    // annotations
+    // sets the annotations
     func map(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         
@@ -601,11 +607,20 @@ extension MapViewController: MKMapViewDelegate {
         return annotationView
     }
     
+    //-----------------------------------------------
+    // mapView()
+    //-----------------------------------------------
+    // When an annotation is selected, the parking
+    // details view controller is presented the
+    // dictionary of stored data is passed to it
+    //-----------------------------------------------
     func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
+        //bring up the new view
         self.present(detailsVC,animated: true, completion: nil)
         if let pin = view.annotation as? MKPointAnnotation {
             if let pinTitle = pin.title{
                 if let hours = spotsAndTimes[pinTitle]{
+                    //pass the data to the next view
                     detailsVC.onUserAction(title: pinTitle, hours: hours)
                 }
             }
