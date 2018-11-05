@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nav = UINavigationController(rootViewController: MapViewController())
         window?.rootViewController = nav
         
+        //if user has no passes saved in user defaults
+        //set app to open to choosePassesView
         if UserDefaults.standard.array(forKey: "userPasses") == nil {
             window?.rootViewController?.present(firstChoosePassView, animated: true, completion: nil)
         }

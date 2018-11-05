@@ -595,7 +595,7 @@ extension MapViewController: MKMapViewDelegate {
         return circleRenderer
     }
     
-    // sets the annotations
+    // sets the annotations to views so they are clickable w/ actions
     func map(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         

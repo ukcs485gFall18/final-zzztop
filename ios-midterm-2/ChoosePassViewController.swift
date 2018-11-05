@@ -8,6 +8,9 @@
 
 import UIKit
 
+
+//view where user selects which passes they have
+
 class ChoosePassViewController: UIViewController, UITableViewDataSource {
 
     var userPasses: [String] = []
@@ -17,10 +20,11 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //save user's pass information in user defaults so they only have to reselect if they want to change their information
         if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
             userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         } else {
-            userPasses = [kPassTypes[21]]
+            userPasses = [kPassTypes[21]] //if user has no pass, make their pass type no pass required
         }
         
         // designes and positions views
@@ -51,7 +55,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         headerView.addSubview(backButton)
     }
 
-    // creates table view
+    // creates table view to hold UK pass options user can select from
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight-buttonHeight-barHeight*2))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier:"passCell")
@@ -103,10 +107,13 @@ extension ChoosePassViewController: UITableViewDelegate {
         return kPassTypes.count
     }
 
+    //make each cell of table contain a pass name
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "passCell", for: indexPath as IndexPath)
         cell.textLabel!.text = "\(kPassTypes[indexPath.row])"
 
+        //if a user has selected that pass, leaves the view, and returns to view
+        //the passes they selected previously will still be selected and have a checkmark by them
         if userPasses.contains(cell.textLabel?.text ?? "") {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
@@ -117,15 +124,17 @@ extension ChoosePassViewController: UITableViewDelegate {
         return cell
     }
 
+    //if user selects a cell put a checkmark next to it and save it to user defaults
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.checkmark
 
-        if !userPasses.contains(kPassTypes[indexPath.row]) {
+        if !userPasses.contains(kPassTypes[indexPath.row]) { //so there aren't duplicate passes
             userPasses.append(kPassTypes[indexPath.row])
             UserDefaults.standard.set(userPasses, forKey:"userPasses")
         }
     }
 
+    //if user deselects a cell remove the checkmark and remove from user defaults
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.none
         let removeIndex = userPasses.firstIndex(of:kPassTypes[indexPath.row])
