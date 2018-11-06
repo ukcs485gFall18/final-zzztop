@@ -13,6 +13,8 @@ Hypothesis: If there is an application to tell people where they can park for fr
 
 The result is our parking app custom to UK and its permits, hours, and lots, streets, and garages.
 
+For best use, we recommend simulating your location on campus, such as at Willy T: 401 Hilltop Ave, Lexington, KY 40506
+
 Sources: 
 Source for font size: https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how
 
