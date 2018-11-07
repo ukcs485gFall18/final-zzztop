@@ -1,4 +1,4 @@
-App: UparK
+# App: UparK
 
 Team Members: Adrienne Corwin, Jordan George, Kyra Seevers
 
@@ -15,7 +15,8 @@ The result is our parking app custom to UK and its permits, hours, and lots, str
 
 For best use, we recommend simulating your location on campus, such as at Willy T: 401 Hilltop Ave, Lexington, KY 40506
 
-Sources: 
+### Sources:
+
 Source for font size: https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how
 
 Source for ViewController background:
@@ -43,4 +44,3 @@ Source for making status bar icons white: https://stackoverflow.com/questions/38
 Source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
 
 https://www.google.com/search?safe=strict&client=firefox-b-1-ab&biw=1440&bih=781&tbm=isch&sa=1&ei=FcbVW-OoEMzMjwS26JTQCQ&q=hulk&oq=hulk&gs_l=img.3..0i67l2j0j0i67j0l3j0i67l2j0.32104.32571..32783...0.0..0.168.331.3j1......1....1..gws-wiz-img.......35i39.0EZpNXHRQe4#imgrc=IuSm1zmzoiIeoM:
-
