@@ -2655,6 +2655,275 @@
                 }
             }
         ]
+    },
+    {
+        "name": "Regulatory Services Lot",
+        "radius": 70,
+        "coords": [
+            38.0210206,
+            -84.5094971
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "Any valid permit",
+                "MF": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Shawneetown Lot",
+        "radius": 70,
+        "coords": [
+            38.0191365,
+            -84.5101679
+        ],
+        "times": [
+            {
+                "pass": "X",
+                "MF": {
+                    "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "R19",
+                "MF": {
+                    "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Baseball Lot",
+        "radius": 70,
+        "coords": [
+            38.0192034,
+            -84.5041396
+        ],
+        "times": [
+            {
+                "pass": "C16",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "No permit required",
+                "MT": {
+                    "start": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    }
+                },
+                "F": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                },
+                "SS": {
+                    "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Soccer Lot",
+        "radius": 70,
+        "coords": [
+           38.0183597,
+           -84.5004895
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "Any valid permit",
+                "MF": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "K",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Blue Lot",
+        "radius": 70,
+        "coords": [
+            38.0221754,
+            -84.5056418
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "Any valid permit",
+                "MF": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            },
+            {
+                "pass": "K",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
+            }
+        ]
     }
   ]
 }
