@@ -55,14 +55,15 @@ class ParkingDetailsViewController: UIViewController {
         //using a UITextView to enable multiline
         let textBox =  UITextView(frame: CGRect(x: 30, y: 100, width: 400, height: 700))
         //sorting the key-value pairs by grouping
-        let hoursSorted = hours.sorted(by: ==)
+        //let hoursSorted = hours.sorted(by: ==)
         //creating the text that will be displayed in the view
         var textToDisplay = ""
         //Dictionary of strings : array of NS Dictionaries
-        for (key,value) in hoursSorted{
+        for (key,value) in hours{
             //for each string pair in the dictionary (day range: pass)
             for (k,v) in key{
-                textToDisplay += "Days: \(v)\nPass: \(k)\n"
+                let dayRange = formatDays(dayRange: v)
+                textToDisplay += "Pass: \(k)\nDays: \(dayRange)\n"
             }
             var counter = 0
             //iterate through each hour set under the designated day and pass
@@ -116,6 +117,23 @@ class ParkingDetailsViewController: UIViewController {
         return "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
     }
 
+    func formatDays(dayRange: String) -> String{
+        switch dayRange{
+        case "MF":
+            return "Monday - Friday"
+        case "MT":
+            return "Monday - Thursday"
+        case "F":
+            return "Friday"
+        case "SS":
+            return "Saturday - Sunday"
+        case "MS":
+            return "All Week"
+        default:
+            return "No date"
+        }
+    }
+    
     //Sources for this file:
     //source for font size: https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how
     //source for ViewController background: https://stackoverflow.com/questions/29759224/change-background-color-of-viewcontroller-swift-single-view-application/29759262
