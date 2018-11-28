@@ -8,7 +8,30 @@
 
 import UIKit
 
-class ParkingDetailsViewController: UIViewController {
+class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    private var myTableView: UITableView!
+    private var displayStrings = [String]()
+    
+    //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return displayStrings.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
+        //references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
+        cell.textLabel!.numberOfLines = 0
+        cell.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
+        cell.textLabel!.text = "\(displayStrings[indexPath.row])"
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        print(displayStrings.count)
+        print("Value: \(displayStrings[indexPath.row])")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +50,18 @@ class ParkingDetailsViewController: UIViewController {
         backButton.setTitle("Back", for: .normal)
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         view.addSubview(backButton)
+        
+        //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
+        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+        let displayWidth: CGFloat = self.view.frame.width
+        let displayHeight: CGFloat = self.view.frame.height
+        
+        myTableView = UITableView(frame: CGRect(x: 0, y: 150, width: displayWidth, height: displayHeight - barHeight))
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        myTableView.dataSource = self
+        myTableView.delegate = self
+        self.view.addSubview(myTableView)
+        
     }
     
     //-----------------------------------------------
@@ -53,7 +88,7 @@ class ParkingDetailsViewController: UIViewController {
     func onUserAction(title: String, hours: [[String:String]: [NSDictionary]])
     {
         //using a UITextView to enable multiline
-        let textBox =  UITextView(frame: CGRect(x: 30, y: 100, width: 400, height: 700))
+        let textBox =  UITextView(frame: CGRect(x: 0, y: 100, width: 400, height: 50))
         //sorting the key-value pairs by grouping
         //let hoursSorted = hours.sorted(by: ==)
         //creating the text that will be displayed in the view
@@ -63,7 +98,7 @@ class ParkingDetailsViewController: UIViewController {
             //for each string pair in the dictionary (day range: pass)
             for (k,v) in key{
                 let dayRange = formatDays(dayRange: v)
-                textToDisplay += "Pass: \(k)\nDays: \(dayRange)\n"
+                textToDisplay += "Pass: \(k) \nDays: \(dayRange)\n"
             }
             var counter = 0
             //iterate through each hour set under the designated day and pass
@@ -73,13 +108,18 @@ class ParkingDetailsViewController: UIViewController {
                 let end = set.object(forKey: "end") as! NSDictionary
                 //formatting the date to be user friendly
                 textToDisplay += makeDateFromData(start: start, end: end)
-                textToDisplay += "\n\n"
+                displayStrings.append(textToDisplay)
                 counter+=1
+                textToDisplay = ""
             }
         }
         //write the name of the parking location
-        textBox.text = ("Parking Location: \n\(title) \n\n\(textToDisplay)")
+        textBox.text = ("Parking Location: \n\(title)")
         //format the text box
+        print("Here is the data in the array")
+        for cell in displayStrings{
+            print(cell)
+        }
         textBox.textColor = UIColor.black
         textBox.font = .systemFont(ofSize: 18)
         //ensure that no one can edit the UITextView
