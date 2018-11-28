@@ -33,6 +33,24 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         print("Value: \(displayStrings[indexPath.row])")
     }
     
+    //created with help from: https://stackoverflow.com/questions/38139774/how-to-set-a-custom-cell-as-header-or-footer-of-uitableview
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell")
+        let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 400, height: 60))
+        textBox.text = ("Parking Location: \n")
+        textBox.textColor = UIColor.black
+        textBox.font = .systemFont(ofSize: 18)
+        //ensure that no one can edit the UITextView
+        textBox.isUserInteractionEnabled = false
+        cell?.addSubview(textBox)
+        cell?.textLabel!.text = "HEYYYYY"
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 80
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +74,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
         
-        myTableView = UITableView(frame: CGRect(x: 0, y: 150, width: displayWidth, height: displayHeight - barHeight))
+        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -88,7 +106,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     func onUserAction(title: String, hours: [[String:String]: [NSDictionary]])
     {
         //using a UITextView to enable multiline
-        let textBox =  UITextView(frame: CGRect(x: 0, y: 100, width: 400, height: 50))
+        let textBox =  UITextView(frame: CGRect(x: 15, y: 100, width: 400, height: 60))
         //sorting the key-value pairs by grouping
         //let hoursSorted = hours.sorted(by: ==)
         //creating the text that will be displayed in the view
@@ -124,7 +142,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         textBox.font = .systemFont(ofSize: 18)
         //ensure that no one can edit the UITextView
         textBox.isUserInteractionEnabled = false
-        self.view.addSubview(textBox)
+        //self.view.addSubview(textBox)
     }
 
     //-----------------------------------------------
