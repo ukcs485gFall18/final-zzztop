@@ -115,6 +115,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //let hoursSorted = hours.sorted(by: ==)
         //creating the text that will be displayed in the view
         var textToDisplay = ""
+        displayStrings = [String]()
         //Dictionary of strings : array of NS Dictionaries
         for (key,value) in hours{
             //for each string pair in the dictionary (day range: pass)
@@ -137,6 +138,11 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         }
         //write the name of the parking location
         nameOfLocation = ("   Parking Location: \n   \(title)")
+        print(title)
+        myTableView.reloadData()
+        for string in displayStrings{
+            print(string)
+        }
     }
 
     //-----------------------------------------------
