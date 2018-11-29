@@ -34,6 +34,27 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         print("Num: \(indexPath.row)")
         print(displayStrings.count)
         print("Value: \(displayStrings[indexPath.row])")
+        
+        //help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
+        let parkHere = UIAlertController(title: "Alert", message: "Do you want to park here?", preferredStyle: .alert)
+        parkHere.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                print("default")
+                
+            case .cancel:
+                print("cancel")
+                
+            case .destructive:
+                print("destructive")
+        }}))
+        
+        //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        parkHere.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in parkHere.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(parkHere, animated: true, completion: nil)
+        
     }
     
     //created with help from: https://stackoverflow.com/questions/38139774/how-to-set-a-custom-cell-as-header-or-footer-of-uitableview
@@ -113,9 +134,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     //-----------------------------------------------
     func onUserAction(title: String, hours: [[String:String]: [NSDictionary]])
     {
-        //sorting the key-value pairs by grouping
-        //let hoursSorted = hours.sorted(by: ==)
-        //creating the text that will be displayed in the view
         //resetting all of the variables
         var textToDisplay = ""
         displayStrings = [String]()
