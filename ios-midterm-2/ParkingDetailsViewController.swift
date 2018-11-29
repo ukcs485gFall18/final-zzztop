@@ -13,6 +13,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     private var myTableView: UITableView!
     private var displayStrings = [String]()
     private var nameOfLocation = String()
+    private var sortableStrings = [String:String]() //extracts the pass name and uses it as a key to sort
+    private var sortedStrings = [(key:String, value:String)]() //dictionary of sorted strings for display in table, only use keys of the tuples
     
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,7 +26,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
         cell.textLabel!.numberOfLines = 0
         cell.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
-        cell.textLabel!.text = "\(displayStrings[indexPath.row])"
+        cell.textLabel!.text = "\(sortedStrings[indexPath.row].key)"
         return cell
     }
     
@@ -114,8 +116,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //sorting the key-value pairs by grouping
         //let hoursSorted = hours.sorted(by: ==)
         //creating the text that will be displayed in the view
+        //resetting all of the variables
         var textToDisplay = ""
         displayStrings = [String]()
+        sortableStrings = [String:String]()
+        sortedStrings = [(key:String, value:String)]()
+        
         //Dictionary of strings : array of NS Dictionaries
         for (key,value) in hours{
             //for each string pair in the dictionary (day range: pass)
@@ -138,11 +144,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         }
         //write the name of the parking location
         nameOfLocation = ("   Parking Location: \n   \(title)")
-        print(title)
+        sortStrings()
         myTableView.reloadData()
-        for string in displayStrings{
-            print(string)
-        }
     }
 
     //-----------------------------------------------
@@ -175,6 +178,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
     }
 
+    
     func formatDays(dayRange: String) -> String{
         switch dayRange{
         case "MF":
@@ -190,6 +194,18 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         default:
             return "No date"
         }
+    }
+    
+    func sortStrings(){
+        for string in displayStrings{
+            let parkingInfoArray = string.components(separatedBy: "\n")
+            let passInfo = parkingInfoArray[0] //get the first line
+            let passNoColonArray = passInfo.components(separatedBy: ": ")
+            let nameOfPass = passNoColonArray[1]
+            print(nameOfPass)
+            sortableStrings[string] = nameOfPass
+        }
+        sortedStrings = sortableStrings.sorted(by: { $0.value < $1.value })
     }
     
     //Sources for this file:
