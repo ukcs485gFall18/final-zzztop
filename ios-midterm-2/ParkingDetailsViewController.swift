@@ -27,6 +27,10 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         cell.textLabel!.numberOfLines = 0
         cell.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
         cell.textLabel!.text = "\(sortedStrings[indexPath.row].key)"
+        //get the value from the tuple for the pass
+        //look in the dictionary of pass names and UIImages
+        //put the value into the imageView
+        cell.imageView?.image = UIImage(named: "parkingPass.jpg")
         return cell
     }
     
