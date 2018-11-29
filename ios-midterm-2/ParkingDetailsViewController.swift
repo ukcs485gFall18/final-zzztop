@@ -65,16 +65,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //setting the background of this current view to white
         view.backgroundColor = .white
         
-        //declaring and adding a back button to the view
-        let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 60, height: 30))
-        backButton.layer.cornerRadius = 5
-        //backButton.backgroundColor = .blue
-        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
-        let backIcon = UIImage(named: "backIcon.png")
-        backButton.setImage(backIcon, for: .normal)
-        backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        view.addSubview(backButton)
-        
         //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
@@ -85,6 +75,16 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.dataSource = self
         myTableView.delegate = self
         self.view.addSubview(myTableView)
+        
+        //declaring and adding a back button to the view
+        let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 30, height: 30))
+        backButton.layer.cornerRadius = 5
+        //backButton.backgroundColor = .blue
+        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+        let backIcon = UIImage(named: "backIconBlack.png")
+        backButton.setImage(backIcon, for: .normal)
+        backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        view.addSubview(backButton)
         
     }
     
