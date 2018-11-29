@@ -12,6 +12,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
 
     private var myTableView: UITableView!
     private var displayStrings = [String]()
+    private var nameOfLocation = String()
     
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,20 +36,23 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     
     //created with help from: https://stackoverflow.com/questions/38139774/how-to-set-a-custom-cell-as-header-or-footer-of-uitableview
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell")
-        let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 400, height: 60))
-        textBox.text = ("Parking Location: \n")
+        let customView:UIView = UIView()
+        customView.backgroundColor = UIColor(patternImage: UIImage(named: "teal-gradient.png")!)
+        
+        let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 450, height: 70))
+        textBox.text = (nameOfLocation)
         textBox.textColor = UIColor.black
-        textBox.font = .systemFont(ofSize: 18)
+        textBox.font = .systemFont(ofSize: 20)
+        textBox.backgroundColor = UIColor.clear
         //ensure that no one can edit the UITextView
         textBox.isUserInteractionEnabled = false
-        cell?.addSubview(textBox)
-        cell?.textLabel!.text = "HEYYYYY"
-        return cell
+        customView.addSubview(textBox)
+        customView.sizeToFit()
+        return customView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 80
+        return 70
     }
     
     override func viewDidLoad() {
@@ -64,8 +68,10 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //declaring and adding a back button to the view
         let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 60, height: 30))
         backButton.layer.cornerRadius = 5
-        backButton.backgroundColor = .blue
-        backButton.setTitle("Back", for: .normal)
+        //backButton.backgroundColor = .blue
+        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+        let backIcon = UIImage(named: "backIcon.png")
+        backButton.setImage(backIcon, for: .normal)
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         view.addSubview(backButton)
         
@@ -74,7 +80,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
         
-        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
+        myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -105,8 +111,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     //-----------------------------------------------
     func onUserAction(title: String, hours: [[String:String]: [NSDictionary]])
     {
-        //using a UITextView to enable multiline
-        let textBox =  UITextView(frame: CGRect(x: 15, y: 100, width: 400, height: 60))
         //sorting the key-value pairs by grouping
         //let hoursSorted = hours.sorted(by: ==)
         //creating the text that will be displayed in the view
@@ -132,17 +136,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
         //write the name of the parking location
-        textBox.text = ("Parking Location: \n\(title)")
-        //format the text box
-        print("Here is the data in the array")
-        for cell in displayStrings{
-            print(cell)
-        }
-        textBox.textColor = UIColor.black
-        textBox.font = .systemFont(ofSize: 18)
-        //ensure that no one can edit the UITextView
-        textBox.isUserInteractionEnabled = false
-        //self.view.addSubview(textBox)
+        nameOfLocation = ("   Parking Location: \n   \(title)")
     }
 
     //-----------------------------------------------
