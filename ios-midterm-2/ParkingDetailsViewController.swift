@@ -15,6 +15,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     private var nameOfLocation = String()
     private var sortableStrings = [String:String]() //extracts the pass name and uses it as a key to sort
     private var sortedStrings = [(key:String, value:String)]() //dictionary of sorted strings for display in table, only use keys of the tuples
+    private var passImages = [String:UIImage]()
     
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -28,9 +29,16 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         cell.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
         cell.textLabel!.text = "\(sortedStrings[indexPath.row].key)"
         //get the value from the tuple for the pass
+        let passString = sortedStrings[indexPath.row].value
+        /*for (key, value) in kPassImages{
+            if key==passString{
+                cell.imageView?.image = value
+            }
+        }*/
         //look in the dictionary of pass names and UIImages
         //put the value into the imageView
-        cell.imageView?.image = UIImage(named: "parkingPass.jpg")
+        let passImage = passImages[passString]
+        cell.imageView?.image = passImage
         return cell
     }
     
@@ -112,6 +120,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         backButton.setImage(backIcon, for: .normal)
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         view.addSubview(backButton)
+        
+        passImages = ["E":EPassImage, "E2":E2PassImage, "E20":E20PassImage, "E26":E26PassImage, "E28":E28PassImage, "E27":E27PassImage, "R2":R2PassImage, "R7":R7PassImage, "R17":R17PassImage, "R19":R19PassImage, "R29":R29PassImage, "R30":R30PassImage, "C5":C5PassImage, "C9":C9PassImage, "C16":C16PassImage, "K":KPassImage, "EK":EKPassImage, "CK":CKPassImage, "X":XPassImage, "Authorized parking only":AuthorizedPassImage, "Any valid permit":AnyPassImage, "No permit required":NoPassImage] as! [String : UIImage]
         
     }
     
@@ -223,7 +233,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             let parkingInfoArray = string.components(separatedBy: "\n")
             let passInfo = parkingInfoArray[0] //get the first line
             let passNoColonArray = passInfo.components(separatedBy: ": ")
-            let nameOfPass = passNoColonArray[1]
+            let nameOfPass = passNoColonArray[1].trimmingCharacters(in: .whitespaces)
             print(nameOfPass)
             sortableStrings[string] = nameOfPass
         }
@@ -233,5 +243,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     //Sources for this file:
     //source for font size: https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how
     //source for ViewController background: https://stackoverflow.com/questions/29759224/change-background-color-of-viewcontroller-swift-single-view-application/29759262
+    //reference for trimming whitespace: https://www.hackingwithswift.com/example-code/strings/how-to-trim-whitespace-in-a-string
     
 }
