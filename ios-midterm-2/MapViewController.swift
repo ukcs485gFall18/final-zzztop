@@ -13,6 +13,10 @@ class MapViewController: UIViewController {
     
     // declaration of public variables
     var parkingData: [NSDictionary]?
+    var gameday: [NSDictionary]?
+    var gamedates: NSDictionary?
+    var gameDates = [String]()
+    var parking: [NSDictionary]?
     var usersPermits: [String] = []
     var spotsAndTimes: [String:[[String:String]:[NSDictionary]]] = [:]
     let locationManager = CLLocationManager()
@@ -25,6 +29,8 @@ class MapViewController: UIViewController {
     var passedText = ""
     let now = Date()
     var headerHeight = CGFloat()
+    let calendar = Calendar.current
+
     
     // enum of all pass types in the JSON file
     enum PassType: String {
@@ -82,17 +88,18 @@ class MapViewController: UIViewController {
         configureLocationManager()
         
         setupViews()
+        // format the PickerView
+        createPickerView()
+        pickedDate = now
         readJson()
+        checkGameDay()
         
-        for p in parkingData! {
+        for p in parking! {
             let coords = p["coords"] as! [Double]
             let dict = [coords[0], coords[1]]
             setPins(dict: dict, title: p["name"] as! String)
         }
-        
-        // format the PickerView
-        createPickerView()
-        pickedDate = now
+        view.addSubview(gameDayLabel)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: pickedDate!)
@@ -206,6 +213,18 @@ class MapViewController: UIViewController {
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
+        if checkGameDay() == "Today"{
+            gameDayLabel.text = "Game Day"
+            gameDayLabel.isHidden = false
+        }
+        else if checkGameDay() == "Tomorrow"{
+            gameDayLabel.text = "Game Day Tomorrow"
+            gameDayLabel.isHidden = false
+        }
+        else{
+            gameDayLabel.text = ""
+            gameDayLabel.isHidden = true
+        }
         accessDataForOverlays(pickedDate: pickedDate!)
     }
     
@@ -219,9 +238,8 @@ class MapViewController: UIViewController {
     func accessDataForOverlays(pickedDate: Date) {
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
-        
         // go through each collection in the JSON file
-        for p in parkingData! {
+        for p in parking! {
             // get the spot name, circle radius, and coordinates
             let spotName = p["name"] as! String
             let radius = p["radius"] as! Int
@@ -324,6 +342,33 @@ class MapViewController: UIViewController {
         }
     }
     
+    func checkGameDay() -> String {
+        var gameDay = "None"
+        let format = "MM/dd/yyyy"
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        let hour = calendar.component(.hour, from: pickedDate!)
+        let min = calendar.component(.minute, from: pickedDate!)
+        for g in gameDates{
+            let gameDate = formatter.date(from: g)
+            if calendar.isDate(pickedDate!, inSameDayAs: gameDate!){
+                parking = gameday
+                gameDay = "Today"
+                break
+            }
+            else if calendar.isDate(pickedDate!.tomorrow(hour: hour, minute: min), inSameDayAs: gameDate!) {
+                parking = parkingData
+                gameDay = "Tomorrow"
+                break
+            }
+            else{
+                parking = parkingData
+                gameDay = "None"
+            }
+        }
+        return gameDay
+    }
+    
     //-----------------------------------------------
     // addToDictionary()
     //-----------------------------------------------
@@ -399,6 +444,32 @@ class MapViewController: UIViewController {
                 let data = try Data(contentsOf: file)
                 let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 parkingData = jsonResult["parking"] as? [NSDictionary]
+            } else {
+                print("no json file")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            if let file = Bundle.main.url(forResource: "gameday", withExtension: "json") {
+                let data = try Data(contentsOf: file)
+                let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                gameday = jsonResult["parking"] as? [NSDictionary]
+            } else {
+                print("no json file")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            if let file = Bundle.main.url(forResource: "gamedates", withExtension: "json") {
+                let data = try Data(contentsOf: file)
+                let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                gamedates = jsonResult as NSDictionary
+                let year = String(calendar.component(.year, from: pickedDate!))
+                gameDates = gamedates?[year] as! [String]
             } else {
                 print("no json file")
             }
@@ -534,6 +605,28 @@ class MapViewController: UIViewController {
         button.setImage(passesImage, for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var gameDayLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: buttonHeight+yPadding*2, width: view.frame.width-buttonWidth, height: buttonHeight))
+        label.center.x = view.center.x
+        label.textAlignment = NSTextAlignment.center
+        label.backgroundColor = .white
+        label.layer.cornerRadius = 5
+        label.alpha = 0.8
+        label.clipsToBounds = true
+        label.isHidden = false
+        if checkGameDay() == "Today"{
+            label.text = "Game Day"
+        }
+        else if checkGameDay() == "Tomorrow"{
+            label.text = "Game Day Tomorrow"
+        }
+        else{
+            label.text = ""
+            label.isHidden = true
+        }
+        return label
     }()
     
     // button to reset the time to the current time

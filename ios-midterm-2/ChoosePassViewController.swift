@@ -90,7 +90,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
 
     // creates add pass label
     lazy var addPassesLabel: UILabel = {
-        let addPassesLabel = UILabel(frame: CGRect(x: 0, y: ynavPadding, width: displayWidth-buttonWidth, height: buttonHeight))
+        let addPassesLabel = UILabel(frame: CGRect(x: 0, y: ynavPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
         addPassesLabel.center.x = view.center.x
         addPassesLabel.text = "Add Passes"
         addPassesLabel.font = addPassesLabel.font.withSize(headerFontSize)
