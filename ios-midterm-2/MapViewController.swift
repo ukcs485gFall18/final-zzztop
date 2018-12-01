@@ -117,7 +117,7 @@ class MapViewController: UIViewController {
     }
     
     @objc func openAdminVC() {
-        print(123)
+        present(AdminViewController(), animated: true, completion: nil)
     }
     
     //-----------------------------------------------
