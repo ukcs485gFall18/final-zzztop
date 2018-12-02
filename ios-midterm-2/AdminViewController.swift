@@ -24,7 +24,20 @@ class AdminViewController: UIViewController {
     }
     
     func checkIfUserIsLoggedIn() {
-        present(LoginViewController(), animated: true, completion: nil)
+        // for testing
+//        UserDefaults.standard.set("wrong", forKey: "username")
+//        UserDefaults.standard.set("wrong", forKey: "password")
+        
+        let pastUsername = UserDefaults.standard.string(forKey: "username")
+        let pastPassword = UserDefaults.standard.string(forKey: "password")
+        let rightUsername = "Admin"
+        let rightPassword = "123"
+        
+        if pastUsername != rightUsername || pastPassword != rightPassword {
+            present(LoginViewController(), animated: true, completion: nil)
+        } else {
+            return
+        }
     }
     
     

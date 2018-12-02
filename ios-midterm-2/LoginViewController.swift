@@ -10,8 +10,6 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -24,27 +22,51 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    @objc func handleLoginButton() {
-        guard let email = emailTextField.text,
+    @objc func checkIfLoginCredentialsAreRight() {
+        guard let username = usernameTextField.text,
             let password = passwordTextField.text else {
                 print("Form is not valid")
                 return
         }
         
-        if email == "Admin" && password == "123" {
-            dismiss(animated: true, completion: nil)
-        } else {
-            alert(title: "Login error", message: "Wrong email or password")
-        }
+        // set user defaults
+        UserDefaults.standard.set(username, forKey: "username")
+        UserDefaults.standard.set(password, forKey: "password")
         
+        // get user default values (the username and password entered by the user)
+        let attemptedUsername = UserDefaults.standard.string(forKey: "username")
+        let attemptedPassword = UserDefaults.standard.string(forKey: "password")
+        
+        // set admin username and password
+        let rightUsername = "Admin"
+        let rightPassword = "123"
+
+        // check if entered values are right
+        if attemptedUsername == rightUsername || attemptedPassword == rightPassword {
+            present(AdminViewController(), animated: true, completion: nil)
+        } else {
+            alert(title: "Login error", message: "Wrong username or password")
+        }
     }
+    
     
     @objc func closeViews() {
         print(123)
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+//        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - keyboard
+    
+    var activeTextField = UITextField()
+    
+    // creates bottom border
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // fix, temporary, keeps adding subviews instead of removing
+        activeTextField.setBottomBorder(color: UIColor.white)
+        
+        activeTextField = textField
+        activeTextField.setBottomBorder(color: red)
+    }
     
     // Hide keyboard when user touches outside keyboard
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -52,10 +74,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        emailTextField.resignFirstResponder()
+        usernameTextField.resignFirstResponder()
         
         // Switch focus to other text field
-        if textField == emailTextField {
+        if textField == usernameTextField {
             passwordTextField.becomeFirstResponder()
         } else if textField == passwordTextField {
             passwordTextField.resignFirstResponder()
@@ -73,13 +95,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = UIColor.white
         
         view.addSubview(logo)
-        view.addSubview(emailTextField)
+        view.addSubview(usernameTextField)
         view.addSubview(passwordTextField)
         view.addSubview(loginButton)
         view.addSubview(exitButton)
         
         setupLogo()
-        setupEmailTextField()
+        setupUsernameTextField()
         setupPasswordTextField()
         setupLoginButton()
         setupExitButton()
@@ -100,22 +122,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         logo.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
-    lazy var emailTextField: UITextField = {
+    lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
-        textField.placeholder = "Email"
+        textField.placeholder = "Username"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
         textField.textAlignment = .center
         return textField
     }()
     
-    func setupEmailTextField() {
-        emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emailTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 50).isActive = true
-        emailTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        emailTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    func setupUsernameTextField() {
+        usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        usernameTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 50).isActive = true
+        usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
+        usernameTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     lazy var passwordTextField: UITextField = {
@@ -133,7 +155,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func setupPasswordTextField() {
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 12).isActive = true
+        passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 12).isActive = true
         passwordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
         passwordTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
@@ -147,7 +169,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
         button.layer.borderColor = lightgray
-        button.addTarget(self, action: #selector(handleLoginButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(checkIfLoginCredentialsAreRight), for: .touchUpInside)
         return button
     }()
     
@@ -173,7 +195,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         exitButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
     }
-    
+   
+}
+
+extension UITextField {
+    func setBottomBorder(color: UIColor) {
+        self.borderStyle = UITextField.BorderStyle.none
+        self.backgroundColor = UIColor.clear
+        
+        let line = UIView()
+        let height = 1.0
+        line.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
+        
+        line.backgroundColor = color
+        self.addSubview(line)
+    }
 }
 
 // Source: my own code; looks similar to other login views I've made
+// source: https://codepany.com/blog/swift-3-custom-uitextfield-with-single-line-input/

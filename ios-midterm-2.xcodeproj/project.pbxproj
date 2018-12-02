@@ -71,7 +71,6 @@
 		806A91D721729D3B00EDA648 /* ios-midterm-2 */ = {
 			isa = PBXGroup;
 			children = (
-				0F1D9D9F21B362C300D272E1 /* ios-midterm-2.entitlements */,
 				806A91D821729D3B00EDA648 /* AppDelegate.swift */,
 				0FB9F04F217D2CE500752425 /* constants.swift */,
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
@@ -80,14 +79,23 @@
 				0F1D9D9D21B3589E00D272E1 /* ParkingTableViewController.swift */,
 				802EDF1621B17240004B1CE8 /* LoginViewController.swift */,
 				802EDF1B21B17329004B1CE8 /* AdminViewController.swift */,
+				80F65C3E21B453470019FEB9 /* data */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
+				0F1D9D9F21B362C300D272E1 /* ios-midterm-2.entitlements */,
+			);
+			path = "ios-midterm-2";
+			sourceTree = "<group>";
+		};
+		80F65C3E21B453470019FEB9 /* data */ = {
+			isa = PBXGroup;
+			children = (
 				0F1D9D9B21B3053700D272E1 /* gamedates.json */,
 				0F1D9D9921B3020300D272E1 /* gameday.json */,
 				0FB9F07C217D531200752425 /* parkingData.json */,
 			);
-			path = "ios-midterm-2";
+			path = data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,4 +385,3 @@
 	};
 	rootObject = 806A91CD21729D3B00EDA648 /* Project object */;
 }
-
