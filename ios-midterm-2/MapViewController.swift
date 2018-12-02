@@ -17,11 +17,13 @@ class MapViewController: UIViewController {
     var gamedates: NSDictionary?
     var gameDates = [String]()
     var parking: [NSDictionary]?
+    var parkingNames = [String]()
     var usersPermits: [String] = []
     var spotsAndTimes: [String:[[String:String]:[NSDictionary]]] = [:]
     let locationManager = CLLocationManager()
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
+    var parkingTableVC = ParkingTableViewController()
     var detailsVC = ParkingDetailsViewController()
     var pickedDate: Date?
     var didSelectDate: Bool = false
@@ -134,6 +136,12 @@ class MapViewController: UIViewController {
         self.present(choosePassVC, animated: true, completion: nil)
     }
     
+    @objc func listViewTouched() {
+        parkingTableVC.parkingNames = parkingNames
+        parkingTableVC.spotsAndTimes = spotsAndTimes
+        self.present(parkingTableVC, animated: true, completion: nil)
+    }
+    
     //-----------------------------------------------
     // zoomToCurrentLocation()
     //-----------------------------------------------
@@ -236,6 +244,7 @@ class MapViewController: UIViewController {
     // current time
     //-----------------------------------------------
     func accessDataForOverlays(pickedDate: Date) {
+        parkingNames.removeAll()
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         // go through each collection in the JSON file
@@ -282,11 +291,11 @@ class MapViewController: UIViewController {
                                 (weekdaystring == WeekDay.tuesday.rawValue) ||
                                 (weekdaystring == WeekDay.wednesday.rawValue) ||
                                 (weekdaystring == WeekDay.thursday.rawValue) {
-                                rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                                rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
                             } else if weekdaystring == WeekDay.friday.rawValue {
-                                rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                                rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
                             } else {
-                                rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius)
+                                rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
                             }
                         }
                     }
@@ -301,10 +310,10 @@ class MapViewController: UIViewController {
     // checks that the given date is within the
     // given date range by calling the function below
     //-----------------------------------------------
-    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int) {
+    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int, name:String) {
         for c in check {
             if let range = timeDict[c] {
-                checkDateRange(open: range as! NSDictionary, coords: coords, radius: radius)
+                checkDateRange(open: range as! NSDictionary, coords: coords, radius: radius, name: name)
                 break
             }
         }
@@ -318,7 +327,7 @@ class MapViewController: UIViewController {
     // Pre: Requires the NSDictionary of dates,
     // the cordinates, and the desired circle radius
     //-----------------------------------------------
-    func checkDateRange(open: NSDictionary, coords: [Double], radius: Int) {
+    func checkDateRange(open: NSDictionary, coords: [Double], radius: Int, name: String) {
         if let time = pickedDate {
             let start = open["start"] as! NSDictionary
             let startHour = start["hour"] as! Int
@@ -337,6 +346,9 @@ class MapViewController: UIViewController {
             }
             
             if (time >= startDate) && (time < endDate) {
+                if !parkingNames.contains(name){
+                    parkingNames.append(name)
+                }
                 setOverlays(dict: coords, radius: radius)
             }
         }
@@ -564,6 +576,7 @@ class MapViewController: UIViewController {
     func setupViews() {
         view.addSubview(map)
         self.navigationController?.navigationBar.addSubview(passButton)
+        self.navigationController?.navigationBar.addSubview(parkingTableButton)
         self.navigationController?.navigationBar.addSubview(resetButton)
         setupMap()
         setupZoomButton()
@@ -604,6 +617,16 @@ class MapViewController: UIViewController {
         button.layer.cornerRadius = 5
         button.setImage(passesImage, for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
+        return button
+    }()
+    
+    // button to display passes screen
+    lazy var parkingTableButton: UIButton = {
+        let tableImage = UIImage(named: "listIcon.png")
+        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding-navButtonW, y: ynavPadding, width: navButtonW, height: navButtonH))
+        button.layer.cornerRadius = 5
+        button.setImage(tableImage, for: .normal)
+        button.addTarget(self, action: #selector(listViewTouched), for: .touchUpInside)
         return button
     }()
     
