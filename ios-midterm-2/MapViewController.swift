@@ -623,7 +623,7 @@ class MapViewController: UIViewController {
     // button to display passes screen
     lazy var parkingTableButton: UIButton = {
         let tableImage = UIImage(named: "listIcon.png")
-        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding-navButtonW, y: ynavPadding, width: navButtonW, height: navButtonH))
+        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding-navButtonW, y: ynavPadding, width: navButtonW/2, height: navButtonH))
         button.layer.cornerRadius = 5
         button.setImage(tableImage, for: .normal)
         button.addTarget(self, action: #selector(listViewTouched), for: .touchUpInside)

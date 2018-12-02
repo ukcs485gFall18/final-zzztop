@@ -24,6 +24,7 @@
 		0F1D9D9921B3020300D272E1 /* gameday.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameday.json; sourceTree = "<group>"; };
 		0F1D9D9B21B3053700D272E1 /* gamedates.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gamedates.json; sourceTree = "<group>"; };
 		0F1D9D9D21B3589E00D272E1 /* ParkingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingTableViewController.swift; sourceTree = "<group>"; };
+		0F1D9D9F21B362C300D272E1 /* ios-midterm-2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ios-midterm-2.entitlements"; sourceTree = "<group>"; };
 		0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassViewController.swift; sourceTree = "<group>"; };
 		0FB9F04F217D2CE500752425 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		0FB9F07C217D531200752425 /* parkingData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parkingData.json; sourceTree = "<group>"; };
@@ -66,6 +67,7 @@
 		806A91D721729D3B00EDA648 /* ios-midterm-2 */ = {
 			isa = PBXGroup;
 			children = (
+				0F1D9D9F21B362C300D272E1 /* ios-midterm-2.entitlements */,
 				806A91D821729D3B00EDA648 /* AppDelegate.swift */,
 				0FB9F04F217D2CE500752425 /* constants.swift */,
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
@@ -116,6 +118,9 @@
 						CreatedOnToolsVersion = 10.0;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -303,6 +308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ios-midterm-2/ios-midterm-2.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SSJNP7NYVC;
 				INFOPLIST_FILE = "ios-midterm-2/Info.plist";
@@ -322,6 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ios-midterm-2/ios-midterm-2.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SSJNP7NYVC;
 				INFOPLIST_FILE = "ios-midterm-2/Info.plist";
