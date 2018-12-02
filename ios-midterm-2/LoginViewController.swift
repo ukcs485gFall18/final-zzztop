@@ -10,6 +10,8 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -64,8 +66,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - views
     
+    let red = UIColor(red: 250/255, green: 92/255, blue: 71/255, alpha: 1)
+    let lightgray = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1).cgColor
+    
     func setupViews() {
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = UIColor.white
         
         view.addSubview(logo)
         view.addSubview(emailTextField)
@@ -83,7 +88,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     lazy var logo: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "AppIcon")
+        imageView.image = UIImage(named: "logo")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -100,8 +105,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         textField.placeholder = "Email"
-        textField.textAlignment = .center
         textField.backgroundColor = UIColor.white
+        textField.tintColor = red
+        textField.textAlignment = .center
         return textField
     }()
     
@@ -116,11 +122,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
-        textField.returnKeyType = .done
-        textField.isSecureTextEntry = true
         textField.placeholder = "Password"
-        textField.backgroundColor = .white
+        textField.backgroundColor = UIColor.white
+        textField.tintColor = red
         textField.textAlignment = .center
+        textField.isSecureTextEntry = true
+        textField.returnKeyType = .done
         return textField
     }()
     
@@ -139,7 +146,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(red: 220, green: 220, blue: 220).cgColor
+        button.layer.borderColor = lightgray
         button.addTarget(self, action: #selector(handleLoginButton), for: .touchUpInside)
         return button
     }()
@@ -169,17 +176,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
 }
 
-extension UIColor {
-    convenience init(red: Int = 0, green: Int = 0, blue: Int = 0, opacity: Int = 255) {
-        precondition(0...255 ~= red   &&
-            0...255 ~= green &&
-            0...255 ~= blue  &&
-            0...255 ~= opacity, "input range is out of range 0...255")
-        self.init(red: CGFloat(red)/255, green: CGFloat(green)/255, blue: CGFloat(blue)/255, alpha: CGFloat(opacity)/255)
-    }
-}
-
-
 // Source: my own code; looks similar to other login views I've made
-
-// FIXME: exit button

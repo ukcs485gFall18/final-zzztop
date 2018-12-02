@@ -672,8 +672,9 @@ class MapViewController: UIViewController {
     }()
     
     // creates the zoom button
+    // returns to the user's current location
     lazy var zoomButton: UIButton = {
-        let img = UIImage(named: "location-arrow")
+        let img = UIImage(named: "zoom")
         let height_width: CGFloat = 30
         let x: CGFloat = (view.frame.width/5) * 2.50 - xPadding
         
