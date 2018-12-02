@@ -13,6 +13,8 @@
 		0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */; };
 		0FB9F050217D2CE500752425 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04F217D2CE500752425 /* constants.swift */; };
 		0FB9F07D217D531200752425 /* parkingData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0FB9F07C217D531200752425 /* parkingData.json */; };
+		802EDF1721B17240004B1CE8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802EDF1621B17240004B1CE8 /* LoginViewController.swift */; };
+		802EDF1C21B17329004B1CE8 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802EDF1B21B17329004B1CE8 /* AdminViewController.swift */; };
 		806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91D821729D3B00EDA648 /* AppDelegate.swift */; };
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
@@ -28,6 +30,8 @@
 		0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassViewController.swift; sourceTree = "<group>"; };
 		0FB9F04F217D2CE500752425 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		0FB9F07C217D531200752425 /* parkingData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parkingData.json; sourceTree = "<group>"; };
+		802EDF1621B17240004B1CE8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		802EDF1B21B17329004B1CE8 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		806A91D521729D3B00EDA648 /* ios-midterm-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-midterm-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		806A91D821729D3B00EDA648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		806A91DA21729D3B00EDA648 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 				806A91DA21729D3B00EDA648 /* MapViewController.swift */,
 				A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */,
 				0F1D9D9D21B3589E00D272E1 /* ParkingTableViewController.swift */,
+				802EDF1621B17240004B1CE8 /* LoginViewController.swift */,
+				802EDF1B21B17329004B1CE8 /* AdminViewController.swift */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
@@ -165,10 +171,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				802EDF1721B17240004B1CE8 /* LoginViewController.swift in Sources */,
 				806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */,
 				0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */,
 				0F1D9D9E21B3589E00D272E1 /* ParkingTableViewController.swift in Sources */,
 				806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */,
+				802EDF1C21B17329004B1CE8 /* AdminViewController.swift in Sources */,
 				0FB9F050217D2CE500752425 /* constants.swift in Sources */,
 				A3C38205218003DD003D53E7 /* ParkingDetailsViewController.swift in Sources */,
 			);
@@ -369,3 +377,4 @@
 	};
 	rootObject = 806A91CD21729D3B00EDA648 /* Project object */;
 }
+

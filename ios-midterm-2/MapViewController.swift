@@ -125,6 +125,10 @@ class MapViewController: UIViewController {
         accessDataForOverlays(pickedDate: now)
     }
     
+    @objc func openAdminVC() {
+        present(AdminViewController(), animated: true, completion: nil)
+    }
+    
     //-----------------------------------------------
     // choosePassTouched()
     //-----------------------------------------------
@@ -574,12 +578,17 @@ class MapViewController: UIViewController {
     // button to the view
     //-----------------------------------------------
     func setupViews() {
+        navigationController?.navigationBar.addSubview(resetButton)
+        navigationController?.navigationBar.addSubview(zoomButton)
+        navigationController?.navigationBar.addSubview(passButton)
+        navigationController?.navigationBar.addSubview(adminButton)
+        
         view.addSubview(map)
         self.navigationController?.navigationBar.addSubview(passButton)
         self.navigationController?.navigationBar.addSubview(parkingTableButton)
         self.navigationController?.navigationBar.addSubview(resetButton)
+
         setupMap()
-        setupZoomButton()
     }
     
     // create the UI text field
@@ -612,9 +621,10 @@ class MapViewController: UIViewController {
     
     // button to display passes screen
     lazy var passButton: UIButton = {
-        let passesImage = UIImage(named: "permitIcon.png")
-        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
-        button.layer.cornerRadius = 5
+        let passesImage = UIImage(named: "permitIcon")
+        let x: CGFloat = (view.frame.width/5)*3.5 - xPadding*2
+        
+        let button = UIButton(frame: CGRect(x: x, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.setImage(passesImage, for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         return button
@@ -654,9 +664,8 @@ class MapViewController: UIViewController {
     
     // button to reset the time to the current time
     lazy var resetButton: UIButton = {
-        let refreshIcon = UIImage(named: "refreshIcon.jpg")
+        let refreshIcon = UIImage(named: "refreshIcon")
         let button = UIButton(frame: CGRect(x: xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
-        button.layer.cornerRadius = 5
         button.setImage(refreshIcon, for: .normal)
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
@@ -664,23 +673,26 @@ class MapViewController: UIViewController {
     
     // creates the zoom button
     lazy var zoomButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         let img = UIImage(named: "location-arrow")
+        let height_width: CGFloat = 30
+        let x: CGFloat = (view.frame.width/5) * 2.50 - xPadding
+        
+        let button = UIButton(frame: CGRect(x: x, y: ynavPadding, width: height_width, height: height_width))
         button.setImage(img, for: .normal)
-        button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(zoomToCurrentLocation), for: .touchUpInside)
         return button
     }()
     
-    // position the zoom button
-    func setupZoomButton() {
-        navigationController?.navigationBar.addSubview(zoomButton)
-        zoomButton.centerXAnchor.constraint(equalTo: (navigationController?.navigationBar.centerXAnchor)!).isActive = true
-        zoomButton.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: ynavPadding).isActive = true
-        zoomButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        zoomButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-    }
+    // creates the zoom button
+    lazy var adminButton: UIButton = {
+        let img = UIImage(named: "gear")
+        let height_width: CGFloat = 30
+        
+        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: height_width, height: height_width))
+        button.setImage(img, for: .normal)
+        button.addTarget(self, action: #selector(openAdminVC), for: .touchUpInside)
+        return button
+    }()
     
     // creates the map
     lazy var map: MKMapView = {
