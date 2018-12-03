@@ -9,6 +9,7 @@
 import UIKit
 
 class ParkingTableViewController: UIViewController, UITableViewDataSource {
+    
     var parkingNames = [String]()
     var spotsAndTimes: [String:[[String:String]:[NSDictionary]]] = [:]
     var displayWidth = CGFloat()
@@ -18,7 +19,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // designes and positions views
+        // designs and positions views
         setupViews()
     }
     
@@ -75,6 +76,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
         availableParkingLabel.textColor = .white
         return availableParkingLabel
     }()
+    
 }
     
 extension ParkingTableViewController: UITableViewDelegate {
@@ -95,5 +97,5 @@ extension ParkingTableViewController: UITableViewDelegate {
             detailsVC.onUserAction(title: parkingNames[indexPath.row], hours: hours)
         }
     }
+    
 }
-

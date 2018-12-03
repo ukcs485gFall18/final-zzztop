@@ -39,7 +39,4 @@ class AdminViewController: UIViewController {
             return
         }
     }
-    
-    
-    
 }

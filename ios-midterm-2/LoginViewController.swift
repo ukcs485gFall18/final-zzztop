@@ -49,10 +49,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
     @objc func closeViews() {
         print(123)
 //        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        
+//        dismiss(animated: true, completion: nil)
+        
+//        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
+        
+//        self.navigationController?.popToRootViewController(animated: true)
+
+//        guard let vc = self.presentingViewController else { return }
+//        while (vc.presentingViewController != nil) {
+//            vc.dismiss(animated: true, completion: nil)
+//        }
+        
+//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+//            appDelegate.window?.rootViewController?.dismiss(animated: true, completion: nil)
+//            (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: true)
+//        }
     }
     
     // MARK: - keyboard
@@ -61,11 +76,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // creates bottom border
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        // fix, temporary, keeps adding subviews instead of removing
+        // temporary, keeps adding subviews instead of removing
         activeTextField.setBottomBorder(color: UIColor.white)
         
         activeTextField = textField
         activeTextField.setBottomBorder(color: red)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // temporary, need to remove subview
+        activeTextField.setBottomBorder(color: UIColor.white)
     }
     
     // Hide keyboard when user touches outside keyboard
@@ -199,6 +219,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 }
 
 extension UITextField {
+    
     func setBottomBorder(color: UIColor) {
         self.borderStyle = UITextField.BorderStyle.none
         self.backgroundColor = UIColor.clear
@@ -206,10 +227,11 @@ extension UITextField {
         let line = UIView()
         let height = 1.0
         line.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
-        
         line.backgroundColor = color
+        
         self.addSubview(line)
     }
+    
 }
 
 // Source: my own code; looks similar to other login views I've made

@@ -8,7 +8,13 @@
 
 import UIKit
 
-let kPassTypes = ["E","E2","E20","E26","E28","E27","R2","R7","R17","R19","R29","R30","C5","C9","C16","K","EK","CK","X","Authorized parking only","Any valid permit","No permit required"]
+let kPassTypes = [
+    "E", "E2", "E20", "E26", "E28", "E27",
+    "R2", "R7", "R17", "R19", "R29", "R30",
+    "C5", "C9", "C16",
+    "K", "EK", "CK", "X",
+    "Authorized parking only", "Any valid permit", "No permit required"
+]
 
 let xPadding: CGFloat = 10
 let yPadding: CGFloat = 10

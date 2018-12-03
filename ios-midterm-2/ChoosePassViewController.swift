@@ -20,14 +20,16 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //save user's pass information in user defaults so they only have to reselect if they want to change their information
+        // save user's pass information in user defaults so they only have to reselect if they want to change their information
         if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
             userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         } else {
-            userPasses = [kPassTypes[21]] //if user has no pass, make their pass type no pass required
+            userPasses = [kPassTypes[21]] // if user has no pass, make their pass type no pass required
+            UserDefaults.standard.set(userPasses, forKey: "userPasses") // set user defaults
         }
+        print(userPasses)
         
-        // designes and positions views
+        // designs and positions views
         setupViews()
     }
     
@@ -52,7 +54,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         headerView.backgroundColor = .black
         view.addSubview(headerView)
         headerView.addSubview(addPassesLabel)
-        headerView.addSubview(backButton)
     }
 
     // creates table view to hold UK pass options user can select from
@@ -64,17 +65,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         tableView.allowsMultipleSelection = true
         return tableView
     }()
-
-    // creates back button
-    lazy var backButton: UIButton = {
-        let backButton = UIButton(frame: CGRect(x: xPadding, y: ynavPadding*2, width: navButtonW/2, height: navButtonH))
-        backButton.layer.cornerRadius = 5
-        let backIcon = UIImage(named: "backIcon.png")
-        backButton.setImage(backIcon, for: .normal)
-        backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-        return backButton
-    }()
-
+    
     // creates apply button
     lazy var applyButton: UIButton = {
         let applyButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: displayWidth-xPadding*2, height: buttonHeight))
@@ -107,13 +98,13 @@ extension ChoosePassViewController: UITableViewDelegate {
         return kPassTypes.count
     }
 
-    //make each cell of table contain a pass name
+    // make each cell of table contain a pass name
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "passCell", for: indexPath as IndexPath)
         cell.textLabel!.text = "\(kPassTypes[indexPath.row])"
 
-        //if a user has selected that pass, leaves the view, and returns to view
-        //the passes they selected previously will still be selected and have a checkmark by them
+        // if a user has selected that pass, leaves the view, and returns to view
+        // the passes they selected previously will still be selected and have a checkmark by them
         if userPasses.contains(cell.textLabel?.text ?? "") {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
@@ -123,25 +114,48 @@ extension ChoosePassViewController: UITableViewDelegate {
 
         return cell
     }
-
-    //if user selects a cell put a checkmark next to it and save it to user defaults
+    
+    // if user selects a cell put a checkmark next to it and save it to user defaults
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.checkmark
-
-        if !userPasses.contains(kPassTypes[indexPath.row]) { //so there aren't duplicate passes
-            userPasses.append(kPassTypes[indexPath.row])
-            UserDefaults.standard.set(userPasses, forKey:"userPasses")
+        
+        let passName = kPassTypes[indexPath.row]
+        
+        if !userPasses.contains(passName) { // so there aren't duplicate passes
+            userPasses.append(passName)
+            
+            // check for special passes
+            let firstCharacter = passName[0]
+            if firstCharacter == "C" || firstCharacter == "R" {
+                // if k lot is not already in userPasses
+                let kLot = kPassTypes[15]
+                if !userPasses.contains(kLot) {
+                    // add check mark for k lot cell
+                    tableView.cellForRow(at: [0, 15])?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    // append k lot
+                    userPasses.append(kLot)
+                }
+            }
+            
+            UserDefaults.standard.set(userPasses, forKey: "userPasses")
         }
     }
 
-    //if user deselects a cell remove the checkmark and remove from user defaults
+    // if user deselects a cell remove the checkmark and remove from user defaults
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.none
-        let removeIndex = userPasses.firstIndex(of:kPassTypes[indexPath.row])
+        let removeIndex = userPasses.firstIndex(of: kPassTypes[indexPath.row])
         userPasses.remove(at: removeIndex!)
         UserDefaults.standard.set(userPasses, forKey: "userPasses")
     }
 }
 
+extension String {
+    subscript (i: Int) -> Character {
+        return self[index(startIndex, offsetBy: i)]
+    }
+}
+
+// source for getting nth character: https://stackoverflow.com/questions/24092884/get-nth-character-of-a-string-in-swift-programming-language
 // source for checkmarks on table view: https://www.youtube.com/watch?v=5MZ-WJuSdpg
 // source for making status bar icons white: https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3

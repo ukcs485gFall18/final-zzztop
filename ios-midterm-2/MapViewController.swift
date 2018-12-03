@@ -713,6 +713,7 @@ class MapViewController: UIViewController {
 
 // overrides map view functions
 extension MapViewController: MKMapViewDelegate {
+    
     // sets the circle overlays
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         guard let circelOverLay = overlay as? MKCircle else {return MKOverlayRenderer()}
@@ -760,10 +761,12 @@ extension MapViewController: MKMapViewDelegate {
             }
         }
     }
+    
 }
 
 // gets user's current location
 extension MapViewController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
@@ -774,10 +777,12 @@ extension MapViewController: CLLocationManagerDelegate {
             map.showsUserLocation = true
         }
     }
+    
 }
 
 // for date range checking
 extension Date {
+    
     func dateAt(hours: Int, minutes: Int) -> Date {
         let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
         
@@ -801,6 +806,7 @@ extension Date {
         let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)! // misses 1 second
         return Calendar.current.date(byAdding: .day, value: 1, to: time)!
     }
+    
 }
 
 // Sources for this file:
