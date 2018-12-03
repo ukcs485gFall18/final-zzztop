@@ -30,11 +30,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         cell.textLabel!.text = "\(sortedStrings[indexPath.row].key)"
         //get the value from the tuple for the pass
         let passString = sortedStrings[indexPath.row].value
-        /*for (key, value) in kPassImages{
-            if key==passString{
-                cell.imageView?.image = value
-            }
-        }*/
         //look in the dictionary of pass names and UIImages
         //put the value into the imageView
         let passImage = passImages[passString]
@@ -48,12 +43,29 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         print("Value: \(displayStrings[indexPath.row])")
         
         //help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
-        let parkHere = UIAlertController(title: "Alert", message: "Do you want to park here?", preferredStyle: .alert)
+        let parkHere = UIAlertController(title: "Alert", message: "Do you want to learn more?", preferredStyle: .alert)
         parkHere.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             switch action.style{
             case .default:
-                print("default")
-                
+                //help regarding openURL being depricated in iOS10:
+                //https://useyourloaf.com/blog/openurl-deprecated-in-ios10/
+                //let urlString = "https://www.uky.edu/transportation/2018_student_commuter"
+                let urlString = kPassURLs[self.sortedStrings[indexPath.row].value]
+                 if let url = URL(string: urlString!) {
+                    if #available(iOS 10, *) {
+                        UIApplication.shared.open(url, options: [:],completionHandler: {
+                            (successBool) in
+                            if(!successBool){
+                                print("Error opening \(urlString)")
+                            }
+                        })
+                    } else {
+                        let successBool = UIApplication.shared.openURL(url)
+                        if(!successBool){
+                            print("Error opening \(urlString)")
+                        }
+                    }
+                }
             case .cancel:
                 print("cancel")
                 
@@ -137,7 +149,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     //-----------------------------------------------
-    // closeView()
+    // onUserAction()
     //-----------------------------------------------
     // The function that ties the MapViewController
     // to the ParkingDetailsViewController
