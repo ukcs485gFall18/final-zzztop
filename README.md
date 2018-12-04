@@ -15,6 +15,17 @@ The result is our parking app custom to UK and its permits, hours, lots, streets
 
 For best use, we recommend simulating your location on campus, such as at Willy T (401 Hilltop Ave, Lexington, KY 40506).
 
+<hr>
+
+### To run:
+- Open terminal and type the following:
+```
+pod install
+```
+- Run with the `ios-midterm-2.xcworkspace` file, not the `ios-midterm-2.xcodeproj` file
+
+<hr>
+
 ### Code Sources:
 - [Source for font size](https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how)
 - [Source for ViewController background](https://stackoverflow.com/questions/29759224/change-background-color-of-viewcontroller-swift-single-view-application/29759262)

@@ -27,7 +27,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
             userPasses = [kPassTypes[21]] // if user has no pass, make their pass type no pass required
             UserDefaults.standard.set(userPasses, forKey: "userPasses") // set user defaults
         }
-        print(userPasses)
         
         // designs and positions views
         setupViews()
@@ -132,6 +131,7 @@ extension ChoosePassViewController: UITableViewDelegate {
                 if !userPasses.contains(kLot) {
                     // add check mark for k lot cell
                     tableView.cellForRow(at: [0, 15])?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    // FIXME: make gray as well
                     // append k lot
                     userPasses.append(kLot)
                 }

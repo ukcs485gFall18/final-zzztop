@@ -30,7 +30,7 @@ let regFontSize: CGFloat = 20
 
 let barHeight = UIApplication.shared.statusBarFrame.size.height
 
-// enum of all pass types in the JSON file
+// enum of all pass types
 enum PassType: String {
     case e = "E"
     case e2 = "E2"
@@ -56,7 +56,7 @@ enum PassType: String {
     case noPermitRequired = "No permit required"
 }
 
-// enum of all possible weekdays in the JSON file
+// enum of all possible weekdays
 enum WeekDay: String {
     case monday = "Monday"
     case tuesday = "Tuesday"
@@ -67,14 +67,22 @@ enum WeekDay: String {
     case sunday = "Sunday"
 }
 
-// enum of all date ranges used in the JSON file
+// enum of all date ranges
 enum Range: String {
-    case mt = "MT"
-    case mf = "MF"
-    case ss = "SS"
-    case f = "F"
-    case ms = "MS"
+    case mt = "MT" // Monday-Thursday
+    case mf = "MF" // Monday-Friday
+    case ss = "SS" // Saturday-Sunday
+    case f = "F" // Friday
+    case ms = "MS" // Monday-Sunday
 }
 
-let red = UIColor(red: 250/255, green: 92/255, blue: 71/255, alpha: 1)
-let lightgray = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1).cgColor
+// colors
+let red = UIColor(red: 250/255, green: 92/255, blue: 71/255, alpha: 1) // matches the logo
+let lightblue = UIColor(red: 196/255, green: 191/255, blue: 227/255, alpha: 1) // matches the logo
+let darkerAppleBlue = UIColor(red: 9/255, green: 100/255, blue: 255/255, alpha: 1)
+let lightgray = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
+
+// AdminViewController
+let tfHeight = CGFloat(40)
+let separation = CGFloat(12)
+let tfFontSize = CGFloat(20)

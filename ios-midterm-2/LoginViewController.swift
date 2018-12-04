@@ -43,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
         // check if entered values are right
         if attemptedUsername == rightUsername || attemptedPassword == rightPassword {
-            present(AdminViewController(), animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
         } else {
             alert(title: "Login error", message: "Wrong username or password")
         }
@@ -106,7 +106,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - views
     
-    
     func setupViews() {
         view.backgroundColor = UIColor.white
         
@@ -145,6 +144,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Username"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         textField.textAlignment = .center
         textField.returnKeyType = .next
         return textField
@@ -154,7 +154,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         usernameTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 50).isActive = true
         usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        usernameTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        usernameTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     lazy var passwordTextField: UITextField = {
@@ -164,6 +164,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Password"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         textField.textAlignment = .center
         textField.isSecureTextEntry = true
         textField.returnKeyType = .done
@@ -172,9 +173,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func setupPasswordTextField() {
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 12).isActive = true
+        passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: separation).isActive = true
         passwordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        passwordTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     lazy var loginButton: UIButton = {
@@ -185,16 +186,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
-        button.layer.borderColor = lightgray
+        button.layer.borderColor = lightgray.cgColor
         button.addTarget(self, action: #selector(checkIfLoginCredentialsAreRight), for: .touchUpInside)
         return button
     }()
     
     func setupLoginButton() {
-        loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 12).isActive = true
+        loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: separation).isActive = true
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 3/5).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     lazy var exitButton: UIButton = {

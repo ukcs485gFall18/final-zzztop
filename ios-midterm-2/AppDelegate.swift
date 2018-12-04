@@ -7,18 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-//    @IBAction func myUnwindAction(segue: UIStoryboardSegue) {}
-    
-
     
     var window: UIWindow?
     let firstChoosePassView = ChoosePassViewController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        FirebaseApp.configure()
         
         // allows for progammatically creating views
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -26,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // set app to open to the map
         let rootVC = MapViewController()
-//        let rootVC = AdminViewController()
+//        let rootVC = AdminViewController() // for testing
         let nav = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = nav
         

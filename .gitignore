@@ -1,1 +1,4 @@
 .DS_Store
+/ios-midterm-2/GoogleService-Info.plist
+/Pods
+Podfile.lock

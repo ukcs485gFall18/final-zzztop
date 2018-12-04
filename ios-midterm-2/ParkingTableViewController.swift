@@ -11,7 +11,7 @@ import UIKit
 class ParkingTableViewController: UIViewController, UITableViewDataSource {
     
     var parkingNames = [String]()
-    var spotsAndTimes: [String:[[String:String]:[NSDictionary]]] = [:]
+    var spotsAndTimes: [String: [[String: String]: [NSDictionary]]] = [:]
     var displayWidth = CGFloat()
     var displayHeight = CGFloat()
     let detailsVC = ParkingDetailsViewController()
