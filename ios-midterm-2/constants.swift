@@ -29,3 +29,52 @@ let headerFontSize: CGFloat = 25
 let regFontSize: CGFloat = 20
 
 let barHeight = UIApplication.shared.statusBarFrame.size.height
+
+// enum of all pass types in the JSON file
+enum PassType: String {
+    case e = "E"
+    case e2 = "E2"
+    case e20 = "E20"
+    case e26 = "E26"
+    case e28 = "E28"
+    case e27 = "E27"
+    case r2 = "R2"
+    case r7 = "R7"
+    case r17 = "R17"
+    case r19 = "R19"
+    case r29 = "R29"
+    case r30 = "R30"
+    case c5 = "C5"
+    case c9 = "C9"
+    case c16 = "C16"
+    case k = "K"
+    case ek = "EK"
+    case ck = "CK"
+    case x = "X"
+    case a = "Authorized parking only"
+    case anyPermit = "Any valid permit"
+    case noPermitRequired = "No permit required"
+}
+
+// enum of all possible weekdays in the JSON file
+enum WeekDay: String {
+    case monday = "Monday"
+    case tuesday = "Tuesday"
+    case wednesday = "Wednesday"
+    case thursday = "Thursday"
+    case friday = "Friday"
+    case saturday = "Saturday"
+    case sunday = "Sunday"
+}
+
+// enum of all date ranges used in the JSON file
+enum Range: String {
+    case mt = "MT"
+    case mf = "MF"
+    case ss = "SS"
+    case f = "F"
+    case ms = "MS"
+}
+
+let red = UIColor(red: 250/255, green: 92/255, blue: 71/255, alpha: 1)
+let lightgray = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1).cgColor

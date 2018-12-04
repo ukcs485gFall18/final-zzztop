@@ -11,6 +11,10 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+//    @IBAction func myUnwindAction(segue: UIStoryboardSegue) {}
+    
+
+    
     var window: UIWindow?
     let firstChoosePassView = ChoosePassViewController()
 
@@ -21,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         // set app to open to the map
-        let nav = UINavigationController(rootViewController: MapViewController())
+        let rootVC = MapViewController()
+//        let rootVC = AdminViewController()
+        let nav = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = nav
         
         // if user has no passes saved in user defaults
