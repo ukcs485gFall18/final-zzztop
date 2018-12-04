@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Firebase
 
 class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
-   
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -22,14 +23,105 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         setupViews()
     }
     
+    @objc func submit() {
+        // fake data; temp
+        let name = "Columbia Ave East Lot2"
+        
+        let values: [String: Any] = [
+            "radius": 70,
+            "coords":  [
+                "lat": 38.033142,
+                "lon": -84.50028
+            ],
+            "times": [
+                "No permit required": [
+                    "MT": [
+                        "start": [
+                            "hour": 19,
+                            "minute": 30,
+                            "12hour": "pm"
+                        ],
+                        "end": [
+                            "hour": 5,
+                            "minute": 0,
+                            "12hour": "am"
+                        ]
+                    ],
+                    "F": [
+                        "start": [
+                            "hour": 15,
+                            "minute": 30,
+                            "12hour": "pm"
+                        ],
+                        "end": [
+                            "hour": 23,
+                            "minute": 59,
+                            "12hour": "pm"
+                        ]
+                    ],
+                    "SS": [
+                        "start": [
+                            "hour": 0,
+                            "minute": 0,
+                            "12hour": "am"
+                        ],
+                        "end": [
+                            "hour": 23,
+                            "minute": 59,
+                            "12hour": "pm"
+                        ]
+                    ]
+                ],
+                "Any valid permit": [
+                    "MT": [
+                        "start": [
+                            "hour": 15,
+                            "minute": 30,
+                            "12hour": "pm"
+                        ],
+                        "end": [
+                            "hour": 19,
+                            "minute": 30,
+                            "12hour": "pm"
+                        ]
+                    ]
+                ],
+                "E": [
+                    "MF": [
+                        "start": [
+                            "hour": 5,
+                            "minute": 0,
+                            "12hour": "am"
+                        ],
+                        "end": [
+                            "hour": 15,
+                            "minute": 30,
+                            "12hour": "pm"
+                        ]
+                    ]
+                ]
+            ]
+        ]
+        
+        // add data to firebase
+        let databaseRef = Database.database().reference().child("parking").child(name)
+        databaseRef.setValue(values)
+        
+        //        dismissView()
+    }
+    
+    @objc func logout() {
+        present(LoginViewController(), animated: true, completion: nil)
+    }
+    
     @objc func dismissView() {
         dismiss(animated: true, completion: nil)
     }
     
     func checkIfUserIsLoggedIn() {
         // for testing
-//                UserDefaults.standard.set("wrong", forKey: "username")
-//                UserDefaults.standard.set("wrong", forKey: "password")
+//        UserDefaults.standard.set("wrong", forKey: "username")
+//        UserDefaults.standard.set("wrong", forKey: "password")
         
         let pastUsername = UserDefaults.standard.string(forKey: "username")
         let pastPassword = UserDefaults.standard.string(forKey: "password")
@@ -77,13 +169,13 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     
     // Switch focus to next text field
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //        usernameTextField.resignFirstResponder()
-        //
-        //        if textField == usernameTextField {
-        //            passwordTextField.becomeFirstResponder()
-        //        } else if textField == passwordTextField {
-        //            passwordTextField.resignFirstResponder()
-        //        }
+//        usernameTextField.resignFirstResponder()
+//
+//        if textField == usernameTextField {
+//            passwordTextField.becomeFirstResponder()
+//        } else if textField == passwordTextField {
+//            passwordTextField.resignFirstResponder()
+//        }
         
         return true
     }
@@ -91,9 +183,6 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     // MARK: - views
     
     func setupViews() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AdminViewController.tapToLeave(gestureRecognizer:)))
-        view.addGestureRecognizer(tapGesture)
-        
         view.backgroundColor = .white
         
         view.addSubview(nameTextField)
@@ -103,7 +192,9 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         view.addSubview(daySegmentedControl)
         view.addSubview(startTextField)
         view.addSubview(endTextField)
+        view.addSubview(submitButton)
         view.addSubview(exitButton)
+        view.addSubview(logoutButton)
         
         setupNameTextField()
         setupRadiusTextField()
@@ -112,35 +203,39 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         setupDaySegmentedControl()
         setupStartTextField()
         setupEndTextField()
+        setupSubmitButton()
         setupExitButton()
+        setupLogoutButton()
         
         // picker view configuration
         radiusTextField.inputView = pickerView
         startTextField.inputView = pickerView
         endTextField.inputView = pickerView
         
-//        view.addGestureRecognizer(tapGesture)
-        
         // sets first value shown in picker view to middle of picker view items
         let row = radiusItems.count / 2
         pickerView.selectRow(row, inComponent: 0, animated: true)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AdminViewController.tapToLeave(gestureRecognizer:)))
+        view.addGestureRecognizer(tapGesture)        
     }
     
     lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
-        textField.placeholder = "Username"
+        textField.placeholder = "Name"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         return textField
     }()
     
     func setupNameTextField() {
         nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
+        nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        nameTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        nameTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     lazy var radiusTextField: UITextField = {
@@ -150,14 +245,15 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         textField.placeholder = "Radius"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         return textField
     }()
     
     func setupRadiusTextField() {
         radiusTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        radiusTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 12).isActive = true
+        radiusTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: separation).isActive = true
         radiusTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        radiusTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        radiusTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     // TODO: add coords label
@@ -170,14 +266,15 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         textField.placeholder = "Latitude"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         return textField
     }()
     
     func setupLatTextField() {
         latTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        latTextField.topAnchor.constraint(equalTo: radiusTextField.bottomAnchor, constant: 12).isActive = true
+        latTextField.topAnchor.constraint(equalTo: radiusTextField.bottomAnchor, constant: separation).isActive = true
         latTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        latTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        latTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     lazy var lonTextField: UITextField = {
@@ -187,19 +284,20 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         textField.placeholder = "Longitude"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         return textField
     }()
     
     func setupLonTextField() {
         lonTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        lonTextField.topAnchor.constraint(equalTo: latTextField.bottomAnchor, constant: 12).isActive = true
+        lonTextField.topAnchor.constraint(equalTo: latTextField.bottomAnchor, constant: separation).isActive = true
         lonTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        lonTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        lonTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     // TODO: get coords by pressing on map
     // lat and lon tfs would then be labels and show coords
-    
+    // with map showing location
     
     // FIXME: Multi selection segmented control
     var daySegmentedControl: UISegmentedControl = {
@@ -218,7 +316,7 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     
     func setupDaySegmentedControl() {
         daySegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        daySegmentedControl.topAnchor.constraint(equalTo: lonTextField.bottomAnchor, constant: 12).isActive = true
+        daySegmentedControl.topAnchor.constraint(equalTo: lonTextField.bottomAnchor, constant: separation).isActive = true
         daySegmentedControl.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
         daySegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
@@ -230,14 +328,15 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         textField.placeholder = "Start"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         return textField
     }()
     
     func setupStartTextField() {
         startTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        startTextField.topAnchor.constraint(equalTo: daySegmentedControl.bottomAnchor, constant: 12).isActive = true
+        startTextField.topAnchor.constraint(equalTo: daySegmentedControl.bottomAnchor, constant: separation).isActive = true
         startTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        startTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        startTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
     lazy var endTextField: UITextField = {
@@ -247,14 +346,33 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         textField.placeholder = "End"
         textField.backgroundColor = UIColor.white
         textField.tintColor = red
+        textField.font = UIFont.systemFont(ofSize: tfFontSize)
         return textField
     }()
     
     func setupEndTextField() {
         endTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        endTextField.topAnchor.constraint(equalTo: startTextField.bottomAnchor, constant: 12).isActive = true
+        endTextField.topAnchor.constraint(equalTo: startTextField.bottomAnchor, constant: separation).isActive = true
         endTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
-        endTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        endTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
+    }
+    
+    lazy var submitButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = darkerAppleBlue
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Submit", for: .normal)
+        button.layer.cornerRadius = 5.0
+        button.addTarget(self, action: #selector(submit), for: .touchUpInside)
+        return button
+    }()
+    
+    func setupSubmitButton() {
+        submitButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
+        submitButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        submitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     lazy var exitButton: UIButton = {
@@ -267,20 +385,35 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     }()
     
     func setupExitButton() {
-        exitButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        exitButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        exitButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        exitButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         exitButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
     }
-
+    
+    lazy var logoutButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Logout", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        return button
+    }()
+    
+    func setupLogoutButton() {
+        logoutButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        logoutButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        logoutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        logoutButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+    }
     
     // MARK: - picker view protocol config
-
+    
     let radiusItems = Array(65...75)
     let timeItems: [[Any]] = [
-        Array(1...12),
-        [0, 30],
-        ["AM", "PM"]
+        Array(1...12), // hours
+        [0, 30, 59], // minutes
+        ["AM", "PM"] // am/pm
     ]
     
     lazy var pickerView: UIPickerView = {
@@ -332,11 +465,11 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 0 {
             radiusTextField.text = "\(radiusItems[row])"
-            
         } else {
-            var hour = 1
-            var min = 0
-            var ampm = "AM"
+            var hour = Int()
+            var min = Int()
+            var ampm = String()
+            
             if component == 0 {
                 hour = timeItems[0][row] as! Int
             } else if component == 1 {
@@ -344,9 +477,9 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
             } else {
                 ampm = timeItems[2][row] as! String
             }
+            
             startTextField.text = "\(hour) \(min) \(ampm)"
         }
-        
     }
     
     // redundant?
@@ -356,10 +489,9 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     
 }
 
+// add pass options; picker view of all passes
 
-// add pass options
-
-// FIXME: Start and end time picker view
+// FIXME: Start and end time picker view are connected; need to unconnect
 
 // options for adding dates and times:
 //option 1
@@ -372,3 +504,10 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
 //option 3
 //    "MS"
 // create another view?
+// forces admin to have times for every day
+
+
+//----------------
+//later:
+//- save data entered to user defaults JIC the admin accidentally taps the exit button; but not with logout button
+//- How to let multiplier be fraction constant var
