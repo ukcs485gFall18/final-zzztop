@@ -14,6 +14,7 @@
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
 		806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */; };
+		A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */; };
 		A3C38205218003DD003D53E7 /* ParkingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		806A91DF21729D3C00EDA648 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		806A91E221729D3C00EDA648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		806A91E421729D3C00EDA648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAndDurationViewController.swift; sourceTree = "<group>"; };
 		A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +67,7 @@
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
 				806A91DA21729D3B00EDA648 /* MapViewController.swift */,
 				A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */,
+				A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */,
+				A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */,
 				0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */,
 				806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */,
 				0FB9F050217D2CE500752425 /* constants.swift in Sources */,

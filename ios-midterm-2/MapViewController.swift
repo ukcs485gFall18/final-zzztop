@@ -19,6 +19,7 @@ class MapViewController: UIViewController {
     var currentLocation = CLLocationCoordinate2D()
     let choosePassVC = ChoosePassViewController()
     var detailsVC = ParkingDetailsViewController()
+    let DurationViewVC = TimeAndDurationViewController()
     var pickedDate: Date?
     var didSelectDate: Bool = false
     var spots = [String]()
@@ -75,7 +76,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //setting up the view 
+        //setting up the view
         headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
         
         map.delegate = self
@@ -90,12 +91,22 @@ class MapViewController: UIViewController {
             setPins(dict: dict, title: p["name"] as! String)
         }
         
+        //create a button for select time and date
+        let timeAndDurationButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+        timeAndDurationButton.center.x = view.center.x
+        timeAndDurationButton.layer.cornerRadius = 5
+        timeAndDurationButton.backgroundColor = UIColor.blue
+        timeAndDurationButton.setTitle("Change Time and Duration", for: .normal)
+        timeAndDurationButton.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
+        self.view.addSubview(timeAndDurationButton)
+        
         //format the PickerView
-        createPickerView()
-        pickedDate = now
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        pickerTextField.text = dateFormatter.string(from: pickedDate!)
+        /*createPickerView()
+         pickedDate = now
+         let dateFormatter = DateFormatter()
+         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
+         pickerTextField.text = dateFormatter.string(from: pickedDate!)
+         */
     }
     
     //-----------------------------------------------
@@ -114,6 +125,10 @@ class MapViewController: UIViewController {
         }
         //place the pins in the correct places
         accessDataForOverlays(pickedDate: now)
+    }
+    
+    @objc func presentDurationView(){
+        self.present(DurationViewVC, animated:true, completion:nil)
     }
     
     //-----------------------------------------------
@@ -156,7 +171,7 @@ class MapViewController: UIViewController {
     @objc func resetDateTime(){
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        pickerTextField.text = dateFormatter.string(from: now)
+        //pickerTextField.text = dateFormatter.string(from: now)
         //update map after reset
         accessDataForOverlays(pickedDate: now)
     }
@@ -169,10 +184,10 @@ class MapViewController: UIViewController {
     // Conditions: none
     //-----------------------------------------------
     func createPickerView() {
-        view.addSubview(pickerTextField)
+        //view.addSubview(pickerTextField)
         
         // add the DatePicker to the UITextField
-        pickerTextField.inputView = datePicker
+        //pickerTextField.inputView = datePicker
         
         // allow the user to get out of the date picker by tapping
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
@@ -202,7 +217,7 @@ class MapViewController: UIViewController {
     @objc func dateSelected(datePicker: UIDatePicker){
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        pickerTextField.text = dateFormatter.string(from: datePicker.date)
+        //pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
         accessDataForOverlays(pickedDate: pickedDate!)
@@ -494,18 +509,18 @@ class MapViewController: UIViewController {
     }
     
     // create the UI text field
-    lazy var pickerTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
-        textField.center.x = view.center.x
-        textField.textAlignment = NSTextAlignment.center
-        textField.font = UIFont.systemFont(ofSize: regFontSize)
-        textField.backgroundColor = .white
-        textField.textColor = .black
-        textField.borderStyle = UITextField.BorderStyle.none
-        textField.layer.cornerRadius = 5
-        textField.alpha = 0.8
-        return textField
-    }()
+    /*lazy var pickerTextField: UITextField = {
+     let textField = UITextField(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+     textField.center.x = view.center.x
+     textField.textAlignment = NSTextAlignment.center
+     textField.font = UIFont.systemFont(ofSize: regFontSize)
+     textField.backgroundColor = .white
+     textField.textColor = .black
+     textField.borderStyle = UITextField.BorderStyle.none
+     textField.layer.cornerRadius = 5
+     textField.alpha = 0.8
+     return textField
+     }()*/
     
     // create the DatePicker
     lazy var datePicker: UIDatePicker = {
