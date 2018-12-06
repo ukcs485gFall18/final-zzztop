@@ -33,7 +33,13 @@ class MapViewController: UIViewController {
     let now = Date()
     var headerHeight = CGFloat()
     let calendar = Calendar.current
-    let database = Database.database().reference()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // designs and positions views
+        setupViews()
+    }
     
     //-----------------------------------------------
     // viewDidAppear()
@@ -61,9 +67,6 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // designs and positions views
-        setupViews()
-        
         // get user's current location
         configureLocationManager()
         
@@ -83,7 +86,7 @@ class MapViewController: UIViewController {
     
     // save parking data and set pins
     func readFirebaseParkingData() {
-        database.child("parking").observeSingleEvent(of: .value) { (snapshot) in
+        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
             // save parking data
             self.parking = snapshot.value as? [String: Any]
             
@@ -101,8 +104,8 @@ class MapViewController: UIViewController {
         }
     }
     
-    @objc func openAdminVC() {
-        present(AdminViewController(), animated: true, completion: nil)
+    @objc func openSettingsVC() {
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
     
     //-----------------------------------------------
@@ -232,7 +235,7 @@ class MapViewController: UIViewController {
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         
-        database.child("parking").observeSingleEvent(of: .value) { (snapshot) in
+        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
             let newParking = (snapshot.value)! as! [String: Any]
             
             // for each parking spot
@@ -679,7 +682,7 @@ class MapViewController: UIViewController {
         
         let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: height_width, height: height_width))
         button.setImage(img, for: .normal)
-        button.addTarget(self, action: #selector(openAdminVC), for: .touchUpInside)
+        button.addTarget(self, action: #selector(openSettingsVC), for: .touchUpInside)
         return button
     }()
     
@@ -737,13 +740,13 @@ extension MapViewController: MKMapViewDelegate {
     // details view controller is presented the
     // dictionary of stored data is passed to it
     //-----------------------------------------------
-    func mapView(_ map:MKMapView, didSelect view:MKAnnotationView) {
-        //bring up the new view
-        self.present(detailsVC,animated: true, completion: nil)
+    func mapView(_ map: MKMapView, didSelect view: MKAnnotationView) {
+        // bring up the new view
+        self.present(detailsVC, animated: true, completion: nil)
         if let pin = view.annotation as? MKPointAnnotation {
-            if let pinTitle = pin.title{
-                if let hours = spotsAndTimes[pinTitle]{
-                    //pass the data to the next view
+            if let pinTitle = pin.title {
+                if let hours = spotsAndTimes[pinTitle] {
+                    // pass the data to the next view
                     detailsVC.onUserAction(title: pinTitle, hours: hours)
                 }
             }

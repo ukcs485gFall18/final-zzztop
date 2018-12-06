@@ -8,5 +8,6 @@ target 'ios-midterm-2' do
   # Pods for ios-midterm-2
   pod 'Firebase/Core'
   pod 'Firebase/Database'
-  
+  pod 'Static', git: 'https://github.com/venmo/Static'
+
 end

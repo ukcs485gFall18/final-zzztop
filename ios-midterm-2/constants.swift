@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 let kPassTypes = [
     "E", "E2", "E20", "E26", "E28", "E27",
@@ -86,3 +87,5 @@ let lightgray = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
 let tfHeight = CGFloat(40)
 let separation = CGFloat(12)
 let tfFontSize = CGFloat(20)
+
+let databaseRef = Database.database().reference()

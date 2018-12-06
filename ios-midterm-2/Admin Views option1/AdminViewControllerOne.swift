@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,10 +24,8 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     }
     
     @objc func submit() {
-        // fake data; temp
-        let name = "Columbia Ave East Lot2"
-        
-        let values: [String: Any] = [
+        let name = "Columbia Ave East Lot2" // fake data; temp
+        let values: [String: Any] = [ // fake data; temp
             "radius": 70,
             "coords":  [
                 "lat": 38.033142,
@@ -104,19 +102,16 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         ]
         
         // add data to firebase
-        let databaseRef = Database.database().reference().child("parking").child(name)
-        databaseRef.setValue(values)
+        databaseRef.child("parking").child(name).setValue(values)
         
-        //        dismissView()
+        // dismiss view
+        
     }
     
     @objc func logout() {
-        present(LoginViewController(), animated: true, completion: nil)
+        present(LoginViewController1(), animated: true, completion: nil)
     }
     
-    @objc func dismissView() {
-        dismiss(animated: true, completion: nil)
-    }
     
     func checkIfUserIsLoggedIn() {
         // for testing
@@ -129,11 +124,19 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         let rightPassword = "123"
         
         if pastUsername != rightUsername || pastPassword != rightPassword {
-            present(LoginViewController(), animated: true, completion: nil)
+            present(LoginViewController1(), animated: true, completion: nil)
         } else {
             return
         }
     }
+    
+    
+    // redundant?
+    @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    
     
     // MARK: - text field config
     
@@ -180,6 +183,83 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         return true
     }
     
+    
+    // MARK: - picker view protocol config
+    
+    let radiusItems = Array(65...75)
+    let timeItems: [[Any]] = [
+        Array(1...12), // hours
+        [0, 30, 59], // minutes
+        ["AM", "PM"] // am/pm
+    ]
+    
+    lazy var pickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        return pickerView
+    }()
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        if pickerView.tag == 0 {
+            return 1
+        } else {
+            return 3
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.tag == 0 {
+            return radiusItems.count
+        } else {
+            if component == 0 {
+                return timeItems[0].count
+            } else if component == 1 {
+                return timeItems[1].count
+            } else {
+                return timeItems[2].count
+            }
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView.tag == 0 {
+            return "\(row + radiusItems[0])"
+        } else {
+            if component == 0 {
+                let text = timeItems[0][row]
+                return "\(text)"
+            } else if component == 1 {
+                let text = timeItems[1][row]
+                return "\(text)"
+            } else {
+                let text = timeItems[2][row]
+                return "\(text)"
+            }
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 0 {
+            radiusTextField.text = "\(radiusItems[row])"
+        } else {
+            var hour = Int()
+            var min = Int()
+            var ampm = String()
+            
+            if component == 0 {
+                hour = timeItems[0][row] as! Int
+            } else if component == 1 {
+                min = timeItems[1][row] as! Int
+            } else {
+                ampm = timeItems[2][row] as! String
+            }
+            
+            startTextField.text = "\(hour) \(min) \(ampm)"
+        }
+    }
+    
+    
     // MARK: - views
     
     func setupViews() {
@@ -193,8 +273,6 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         view.addSubview(startTextField)
         view.addSubview(endTextField)
         view.addSubview(submitButton)
-        view.addSubview(exitButton)
-        view.addSubview(logoutButton)
         
         setupNameTextField()
         setupRadiusTextField()
@@ -204,8 +282,6 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         setupStartTextField()
         setupEndTextField()
         setupSubmitButton()
-        setupExitButton()
-        setupLogoutButton()
         
         // picker view configuration
         radiusTextField.inputView = pickerView
@@ -216,8 +292,8 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         let row = radiusItems.count / 2
         pickerView.selectRow(row, inComponent: 0, animated: true)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AdminViewController.tapToLeave(gestureRecognizer:)))
-        view.addGestureRecognizer(tapGesture)        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AdminViewControllerOne.tapToLeave(gestureRecognizer:)))
+        view.addGestureRecognizer(tapGesture)
     }
     
     lazy var nameTextField: UITextField = {
@@ -375,117 +451,7 @@ class AdminViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    lazy var exitButton: UIButton = {
-        let img = UIImage(named: "exit")
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(img, for: .normal)
-        button.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-        return button
-    }()
     
-    func setupExitButton() {
-        exitButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        exitButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-        exitButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-    }
-    
-    lazy var logoutButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Logout", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        return button
-    }()
-    
-    func setupLogoutButton() {
-        logoutButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        logoutButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        logoutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-        logoutButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-    }
-    
-    // MARK: - picker view protocol config
-    
-    let radiusItems = Array(65...75)
-    let timeItems: [[Any]] = [
-        Array(1...12), // hours
-        [0, 30, 59], // minutes
-        ["AM", "PM"] // am/pm
-    ]
-    
-    lazy var pickerView: UIPickerView = {
-        let pickerView = UIPickerView()
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        return pickerView
-    }()
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if pickerView.tag == 0 {
-            return 1
-        } else {
-            return 3
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView.tag == 0 {
-            return radiusItems.count
-        } else {
-            if component == 0 {
-                return timeItems[0].count
-            } else if component == 1 {
-                return timeItems[1].count
-            } else {
-                return timeItems[2].count
-            }
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView.tag == 0 {
-            return "\(row + radiusItems[0])"
-        } else {
-            if component == 0 {
-                let text = timeItems[0][row]
-                return "\(text)"
-            } else if component == 1 {
-                let text = timeItems[1][row]
-                return "\(text)"
-            } else {
-                let text = timeItems[2][row]
-                return "\(text)"
-            }
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView.tag == 0 {
-            radiusTextField.text = "\(radiusItems[row])"
-        } else {
-            var hour = Int()
-            var min = Int()
-            var ampm = String()
-            
-            if component == 0 {
-                hour = timeItems[0][row] as! Int
-            } else if component == 1 {
-                min = timeItems[1][row] as! Int
-            } else {
-                ampm = timeItems[2][row] as! String
-            }
-            
-            startTextField.text = "\(hour) \(min) \(ampm)"
-        }
-    }
-    
-    // redundant?
-    @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer) {
-        view.endEditing(true)
-    }
     
 }
 

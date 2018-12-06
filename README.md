@@ -26,7 +26,13 @@ pod install
 
 <hr>
 
-### Code Sources:
+### Frameworks
+- [Static](https://github.com/venmo/Static)
+  - For static UITableView
+- [Firebase](https://firebase.google.com/)
+  - For retrieving and storing data to a database
+
+### Code Help Sources:
 - [Source for font size](https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how)
 - [Source for ViewController background](https://stackoverflow.com/questions/29759224/change-background-color-of-viewcontroller-swift-single-view-application/29759262)
 - [Source for creating a UITextField programmatically](https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically)

@@ -8,20 +8,13 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController2: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
-    
-    func alert(title: String = "", message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
+
     @objc func checkIfLoginCredentialsAreRight() {
         guard let username = usernameTextField.text,
             let password = passwordTextField.text else {
@@ -45,7 +38,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if attemptedUsername == rightUsername || attemptedPassword == rightPassword {
             dismiss(animated: true, completion: nil)
         } else {
-            alert(title: "Login error", message: "Wrong username or password")
+            // present alert
+            let alertController = UIAlertController(title: "Login error", message: "Wrong username or password", preferredStyle: .alert)
+            let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(OKAction)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -216,21 +213,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
    
 }
 
-extension UITextField {
-    
-    func setBottomBorder(color: UIColor) {
-        self.borderStyle = UITextField.BorderStyle.none
-        self.backgroundColor = UIColor.clear
-        
-        let line = UIView()
-        let height = 1.0
-        line.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
-        line.backgroundColor = color
-        
-        self.addSubview(line)
-    }
-    
-}
+//extension UITextField {
+//    
+//    func setBottomBorder(color: UIColor) {
+//        self.borderStyle = UITextField.BorderStyle.none
+//        self.backgroundColor = UIColor.clear
+//        
+//        let line = UIView()
+//        let height = 1.0
+//        line.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
+//        line.backgroundColor = color
+//        
+//        self.addSubview(line)
+//    }
+//    
+//}
 
 // Source: my own code; looks similar to other login views I've made
 // source: https://codepany.com/blog/swift-3-custom-uitextfield-with-single-line-input/
