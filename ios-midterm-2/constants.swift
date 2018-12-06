@@ -38,7 +38,7 @@ let kPassURLs = ["E":"https://www.uky.edu/transportation/parking-permits_employe
 
 let kPassImages = ["E":EPassImage, "E2":E2PassImage, "E20":E20PassImage, "E26":E26PassImage, "E28":E28PassImage, "E27":E27PassImage, "R2":R2PassImage, "R7":R7PassImage, "R17":R17PassImage, "R19":R19PassImage, "R29":R29PassImage, "R30":R30PassImage, "C5":C5PassImage, "C9":C9PassImage, "C16":C16PassImage, "K":KPassImage, "EK":EKPassImage, "CK":CKPassImage, "X":XPassImage, "Authorized parking only":AuthorizedPassImage, "Any valid permit":AnyPassImage, "No permit required":NoPassImage] as! [String : UIImage]
 
-let kDurationHours = ["Current times only: 0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25+"]
+let kDurationHours = ["Current times only: 0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
 
 let xPadding: CGFloat = 10
 let yPadding: CGFloat = 10
