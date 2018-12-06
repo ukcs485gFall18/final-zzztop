@@ -176,5 +176,6 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
      }
      */
     
+     //source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
     
 }
