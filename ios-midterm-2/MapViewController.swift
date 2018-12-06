@@ -94,8 +94,12 @@ class MapViewController: UIViewController {
         let timeAndDurationButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
         timeAndDurationButton.center.x = view.center.x
         timeAndDurationButton.layer.cornerRadius = 5
-        timeAndDurationButton.backgroundColor = UIColor.blue
+        timeAndDurationButton.backgroundColor = .white
+        timeAndDurationButton.alpha = 0.8
         timeAndDurationButton.setTitle("Change Time and Duration", for: .normal)
+        //Source for title color:
+        //https://stackoverflow.com/questions/31088172/how-to-set-the-title-text-color-of-uibutton/41853921
+        timeAndDurationButton.setTitleColor(UIColor.black, for: [])
         timeAndDurationButton.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
         self.view.addSubview(timeAndDurationButton)
 
@@ -123,6 +127,7 @@ class MapViewController: UIViewController {
         accessDataForOverlays(pickedDate: now)
     }
     
+    //COMMENT THIS
     @objc func presentDurationView(){
         DurationViewVC.mapViewController = self
         self.present(DurationViewVC, animated:true, completion:nil)
@@ -687,4 +692,5 @@ extension Date {
 // source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
 //source for viewing annotation titles: https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked
 // source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
+//source for linking view controllers: https://teamtreehouse.com/community/passing-data-from-modal-view-controller-to-parent
 
