@@ -5,7 +5,6 @@
 //  Created by Jordan George on 10/13/18.
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
-
 import UIKit
 import MapKit
 
@@ -99,14 +98,11 @@ class MapViewController: UIViewController {
         timeAndDurationButton.setTitle("Change Time and Duration", for: .normal)
         timeAndDurationButton.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
         self.view.addSubview(timeAndDurationButton)
-        
-        //format the PickerView
-        /*createPickerView()
-         pickedDate = now
-         let dateFormatter = DateFormatter()
-         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-         pickerTextField.text = dateFormatter.string(from: pickedDate!)
-         */
+
+        pickedDate = now
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
+        print(dateFormatter.string(from: pickedDate!))
     }
     
     //-----------------------------------------------
@@ -128,6 +124,7 @@ class MapViewController: UIViewController {
     }
     
     @objc func presentDurationView(){
+        DurationViewVC.mapViewController = self
         self.present(DurationViewVC, animated:true, completion:nil)
     }
     
@@ -690,3 +687,4 @@ extension Date {
 // source for UI Text Field with rounded corners: https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue
 //source for viewing annotation titles: https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked
 // source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
+
