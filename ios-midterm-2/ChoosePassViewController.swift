@@ -58,6 +58,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelection = true
+        tableView.rowHeight = 55
         return tableView
     }()
 
@@ -101,10 +102,6 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
 extension ChoosePassViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kPassTypes.count
-    }
-    
-    private func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat{
-        return 45
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
