@@ -181,5 +181,5 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
      */
     
      //source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
-    
+    //source for adding hours to a date: http://swiftdeveloperblog.com/code-examples/add-days-months-or-years-to-current-date-in-swift/
 }

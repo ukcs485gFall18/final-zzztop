@@ -75,6 +75,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        pickedDate = now
+        
         //setting up the view
         headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
         
@@ -103,7 +105,6 @@ class MapViewController: UIViewController {
         timeAndDurationButton.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
         self.view.addSubview(timeAndDurationButton)
 
-        pickedDate = now
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         print(dateFormatter.string(from: pickedDate!))
