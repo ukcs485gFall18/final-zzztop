@@ -143,3 +143,4 @@ extension ChoosePassViewController: UITableViewDelegate {
 
 // source for checkmarks on table view: https://www.youtube.com/watch?v=5MZ-WJuSdpg
 // source for making status bar icons white: https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3
+// source for cell height without delegate: https://stackoverflow.com/questions/46519567/table-view-cell-row-height-doesnt-work
