@@ -102,6 +102,10 @@ extension ChoosePassViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kPassTypes.count
     }
+    
+    private func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat{
+        return 45
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "passCell", for: indexPath as IndexPath)
@@ -114,6 +118,12 @@ extension ChoosePassViewController: UITableViewDelegate {
             cell.accessoryType = UITableViewCell.AccessoryType.none
         }
 
+        let passString = kPassTypes[indexPath.row]
+        //look in the dictionary of pass names and UIImages
+        //put the value into the imageView
+        let passImage = kPassImages[passString]
+        cell.imageView?.image = passImage
+        
         return cell
     }
 
