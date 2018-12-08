@@ -5,7 +5,6 @@
 //  Created by Jordan George on 10/13/18.
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
-
 import UIKit
 import MapKit
 import Firebase
@@ -26,6 +25,7 @@ class MapViewController: UIViewController {
     let choosePassVC = ChoosePassViewController()
     var parkingTableVC = ParkingTableViewController()
     var detailsVC = ParkingDetailsViewController()
+    let DurationViewVC = TimeAndDurationViewController()
     var pickedDate: Date?
     //    var didSelectDate: Bool = false
     var spots = [String]()
@@ -33,12 +33,97 @@ class MapViewController: UIViewController {
     let now = Date()
     var headerHeight = CGFloat()
     let calendar = Calendar.current
+    var timeAndDurationButton:UIButton?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         // designs and positions views
+        //create a button for select time and date
+        timeAndDurationButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+        timeAndDurationButton!.center.x = view.center.x
+        timeAndDurationButton!.layer.cornerRadius = 5
+        timeAndDurationButton!.backgroundColor = .white
+        timeAndDurationButton!.alpha = 0.8
+        timeAndDurationButton!.setTitle("Change Time and Duration", for: .normal)
+        //Source for title color:
+        //https://stackoverflow.com/questions/31088172/how-to-set-the-title-text-color-of-uibutton/41853921
+        timeAndDurationButton!.setTitleColor(UIColor.black, for: [])
+        timeAndDurationButton!.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
+        self.view.addSubview(timeAndDurationButton!)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
+        print(dateFormatter.string(from: pickedDate!))
+
         setUpViews()
+    }
+    
+    //enum of all pass types in the JSON file
+    enum PassType: String {
+        case e = "E"
+        case e2 = "E2"
+        case e20 = "E20"
+        case e26 = "E26"
+        case e28 = "E28"
+        case e27 = "E27"
+        case r2 = "R2"
+        case r7 = "R7"
+        case r17 = "R17"
+        case r19 = "R19"
+        case r29 = "R29"
+        case r30 = "R30"
+        case c5 = "C5"
+        case c9 = "C9"
+        case c16 = "C16"
+        case k = "K"
+        case ek = "EK"
+        case ck = "CK"
+        case x = "X"
+        case a = "Authorized parking only"
+        case anyPermit = "Any valid permit"
+        case noPermitRequired = "No permit required"
+    }
+    
+    //enum of all possible weekdays in the JSON file
+    enum WeekDay: String {
+        case monday = "Monday"
+        case tuesday = "Tuesday"
+        case wednesday = "Wednesday"
+        case thursday = "Thursday"
+        case friday = "Friday"
+        case saturday = "Saturday"
+        case sunday = "Sunday"
+    }
+    
+    //enum of all date ranges used in the JSON file
+    enum Range: String {
+        case mt = "MT"
+        case mf = "MF"
+        case ss = "SS"
+        case f = "F"
+        case ms = "MS"
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        pickedDate = now
+        
+        //setting up the view
+        headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
+        
+        map.delegate = self
+        configureLocationManager()
+        
+        //setUpViews()
+        readJson()
+        checkGameDay()
+        
+        /*for p in parkingData! {
+            let coords = p["coords"] as! [Double]
+            let dict = [coords[0], coords[1]]
+            setPins(dict: dict, title: p["name"] as! String)
+        }*/
     }
     
     //-----------------------------------------------
@@ -64,26 +149,6 @@ class MapViewController: UIViewController {
         accessDataForOverlaysFromFirebase(pickedDate: now)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // get user's current location
-        configureLocationManager()
-        
-        // create and format the date picker
-        createPickerView()
-        pickedDate = now
-        
-        // set picker text field to picked date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        pickerTextField.text = dateFormatter.string(from: pickedDate!)
-        
-        // game day config
-        readJson()
-        checkGameDay()
-    }
-    
     // save parking data and set pins
     func readFirebaseParkingData() {
         databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
@@ -106,6 +171,12 @@ class MapViewController: UIViewController {
     
     @objc func openSettingsVC() {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
+    }
+    
+    //COMMENT THIS
+    @objc func presentDurationView(){
+        DurationViewVC.mapViewController = self
+        self.present(DurationViewVC, animated:true, completion:nil)
     }
     
     //-----------------------------------------------
@@ -154,7 +225,7 @@ class MapViewController: UIViewController {
     @objc func resetDateTime(){
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        pickerTextField.text = dateFormatter.string(from: now)
+        //pickerTextField.text = dateFormatter.string(from: now)
         
         // update map after reset
         accessDataForOverlaysFromFirebase(pickedDate: now)
@@ -169,7 +240,7 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     func createPickerView() {
         // add the DatePicker to the UITextField
-        pickerTextField.inputView = datePicker
+        //pickerTextField.inputView = datePicker
         
         // allow the user to get out of the date picker by tapping
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
@@ -189,7 +260,7 @@ class MapViewController: UIViewController {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        pickerTextField.text = dateFormatter.string(from: datePicker.date)
+        //pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
         accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
     }
@@ -205,7 +276,7 @@ class MapViewController: UIViewController {
     @objc func dateSelected(datePicker: UIDatePicker){
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        pickerTextField.text = dateFormatter.string(from: datePicker.date)
+        //pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
         if checkGameDay() == "Today"{
@@ -575,24 +646,26 @@ class MapViewController: UIViewController {
 
         view.addSubview(map)
         view.addSubview(gameDayLabel)
-        view.addSubview(pickerTextField)
+        view.addSubview(timeAndDurationButton!)
+        //view.addSubview(pickerTextField)
 
         setUpMap()
     }
     
-    // create the picker text field
-    lazy var pickerTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
-        textField.center.x = view.center.x
-        textField.textAlignment = NSTextAlignment.center
-        textField.font = UIFont.systemFont(ofSize: regFontSize)
-        textField.backgroundColor = .white
-        textField.textColor = .black
-        textField.borderStyle = UITextField.BorderStyle.none
-        textField.layer.cornerRadius = 5
-        textField.alpha = 0.8
-        return textField
-    }()
+
+    // create the UI text field
+    /*lazy var pickerTextField: UITextField = {
+     let textField = UITextField(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+     textField.center.x = view.center.x
+     textField.textAlignment = NSTextAlignment.center
+     textField.font = UIFont.systemFont(ofSize: regFontSize)
+     textField.backgroundColor = .white
+     textField.textColor = .black
+     textField.borderStyle = UITextField.BorderStyle.none
+     textField.layer.cornerRadius = 5
+     textField.alpha = 0.8
+     return textField
+     }()*/
     
     // create the DatePicker
     lazy var datePicker: UIDatePicker = {
@@ -808,3 +881,4 @@ extension Date {
 // source for making annotations clickable: https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
 // source for date range check: https://stackoverflow.com/questions/29652771/how-to-check-if-time-is-within-a-specific-range-in-swift/39499504#
 // source for tomorrow date: https://stackoverflow.com/questions/44009804/swift-3-how-to-get-date-for-tomorrow-and-yesterday-take-care-special-case-ne
+//source for linking view controllers: https://teamtreehouse.com/community/passing-data-from-modal-view-controller-to-parent

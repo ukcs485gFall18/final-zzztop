@@ -62,6 +62,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelection = true
+        tableView.rowHeight = 55
         return tableView
     }()
     
@@ -111,6 +112,12 @@ extension ChoosePassViewController: UITableViewDelegate {
             cell.accessoryType = UITableViewCell.AccessoryType.none
         }
 
+        let passString = kPassTypes[indexPath.row]
+        //look in the dictionary of pass names and UIImages
+        //put the value into the imageView
+        let passImage = kPassImages[passString]
+        cell.imageView?.image = passImage
+        
         return cell
     }
     
@@ -159,3 +166,4 @@ extension String {
 // source for getting nth character: https://stackoverflow.com/questions/24092884/get-nth-character-of-a-string-in-swift-programming-language
 // source for checkmarks on table view: https://www.youtube.com/watch?v=5MZ-WJuSdpg
 // source for making status bar icons white: https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3
+// source for cell height without delegate: https://stackoverflow.com/questions/46519567/table-view-cell-row-height-doesnt-work
