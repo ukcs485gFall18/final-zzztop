@@ -11,7 +11,7 @@ import Static
 
 class AdminViewController: TableViewController, UITextFieldDelegate {
     
-    // MARK: - Properties
+    // MARK: - properties
     
     //    var tag = Int()
     var name: String?
@@ -19,19 +19,26 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
     var passtype:String?
     var coords: [String: Double]?
     var coordDisplay = String()
+    var dayOptions = [
+        ["MT", "F", "SS"],
+        ["MF", "SS"],
+        ["MS"]
+    ]
+    var times:[String:Any]?
+//    var selectedTimes:[String:Any]?
     
-    // MARK: - Initializers
+    // MARK: - initializers
     
-    //    do i need?
     convenience init() {
         self.init(style: .grouped)
     }
     
-    // MARK: - viewdidload
+    // MARK: - overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,7 +49,13 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         
         getCoords()
         
-        setupViews()
+        str = ""
+        str2 = ""
+        str3 = ""
+        makeDayOptionsIntoString()
+        
+        // designs and positions views
+        setUpViews()
     }
     
     func getCoords() {
@@ -58,84 +71,25 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         vc.coords = coords
     }
     
+    func getTimes() {
+//        let times = []
+        
+    }
+    
     @objc func submit() {
+        getTimes()
+        
         guard let name = vc.name,
             let radius = vc.radius,
-            //            let passtype = vc.passtype,
-            let coords = vc.coords else { return }
+            let passtype = vc.passtype,
+            let coords = vc.coords,
+            let times = vc.times else { return }
         
         
         let values: [String: Any] = [
             "radius": radius,
             "coords":  coords,
-            "times": [
-                "No permit required": [
-                    "MT": [
-                        "start": [
-                            "hour": 19,
-                            "minute": 30,
-                            "12hour": "pm"
-                        ],
-                        "end": [
-                            "hour": 5,
-                            "minute": 0,
-                            "12hour": "am"
-                        ]
-                    ],
-                    "F": [
-                        "start": [
-                            "hour": 15,
-                            "minute": 30,
-                            "12hour": "pm"
-                        ],
-                        "end": [
-                            "hour": 23,
-                            "minute": 59,
-                            "12hour": "pm"
-                        ]
-                    ],
-                    "SS": [
-                        "start": [
-                            "hour": 0,
-                            "minute": 0,
-                            "12hour": "am"
-                        ],
-                        "end": [
-                            "hour": 23,
-                            "minute": 59,
-                            "12hour": "pm"
-                        ]
-                    ]
-                ],
-                "Any valid permit": [
-                    "MT": [
-                        "start": [
-                            "hour": 15,
-                            "minute": 30,
-                            "12hour": "pm"
-                        ],
-                        "end": [
-                            "hour": 19,
-                            "minute": 30,
-                            "12hour": "pm"
-                        ]
-                    ]
-                ],
-                "E": [
-                    "MF": [
-                        "start": [
-                            "hour": 5,
-                            "minute": 0,
-                            "12hour": "am"
-                        ],
-                        "end": [
-                            "hour": 15,
-                            "minute": 30,
-                            "12hour": "pm"
-                        ]
-                    ]
-                ]
-            ]
+            "times": times
         ]
         
         // add data to firebase
@@ -166,7 +120,35 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         present(LoginViewController2(), animated: true, completion: nil)
     }
     
-    func setupViews() {
+    
+    var str = ""
+    var str2 = ""
+    var str3 = ""
+    func makeDayOptionsIntoString() {
+        for day in dayOptions[0] {
+            if day ==  dayOptions[0].last {
+                str += day
+            } else {
+                str += day + ", "
+            }
+        }
+        for day in dayOptions[1] {
+            if day ==  dayOptions[1].last {
+                str2 += day
+            } else {
+                str2 += day + ", "
+            }
+        }
+        for day in dayOptions[2] {
+            if day ==  dayOptions[2].last {
+                str3 += day
+            } else {
+                str3 += day + ", "
+            }
+        }
+    }
+    
+    func setUpViews() {
         let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
         navigationItem.rightBarButtonItem = logoutButton
         
@@ -183,25 +165,31 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
             Section(rows: [
                 Row(text: "Name:", cellClass: regularTextFieldCell.self),
                 Row(text: "Radius:", cellClass: radiusPickerTextFieldCell.self),
-                Row(text: "Pass Type:", cellClass: passPickerTextFieldCell.self)
-                ]),
-            Section(header: "Map", rows: [
                 Row(text: "Coordinates: \(coordDisplay)", selection: { [unowned self] in
                     self.navigationController?.pushViewController(AdminMapViewController(), animated: true)
-                    }, accessory: .disclosureIndicator)
+                    }, accessory: .disclosureIndicator),
+                ]),
+            Section(rows: [
+                Row(text: "Pass Type:", cellClass: passPickerTextFieldCell.self)
                 ]),
             Section(header: "Days", rows: [
-                Row(text: "Start Time:", cellClass: timesPickerTextFieldCell.self),
-                Row(text: "End Time:", cellClass: timesPickerTextFieldCell.self)
-                ])
-            //            ,
-            //            Section(rows: [
-            //                Row(cellClass: submitbuttoncell.self)
-            //                ])
+                Row(text: str, selection: { [unowned self] in
+                        chooseDayVC.options = self.dayOptions[0]
+                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    }, accessory: .disclosureIndicator),
+                Row(text: str2,  selection: { [unowned self] in
+                        chooseDayVC.options = self.dayOptions[1]
+                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    }, accessory: .disclosureIndicator),
+                Row(text: str3, selection: { [unowned self] in
+                        chooseDayVC.options = self.dayOptions[2]
+                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    }, accessory: .disclosureIndicator)
+                ], footer: "Choose days for which you'd like to enter times.")
         ]
         
         view.addSubview(submitButton)
-        setupSubmitButton()
+        setUpSubmitButton()
     }
     
     lazy var submitButton: UIButton = {
@@ -214,35 +202,90 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         return button
     }()
     
-    func setupSubmitButton() {
+    func setUpSubmitButton() {
         submitButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         submitButton.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        submitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 40).isActive = true // does not work as expected
+        submitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200).isActive = true // does not work as expected
     }
     
 }
 
 
-// TODO:
-//    1.Day options
-//    2.Fill out times in text views that have picker views
-
-
-// options for adding dates and times:
-//option 1
-//    "MT"
-//    "F"
-//    "SS"
-//option 2
-//    "MF"
-//    "SS"
-//option 3
-//    "MS"
-// create another view?
-// forces admin to have times for every day
-
 //----------------
 //later:
 //- save data entered to user defaults JIC the admin accidentally taps the exit button; but not with logout button
 //- How to let multiplier be fraction constant var
+//- refactor cells with tag functionality
+//- swift global var rules? (like vc in this case)
+
+
+
+//[
+//    "No permit required": [
+//        "MT": [
+//            "start": [
+//                "hour": 19,
+//                "minute": 30,
+//                "12hour": "pm"
+//            ],
+//            "end": [
+//                "hour": 5,
+//                "minute": 0,
+//                "12hour": "am"
+//            ]
+//        ],
+//        "F": [
+//            "start": [
+//                "hour": 15,
+//                "minute": 30,
+//                "12hour": "pm"
+//            ],
+//            "end": [
+//                "hour": 23,
+//                "minute": 59,
+//                "12hour": "pm"
+//            ]
+//        ],
+//        "SS": [
+//            "start": [
+//                "hour": 0,
+//                "minute": 0,
+//                "12hour": "am"
+//            ],
+//            "end": [
+//                "hour": 23,
+//                "minute": 59,
+//                "12hour": "pm"
+//            ]
+//        ]
+//    ],
+//    "Any valid permit": [
+//        "MT": [
+//            "start": [
+//                "hour": 15,
+//                "minute": 30,
+//                "12hour": "pm"
+//            ],
+//            "end": [
+//                "hour": 19,
+//                "minute": 30,
+//                "12hour": "pm"
+//            ]
+//        ]
+//    ],
+//    "E": [
+//        "MF": [
+//            "start": [
+//                "hour": 5,
+//                "minute": 0,
+//                "12hour": "am"
+//            ],
+//            "end": [
+//                "hour": 15,
+//                "minute": 30,
+//                "12hour": "pm"
+//            ]
+//        ]
+//    ]
+//]

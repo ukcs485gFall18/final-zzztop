@@ -13,7 +13,7 @@ let vc: AdminViewController = AdminViewController()
 
 extension TableViewController {
     func hideKeyboard() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AdminViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
@@ -29,7 +29,7 @@ class regularTextFieldCell: UITableViewCell, Cell, UITextFieldDelegate {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(textField)
-        setupTextField()
+        setUpTextField()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         vc.name = textField.text!
@@ -40,7 +40,7 @@ class regularTextFieldCell: UITableViewCell, Cell, UITextFieldDelegate {
         textField.delegate = self
         return textField
     }()
-    func setupTextField() {
+    func setUpTextField() {
         textField.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         textField.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -57,7 +57,7 @@ class radiusPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UI
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(textField)
-        setupTextField()
+        setUpTextField()
         textField.inputView = pickerView
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -69,7 +69,7 @@ class radiusPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UI
         textField.delegate = self
         return textField
     }()
-    func setupTextField() {
+    func setUpTextField() {
         textField.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         textField.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -112,7 +112,7 @@ class timesPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIP
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(textField)
-        setupTextField()
+        setUpTextField()
         textField.inputView = pickerView
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -123,7 +123,7 @@ class timesPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIP
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    func setupTextField() {
+    func setUpTextField() {
         textField.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         textField.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -181,7 +181,7 @@ class passPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIPi
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(textField)
-        setupTextField()
+        setUpTextField()
         textField.inputView = pickerView
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -193,7 +193,7 @@ class passPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIPi
         textField.delegate = self
         return textField
     }()
-    func setupTextField() {
+    func setUpTextField() {
         textField.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         textField.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -233,7 +233,7 @@ class passPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIPi
 //    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 //        super.init(style: style, reuseIdentifier: reuseIdentifier)
 //        self.addSubview(button)
-//        setupbutton()
+//        setUpbutton()
 //    }
 //    lazy var button: UIButton = {
 //        let button = UIButton()
@@ -270,7 +270,7 @@ class passPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIPi
 //        // dismiss view
 //    }
 //
-//    func setupbutton() {
+//    func setUpbutton() {
 //        button.heightAnchor.constraint(equalToConstant: self.bounds.height+5).isActive = true
 //        button.widthAnchor.constraint(equalToConstant: self.bounds.width+100).isActive = true
 //    }

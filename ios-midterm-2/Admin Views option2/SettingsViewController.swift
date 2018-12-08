@@ -10,12 +10,14 @@ import UIKit
 import Static
 
 class SettingsViewController: TableViewController {
-    //do i need?
+    
+    // MARK: - initializers
+    
     convenience init() {
         self.init(style: .grouped)
     }
     
-    
+    // MARK: - overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()

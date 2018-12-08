@@ -17,7 +17,7 @@ class AdminMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(map)
-        setupMap()
+        setUpMap()
         configureLocationManager()
         
         let uilpgr = UILongPressGestureRecognizer(target: self, action: #selector(addpin(gesture:)))
@@ -61,7 +61,7 @@ class AdminMapViewController: UIViewController {
         return map
     }()
     
-    func setupMap() {
+    func setUpMap() {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }

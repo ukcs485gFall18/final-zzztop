@@ -20,7 +20,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        setUpViews()
     }
     
     @objc func submit() {
@@ -262,7 +262,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
     
     // MARK: - views
     
-    func setupViews() {
+    func setUpViews() {
         view.backgroundColor = .white
         
         view.addSubview(nameTextField)
@@ -274,14 +274,14 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         view.addSubview(endTextField)
         view.addSubview(submitButton)
         
-        setupNameTextField()
-        setupRadiusTextField()
-        setupLatTextField()
-        setupLonTextField()
-        setupDaySegmentedControl()
-        setupStartTextField()
-        setupEndTextField()
-        setupSubmitButton()
+        setUpNameTextField()
+        setUpRadiusTextField()
+        setUpLatTextField()
+        setUpLonTextField()
+        setUpDaySegmentedControl()
+        setUpStartTextField()
+        setUpEndTextField()
+        setUpSubmitButton()
         
         // picker view configuration
         radiusTextField.inputView = pickerView
@@ -307,7 +307,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return textField
     }()
     
-    func setupNameTextField() {
+    func setUpNameTextField() {
         nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -325,7 +325,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return textField
     }()
     
-    func setupRadiusTextField() {
+    func setUpRadiusTextField() {
         radiusTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         radiusTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: separation).isActive = true
         radiusTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -333,7 +333,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
     }
     
     // TODO: add coords label
-    // TODO: setup for label
+    // TODO: setUp for label
     
     lazy var latTextField: UITextField = {
         let textField = UITextField()
@@ -346,7 +346,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return textField
     }()
     
-    func setupLatTextField() {
+    func setUpLatTextField() {
         latTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         latTextField.topAnchor.constraint(equalTo: radiusTextField.bottomAnchor, constant: separation).isActive = true
         latTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -364,7 +364,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return textField
     }()
     
-    func setupLonTextField() {
+    func setUpLonTextField() {
         lonTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         lonTextField.topAnchor.constraint(equalTo: latTextField.bottomAnchor, constant: separation).isActive = true
         lonTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -390,7 +390,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return segmentedControl
     }()
     
-    func setupDaySegmentedControl() {
+    func setUpDaySegmentedControl() {
         daySegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         daySegmentedControl.topAnchor.constraint(equalTo: lonTextField.bottomAnchor, constant: separation).isActive = true
         daySegmentedControl.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -408,7 +408,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return textField
     }()
     
-    func setupStartTextField() {
+    func setUpStartTextField() {
         startTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         startTextField.topAnchor.constraint(equalTo: daySegmentedControl.bottomAnchor, constant: separation).isActive = true
         startTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -426,7 +426,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return textField
     }()
     
-    func setupEndTextField() {
+    func setUpEndTextField() {
         endTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         endTextField.topAnchor.constraint(equalTo: startTextField.bottomAnchor, constant: separation).isActive = true
         endTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -444,7 +444,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         return button
     }()
     
-    func setupSubmitButton() {
+    func setUpSubmitButton() {
         submitButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
         submitButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         submitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true

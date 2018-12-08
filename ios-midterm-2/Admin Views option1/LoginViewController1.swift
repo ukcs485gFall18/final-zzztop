@@ -12,7 +12,7 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        setUpViews()
     }
     
     
@@ -105,7 +105,7 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
     
     // MARK: - views
     
-    func setupViews() {
+    func setUpViews() {
         view.backgroundColor = UIColor.white
         
         view.addSubview(logo)
@@ -114,11 +114,11 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
         view.addSubview(loginButton)
         view.addSubview(exitButton)
         
-        setupLogo()
-        setupUsernameTextField()
-        setupPasswordTextField()
-        setupLoginButton()
-        setupExitButton()
+        setUpLogo()
+        setUpUsernameTextField()
+        setUpPasswordTextField()
+        setUpLoginButton()
+        setUpExitButton()
     }
     
     lazy var logo: UIImageView = {
@@ -129,7 +129,7 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
         return imageView
     }()
     
-    func setupLogo() {
+    func setUpLogo() {
         logo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         logo.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
         logo.widthAnchor.constraint(equalToConstant: 200).isActive = true
@@ -149,7 +149,7 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    func setupUsernameTextField() {
+    func setUpUsernameTextField() {
         usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         usernameTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 50).isActive = true
         usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -170,7 +170,7 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    func setupPasswordTextField() {
+    func setUpPasswordTextField() {
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: separation).isActive = true
         passwordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
@@ -190,7 +190,7 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    func setupLoginButton() {
+    func setUpLoginButton() {
         loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: separation).isActive = true
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 3/5).isActive = true
@@ -206,7 +206,7 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    func setupExitButton() {
+    func setUpExitButton() {
         exitButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         exitButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true

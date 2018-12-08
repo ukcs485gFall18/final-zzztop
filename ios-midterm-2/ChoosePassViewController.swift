@@ -29,7 +29,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         }
         
         // designs and positions views
-        setupViews()
+        setUpViews()
     }
     
     // dismisses a view
@@ -42,7 +42,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         return .lightContent
     }
     
-    func setupViews() {
+    func setUpViews() {
         displayWidth = self.view.frame.width
         displayHeight = self.view.frame.height
 

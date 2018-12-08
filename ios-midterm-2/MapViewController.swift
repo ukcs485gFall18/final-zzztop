@@ -12,7 +12,7 @@ import Firebase
 
 class MapViewController: UIViewController {
     
-    // MARK: - public variables
+    // MARK: - properties
     var parkingData: [NSDictionary]?
     var gameday: [NSDictionary]?
     var gamedates: NSDictionary?
@@ -38,7 +38,7 @@ class MapViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // designs and positions views
-        setupViews()
+        setUpViews()
     }
     
     //-----------------------------------------------
@@ -559,12 +559,12 @@ class MapViewController: UIViewController {
     // MARK: - views
     
     //-----------------------------------------------
-    // setupViews()
+    // setUpViews()
     //-----------------------------------------------
     // Add the map, navigationcontroller, and zoom
     // button to the view
     //-----------------------------------------------
-    func setupViews() {
+    func setUpViews() {
         headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
         
         navigationController?.navigationBar.addSubview(resetButton)
@@ -577,7 +577,7 @@ class MapViewController: UIViewController {
         view.addSubview(gameDayLabel)
         view.addSubview(pickerTextField)
 
-        setupMap()
+        setUpMap()
     }
     
     // create the picker text field
@@ -695,7 +695,7 @@ class MapViewController: UIViewController {
     }()
     
     // positions the map to fill most of the view
-    func setupMap() {
+    func setUpMap() {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }

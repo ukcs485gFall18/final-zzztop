@@ -18,6 +18,7 @@
 		800045E421B8B17000C4DE89 /* LoginViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045DF21B8B17000C4DE89 /* LoginViewController2.swift */; };
 		800045E521B8B17000C4DE89 /* AdminMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E021B8B17000C4DE89 /* AdminMapViewController.swift */; };
 		800045E621B8B17000C4DE89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E121B8B17000C4DE89 /* SettingsViewController.swift */; };
+		800045E821B8D70C00C4DE89 /* ChooseDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */; };
 		8027575A21B85F5700813CB9 /* staticviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8027575921B85F5700813CB9 /* staticviews.swift */; };
 		806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91D821729D3B00EDA648 /* AppDelegate.swift */; };
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
@@ -46,6 +47,7 @@
 		800045DF21B8B17000C4DE89 /* LoginViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController2.swift; sourceTree = "<group>"; };
 		800045E021B8B17000C4DE89 /* AdminMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminMapViewController.swift; sourceTree = "<group>"; };
 		800045E121B8B17000C4DE89 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDayViewController.swift; sourceTree = "<group>"; };
 		8027575921B85F5700813CB9 /* staticviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = staticviews.swift; sourceTree = "<group>"; };
 		806A91D521729D3B00EDA648 /* ios-midterm-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-midterm-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		806A91D821729D3B00EDA648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,8 +93,9 @@
 				800045E121B8B17000C4DE89 /* SettingsViewController.swift */,
 				800045DF21B8B17000C4DE89 /* LoginViewController2.swift */,
 				800045DD21B8B17000C4DE89 /* AdminViewController.swift */,
-				800045DE21B8B17000C4DE89 /* Cells.swift */,
 				800045E021B8B17000C4DE89 /* AdminMapViewController.swift */,
+				800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */,
+				800045DE21B8B17000C4DE89 /* Cells.swift */,
 			);
 			path = "Admin Views option2";
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				A3C38205218003DD003D53E7 /* ParkingDetailsViewController.swift in Sources */,
 				800045E521B8B17000C4DE89 /* AdminMapViewController.swift in Sources */,
 				80EB848221B8AF60003448EF /* LoginViewController1.swift in Sources */,
+				800045E821B8D70C00C4DE89 /* ChooseDayViewController.swift in Sources */,
 				80EB847E21B8AED5003448EF /* AdminViewControllerThree.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
