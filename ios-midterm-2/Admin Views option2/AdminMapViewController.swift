@@ -11,6 +11,8 @@ import MapKit
 
 class AdminMapViewController: UIViewController {
     
+    // MARK: - properties
+    
     let locationManager = CLLocationManager()
     var coords = [String:Double]()
     
@@ -54,6 +56,8 @@ class AdminMapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
+    
+    // MARK: - views
     
     lazy var map: MKMapView = {
         let map = MKMapView()

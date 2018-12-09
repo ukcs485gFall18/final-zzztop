@@ -50,7 +50,7 @@ class LoginViewController2: UIViewController, UITextFieldDelegate {
     var count = 0
     @objc func closeViews() {
         count += 1
-        print(count)
+        print("in login vc, count==", count)
 
         // dismisses with two clicks
         // Error printed when dismissed: 2018-12-03 19:17:20.530008-0500 ios-midterm-2[64885:4664648] Warning: Attempt to present <ios_midterm_2.LoginViewController: 0x7fed996ce3f0> on <ios_midterm_2.AdminViewController: 0x7fed99574e50> whose view is not in the window hierarchy!

@@ -7,7 +7,7 @@
 //
 import UIKit
 import MapKit
-import Firebase
+//import Firebase
 
 class MapViewController: UIViewController {
     
@@ -17,7 +17,8 @@ class MapViewController: UIViewController {
     var gameday: [NSDictionary]?
     var gamedates: NSDictionary?
     var gameDates = [String]()
-    var parking: [String: Any]?
+    //    var parking: [String: Any]?
+    var parking: [NSDictionary]?
     var parkingNames = [String]()
     var usersPermits: [String] = []
     var spotsAndTimes: [String: [[String: String]: [NSDictionary]]] = [:]
@@ -55,7 +56,7 @@ class MapViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         print(dateFormatter.string(from: pickedDate!))
-
+        
         setUpViews()
     }
     
@@ -63,14 +64,21 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         pickedDate = now
-
+        
         // get user's current location
         configureLocationManager()
         
-        // game day config
         readJson()
+        parking = parkingData
+        
+        for p in parking! {
+            let coords = p["coords"] as! [Double]
+            let dict = [coords[0], coords[1]]
+            setPins(dict: dict, title: p["name"] as! String)
+        }
+        
         checkGameDay()
-
+        
     }
     
     //-----------------------------------------------
@@ -91,31 +99,32 @@ class MapViewController: UIViewController {
         }
         
         // save parking data and set pins
-        readFirebaseParkingData()
+        //        readFirebaseParkingData()
         
         // place the overlays in the correct places
-        accessDataForOverlaysFromFirebase(pickedDate: now)
+        //        accessDataForOverlaysFromFirebase(pickedDate: now)
+        accessDataForOverlays(pickedDate: now)
     }
     
     // save parking data and set pins
-    func readFirebaseParkingData() {
-        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
-            // save parking data
-            self.parking = snapshot.value as? [String: Any]
-            
-            // set pins
-            for p in self.parking! {
-                // assign other values to array
-                let values = p.value as! [String: Any]
-                // get coordinates
-                let coordDict = values["coords"] as! [String: Any]
-                let lat = coordDict["lat"] as! Double
-                let lon = coordDict["lon"] as! Double
-                let coords = [lat, lon]
-                self.setPins(dict: coords, title: p.key)
-            }
-        }
-    }
+    //    func readFirebaseParkingData() {
+    //        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
+    //            // save parking data
+    //            self.parking = snapshot.value as? [String: Any]
+    //
+    //            // set pins
+    //            for p in self.parking! {
+    //                // assign other values to array
+    //                let values = p.value as! [String: Any]
+    //                // get coordinates
+    //                let coordDict = values["coords"] as! [String: Any]
+    //                let lat = coordDict["lat"] as! Double
+    //                let lon = coordDict["lon"] as! Double
+    //                let coords = [lat, lon]
+    //                self.setPins(dict: coords, title: p.key)
+    //            }
+    //        }
+    //    }
     
     @objc func openSettingsVC() {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
@@ -171,25 +180,12 @@ class MapViewController: UIViewController {
     // Post: Updates the pins on the map
     //-----------------------------------------------
     @objc func resetDateTime(){
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        //pickerTextField.text = dateFormatter.string(from: now)
-        
         // update map after reset
-        accessDataForOverlaysFromFirebase(pickedDate: now)
+        //        accessDataForOverlaysFromFirebase(pickedDate: now)
+        accessDataForOverlays(pickedDate: now)
     }
     
-    //-----------------------------------------------
-    // createPickerView()
-    //-----------------------------------------------
-    // A function to create the UIPickerView and
-    // place it on the view
-    // Conditions: none
-    //-----------------------------------------------
     func createPickerView() {
-        // add the DatePicker to the UITextField
-        //pickerTextField.inputView = datePicker
-        
         // allow the user to get out of the date picker by tapping
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
         view.addGestureRecognizer(tapGesture)
@@ -205,11 +201,8 @@ class MapViewController: UIViewController {
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        //pickerTextField.text = dateFormatter.string(from: datePicker.date)
-        
-        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
+        //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
+        accessDataForOverlays(pickedDate: now)
     }
     
     //-----------------------------------------------
@@ -220,11 +213,7 @@ class MapViewController: UIViewController {
     // Post: accesses the data to set the pins
     // to match the new date
     //-----------------------------------------------
-    @objc func dateSelected(datePicker: UIDatePicker){
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        //pickerTextField.text = dateFormatter.string(from: datePicker.date)
-        
+    @objc func dateSelected(datePicker: UIDatePicker) {
         pickedDate = datePicker.date
         if checkGameDay() == "Today"{
             gameDayLabel.text = "Game Day"
@@ -238,83 +227,73 @@ class MapViewController: UIViewController {
             gameDayLabel.text = ""
             gameDayLabel.isHidden = true
         }
-        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
+        
+        //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
+        accessDataForOverlays(pickedDate: pickedDate!)
     }
     
+    
     //-----------------------------------------------
-    // accessDataForOverlaysFromFirebase()
+    // accessDataForOverlays()
     //-----------------------------------------------
     // accesses and formats the data from the JSON
     // file such that they can be compared to the
     // current time
     //-----------------------------------------------
-    func accessDataForOverlaysFromFirebase(pickedDate: Date) {
+    func accessDataForOverlays(pickedDate: Date) {
         parkingNames.removeAll()
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         
-        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
-            let newParking = (snapshot.value)! as! [String: Any]
+        // go through each collection in the JSON file
+        for p in parking! {
+            // get the spot name, circle radius, and coordinates
+            let spotName = p["name"] as! String
+            let radius = p["radius"] as! Int
+            let coords = p["coords"] as! [Double]
             
-            // for each parking spot
-            for p in newParking {
-                // get name
-                let spotName = p.key
+            // get the current user settings for dates
+            let date = pickedDate
+            let calendar = Calendar.current
+            let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
+            let f = DateFormatter()
+            let weekdaystring = f.weekdaySymbols[weekday]
+            
+            // unwrap all of the times
+            guard let times = p["times"] as? [Any] else {
+                return
+            }
+            
+            // go through all of the times
+            for time in times {
+                // store the times as a NSDictionary
+                let timeDict = time as! NSDictionary
+                let name = timeDict["pass"] as! String
+                addToDictionary(pass: name, spotName: spotName, timeDict: timeDict)
                 
-                // assign other values to array
-                let values = p.value as! [String: Any]
-                
-                // get radius
-                let radius = values["radius"] as! Int
-                
-                // get coordinates
-                let coordDict = values["coords"] as! [String: Any]
-                let lat = coordDict["lat"] as! Double
-                let lon = coordDict["lon"] as! Double
-                let coords = [lat, lon]
-                
-                // get the current user settings for dates
-                let date = pickedDate
-                let weekday = self.calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
-                let f = DateFormatter()
-                let weekdaystring = f.weekdaySymbols[weekday]
-                
-                // unwrap all of the times
-                guard let times = values["times"] as? [String: Any] else {
-                    return
-                }
-                
-                // go through all of the times
-                for time in times {
-                    // store time as dictionary
-                    let timeDict = time.value as! [String: Any]
-                    let passName = time.key
-                    self.addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
+                // store all of the parking spots and their names
+                if spots.contains(spotName) {
+                    continue
+                } else {
+                    spots.append(spotName)
                     
-                    // store all of the parking spots and their names
-                    if self.spots.contains(spotName) {
-                        continue
-                    } else {
-                        self.spots.append(spotName)
-                        
-                        // go through all of the permits possible
-                        for permit in self.usersPermits {
-                            // if the permit name is a match, check the date ranges and format them
-                            if passName == permit {
-                                let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-                                let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-                                let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-                                
-                                if (weekdaystring == WeekDay.monday.rawValue) ||
-                                    (weekdaystring == WeekDay.tuesday.rawValue) ||
-                                    (weekdaystring == WeekDay.wednesday.rawValue) ||
-                                    (weekdaystring == WeekDay.thursday.rawValue) {
-                                    self.rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-                                } else if weekdaystring == WeekDay.friday.rawValue {
-                                    self.rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-                                } else {
-                                    self.rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-                                }
+                    // go through all of the permits possible
+                    for permit in usersPermits {
+                        // if the permit name is a match, check the date ranges and format them
+                        if name == permit {
+                            let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+                            let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+                            let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
+                            
+                            if (weekdaystring == WeekDay.monday.rawValue) ||
+                                (weekdaystring == WeekDay.tuesday.rawValue) ||
+                                (weekdaystring == WeekDay.wednesday.rawValue) ||
+                                (weekdaystring == WeekDay.thursday.rawValue) {
+                                rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+                            } else if weekdaystring == WeekDay.friday.rawValue {
+                                rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+                            } else {
+                                rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
                             }
                         }
                     }
@@ -324,12 +303,95 @@ class MapViewController: UIViewController {
     }
     
     //-----------------------------------------------
+    // accessDataForOverlaysFromFirebase()
+    //-----------------------------------------------
+    // accesses and formats the data from the JSON
+    // file such that they can be compared to the
+    // current time
+    //-----------------------------------------------
+    //    func accessDataForOverlaysFromFirebase(pickedDate: Date) {
+    //        parkingNames.removeAll()
+    //        map.removeOverlays(map.overlays) // remove previous overlays
+    //        spots = []
+    //
+    //        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
+    //            let newParking = (snapshot.value)! as! [String: Any]
+    //
+    //            // for each parking spot
+    //            for p in newParking {
+    //                // get name
+    //                let spotName = p.key
+    //
+    //                // assign other values to array
+    //                let values = p.value as! [String: Any]
+    //
+    //                // get radius
+    //                let radius = values["radius"] as! Int
+    //
+    //                // get coordinates
+    //                let coordDict = values["coords"] as! [String: Any]
+    //                let lat = coordDict["lat"] as! Double
+    //                let lon = coordDict["lon"] as! Double
+    //                let coords = [lat, lon]
+    //
+    //                // get the current user settings for dates
+    //                let date = pickedDate
+    //                let weekday = self.calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
+    //                let f = DateFormatter()
+    //                let weekdaystring = f.weekdaySymbols[weekday]
+    //
+    //                // unwrap all of the times
+    //                guard let times = values["times"] as? [String: Any] else {
+    //                    return
+    //                }
+    //
+    //                // go through all of the times
+    //                for time in times {
+    //                    // store time as dictionary
+    //                    let timeDict = time.value as! [String: Any]
+    //                    let passName = time.key
+    //                    self.addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
+    //
+    //                    // store all of the parking spots and their names
+    //                    if self.spots.contains(spotName) {
+    //                        continue
+    //                    } else {
+    //                        self.spots.append(spotName)
+    //
+    //                        // go through all of the permits possible
+    //                        for permit in self.usersPermits {
+    //                            // if the permit name is a match, check the date ranges and format them
+    //                            if passName == permit {
+    //                                let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+    //                                let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+    //                                let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
+    //
+    //                                if (weekdaystring == WeekDay.monday.rawValue) ||
+    //                                    (weekdaystring == WeekDay.tuesday.rawValue) ||
+    //                                    (weekdaystring == WeekDay.wednesday.rawValue) ||
+    //                                    (weekdaystring == WeekDay.thursday.rawValue) {
+    //                                    self.rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+    //                                } else if weekdaystring == WeekDay.friday.rawValue {
+    //                                    self.rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+    //                                } else {
+    //                                    self.rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+    //                                }
+    //                            }
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    
+    //-----------------------------------------------
     // rangeLoop()
     //-----------------------------------------------
     // checks that the given date is within the
     // given date range by calling the function below
     //-----------------------------------------------
-    func rangeLoop(check: [String], timeDict: [String: Any], coords: [Double], radius: Int, name:String) {
+    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int, name:String) { // for json
+        //    func rangeLoop(check: [String], timeDict: [String: Any], coords: [Double], radius: Int, name:String) { // for firebase
         for c in check {
             if let range = timeDict[c] {
                 checkDateRange(open: range as! [String: Any], coords: coords, radius: radius, name: name)
@@ -387,15 +449,15 @@ class MapViewController: UIViewController {
         for g in gameDates {
             let gameDate = formatter.date(from: g)
             if calendar.isDate(pickedDate, inSameDayAs: gameDate!) {
-//                parking = gameday
+                //                parking = gameday
                 gameDay = "Today"
                 break
             } else if calendar.isDate(pickedDate.tomorrow(hour: hour, minute: min), inSameDayAs: gameDate!) {
-//                parking = parkingData
+                //                parking = parkingData
                 gameDay = "Tomorrow"
                 break
             } else {
-//                parking = parkingData
+                //                parking = parkingData
                 gameDay = "None"
             }
         }
@@ -410,8 +472,8 @@ class MapViewController: UIViewController {
     // Pre: requires the pass name, spot name, and
     // the time range as a NSDictionary
     //-----------------------------------------------
-    func addToDictionary(pass: String, spotName: String, timeDict: [String:Any]) {
-        var timeCategories: [[String:String]: [NSDictionary]] = [:]
+    func addToDictionary(pass: String, spotName: String, timeDict: NSDictionary) {
+        var timeCategories: [[String: String]: [NSDictionary]] = [:]
         
         // go through each day range and add to dictionary if not previously appended
         if let MT = timeDict["MT"] {
@@ -472,6 +534,18 @@ class MapViewController: UIViewController {
     // a NSDictionary
     //-----------------------------------------------
     func readJson() {
+        do {
+            if let file = Bundle.main.url(forResource: "parkingData", withExtension: "json") {
+                let data = try Data(contentsOf: file)
+                let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                parkingData = jsonResult["parking"] as? [NSDictionary]
+            } else {
+                print("no json file")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         do {
             if let file = Bundle.main.url(forResource: "gameday", withExtension: "json") {
                 let data = try Data(contentsOf: file)
@@ -589,24 +663,15 @@ class MapViewController: UIViewController {
         navigationController?.navigationBar.addSubview(parkingTableButton)
         navigationController?.navigationBar.addSubview(zoomButton)
         navigationController?.navigationBar.addSubview(passButton)
-        navigationController?.navigationBar.addSubview(adminButton)
-
+        navigationController?.navigationBar.addSubview(settingsButton)
+        
         view.addSubview(map)
         view.addSubview(gameDayLabel)
         view.addSubview(timeAndDurationButton!)
-        //view.addSubview(pickerTextField)
-
+        
+        
         setUpMap()
     }
-
-    
-    // create the DatePicker
-    lazy var datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .dateAndTime
-        datePicker.addTarget(self, action: #selector(MapViewController.dateSelected(datePicker:)), for: .valueChanged)
-        return datePicker
-    }()
     
     lazy var detailsView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: self.view.frame.height-self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height/2))
@@ -659,10 +724,9 @@ class MapViewController: UIViewController {
     }()
     
     // button to reset the time to the current time
-    // FIXME: when pressed has black/gray background; should act like other buttons
     lazy var resetButton: UIButton = {
         let refreshIcon = UIImage(named: "refreshIcon")
-        let button = UIButton(frame: CGRect(x: xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
+        let button = UIButton(frame: CGRect(x: xPadding+7, y: 0, width: navButtonW/1.4, height: navButtonH*1.4))
         button.setImage(refreshIcon, for: .normal)
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
@@ -682,7 +746,7 @@ class MapViewController: UIViewController {
     }()
     
     // creates the zoom button
-    lazy var adminButton: UIButton = {
+    lazy var settingsButton: UIButton = {
         let img = UIImage(named: "gear")
         let height_width: CGFloat = 30
         
@@ -713,30 +777,31 @@ extension MapViewController: MKMapViewDelegate {
     
     // sets the circle overlays
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        guard let circelOverLay = overlay as? MKCircle else {return MKOverlayRenderer()}
+        guard let circelOverLay = overlay as? MKCircle else { return MKOverlayRenderer() }
         
         let circleRenderer = MKCircleRenderer(circle: circelOverLay)
-        circleRenderer.strokeColor = .blue
-        circleRenderer.fillColor = .blue
+        circleRenderer.strokeColor = .red
+        circleRenderer.fillColor = .red
         circleRenderer.alpha = 0.2
         return circleRenderer
     }
     
     // sets the annotations to views so they are clickable w/ actions
-    func map(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         
-        let identifier = "Annotation"
-        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: identifier)
+        let identifier = "marker"
+        var view: MKMarkerAnnotationView
         
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            as? MKMarkerAnnotationView {
+            dequeuedView.annotation = annotation
+            view = dequeuedView
         } else {
-            annotationView!.annotation = annotation
+            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.markerTintColor = .blue
         }
-        
-        return annotationView
+        return view
     }
     
     //-----------------------------------------------

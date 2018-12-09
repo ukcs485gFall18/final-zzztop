@@ -144,9 +144,12 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     //-----------------------------------------------
     @objc func closeView() {
         self.dismiss(animated: true, completion:{
-            let futureTime = Calendar.current.date(byAdding: .hour, value: self.timePicked, to: self.pickedDate!)
-            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
-            print("Future Time: \(futureTime!)")
+            var addingHours = DateComponents()
+            addingHours.hour = self.timePicked
+            let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
+//            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
+            self.mapViewController?.accessDataForOverlays(pickedDate: futureTime!)
+            print(futureTime!)
         })
     }
     
