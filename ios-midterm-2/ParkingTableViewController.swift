@@ -15,6 +15,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
     var displayWidth = CGFloat()
     var displayHeight = CGFloat()
     let detailsVC = ParkingDetailsViewController()
+    var pickedDate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +93,7 @@ extension ParkingTableViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        detailsVC.pickedDate = pickedDate
         self.present(detailsVC,animated: true, completion: nil)
         if let hours = spotsAndTimes[parkingNames[indexPath.row]]{
             detailsVC.onUserAction(title: parkingNames[indexPath.row], hours: hours)
