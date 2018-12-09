@@ -72,5 +72,3 @@ extension TableViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
     
 }
-
-// todo: login

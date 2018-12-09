@@ -6,8 +6,9 @@ target 'ios-midterm-2' do
   use_frameworks!
 
   # Pods for ios-midterm-2
-  pod 'Firebase/Core'
-  pod 'Firebase/Database'
+  # pod 'Firebase/Core'
+  # pod 'Firebase/Database'
   pod 'Static', git: 'https://github.com/venmo/Static'
+  pod 'SwiftyJSON', '~> 4.0'
 
 end

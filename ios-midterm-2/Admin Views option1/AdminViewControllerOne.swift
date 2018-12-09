@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -102,7 +101,7 @@ class AdminViewControllerOne: UIViewController, UITextFieldDelegate, UIPickerVie
         ]
         
         // add data to firebase
-        databaseRef.child("parking").child(name).setValue(values)
+//        databaseRef.child("parking").child(name).setValue(values)
         
         // dismiss view
         

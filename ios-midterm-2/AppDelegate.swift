@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+//import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,16 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         
         // allows for progammatically creating views
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
         // set app to open to the map
-        let rootVC = MapViewController()
+//        let rootVC = MapViewController()
 //        let rootVC = SettingsViewController() // for testing
-//        let rootVC = AdminViewController() // for testing
+        let rootVC = AdminViewController() // for testing
 //        let rootVC = ChooseDayViewController() // for testing
 //        let rootVC = LoginViewController2() // for testing
         let nav = UINavigationController(rootViewController: rootVC)

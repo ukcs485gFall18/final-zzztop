@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+
 
 let kPassTypes = [
     "E", "E2", "E20", "E26", "E28", "E27", "E25",
@@ -118,5 +118,5 @@ let tfHeight = CGFloat(40)
 let separation = CGFloat(12)
 let tfFontSize = CGFloat(20)
 
-// Firebase
-let databaseRef = Database.database().reference()
+
+
