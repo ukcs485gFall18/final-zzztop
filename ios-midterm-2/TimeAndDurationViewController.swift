@@ -175,18 +175,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
                 
         self.mapViewController?.dateSelected(datePicked: datePicker.date)
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+  
     //source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
     //source for adding hours to a date: http://swiftdeveloperblog.com/code-examples/add-days-months-or-years-to-current-date-in-swift/
 }
