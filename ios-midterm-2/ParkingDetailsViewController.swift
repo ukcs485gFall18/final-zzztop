@@ -32,6 +32,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        onUserAction(title: parkingName, hours: times)
     }
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,22 +60,29 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                         cell.textLabel!.isHighlighted = true
                         break
                     }
-                    else {
-                        if let waitTime = times[[passString:"MT"]] {
-                            for c in waitTime {
-                                let start = c["start"] as! NSDictionary
-                                let startHour = start["hour"] as! Int
-                                let startMinute = start["minute"] as! Int
-                                let startDate = pickedDate!.dateAt(hours: startHour, minutes: startMinute)
-                                if startDate > pickedDate! {
-                                    let delay = startDate.timeIntervalSince(pickedDate!)
-                                    let formatter = DateComponentsFormatter()
-                                    formatter.unitsStyle = .abbreviated
-                                    
-                                    cell.textLabel!.text = cell.textLabel!.text! + "Available in: " + formatter.string(from: delay)!
-                                }
-                            }
-                        }
+                }
+                var waitTime: [NSDictionary]?
+                if times[[passString:"MT"]] != nil{
+                    waitTime = times[[passString:"MT"]]!
+                }
+                else if times[[passString:"MF"]] != nil{
+                    waitTime = times[[passString:"MF"]]!
+                }
+                else if times[[passString:"MF"]] != nil{
+                    waitTime = times[[passString:"MF"]]!
+                }
+                for c in waitTime! {
+                    let start = c["start"] as! NSDictionary
+                    let startHour = start["hour"] as! Int
+                    let startMinute = start["minute"] as! Int
+                    let startDate = pickedDate!.dateAt(hours: startHour, minutes: startMinute)
+                    if startDate > pickedDate! {
+                        let delay = startDate.timeIntervalSince(pickedDate!)
+                        let formatter = DateComponentsFormatter()
+                        formatter.unitsStyle = .abbreviated
+                        cell.textLabel!.text = cell.textLabel!.text! + "\nAvailable in: " + formatter.string(from: delay)!
+                        cell.textLabel!.highlightedTextColor = .red
+                        cell.textLabel!.isHighlighted = true
                     }
                 }
             }
@@ -85,8 +93,29 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                         cell.textLabel!.isHighlighted = true
                         break
                     }
-                    else {
-                        
+                    var waitTime: [NSDictionary]?
+                    if times[[passString:"MF"]] != nil{
+                        waitTime = times[[passString:"MF"]]!
+                    }
+                    else if times[[passString:"F"]] != nil{
+                        waitTime = times[[passString:"F"]]!
+                    }
+                    else if times[[passString:"MS"]] != nil{
+                        waitTime = times[[passString:"MS"]]!
+                    }
+                    for c in waitTime! {
+                        let start = c["start"] as! NSDictionary
+                        let startHour = start["hour"] as! Int
+                        let startMinute = start["minute"] as! Int
+                        let startDate = pickedDate!.dateAt(hours: startHour, minutes: startMinute)
+                        if startDate > pickedDate! {
+                            let delay = startDate.timeIntervalSince(pickedDate!)
+                            let formatter = DateComponentsFormatter()
+                            formatter.unitsStyle = .abbreviated
+                            cell.textLabel!.text = cell.textLabel!.text! + "\nAvailable in: " + formatter.string(from: delay)!
+                            cell.textLabel!.highlightedTextColor = .red
+                            cell.textLabel!.isHighlighted = true
+                        }
                     }
                 }
             }
@@ -94,6 +123,27 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 for key in availableRangeForSpot.keys {
                     if (sortedStrings[indexPath.row].key.range(of: key) != nil){
                         cell.textLabel!.highlightedTextColor = .blue
+                        cell.textLabel!.isHighlighted = true
+                    }
+                }
+                var waitTime: [NSDictionary]?
+                if times[[passString:"SS"]] != nil{
+                    waitTime = times[[passString:"SS"]]!
+                }
+                else if times[[passString:"MS"]] != nil{
+                    waitTime = times[[passString:"MS"]]!
+                }
+                for c in waitTime! {
+                    let start = c["start"] as! NSDictionary
+                    let startHour = start["hour"] as! Int
+                    let startMinute = start["minute"] as! Int
+                    let startDate = pickedDate!.dateAt(hours: startHour, minutes: startMinute)
+                    if startDate > pickedDate! {
+                        let delay = startDate.timeIntervalSince(pickedDate!)
+                        let formatter = DateComponentsFormatter()
+                        formatter.unitsStyle = .abbreviated
+                        cell.textLabel!.text = cell.textLabel!.text! + "\nAvailable in: " + formatter.string(from: delay)!
+                        cell.textLabel!.highlightedTextColor = .red
                         cell.textLabel!.isHighlighted = true
                     }
                 }
