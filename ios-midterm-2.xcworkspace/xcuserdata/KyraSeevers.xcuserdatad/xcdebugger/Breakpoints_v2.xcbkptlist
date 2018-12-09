@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-midterm-2/MapViewController.swift"
-            timestampString = "566005531.707227"
+            timestampString = "566007493.309315"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "viewDidAppear(_:)"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "choosePassTouched()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ios-midterm-2/MapViewController.swift"
+            timestampString = "566007493.309863"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "accessDataForOverlaysFromFirebase(pickedDate:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

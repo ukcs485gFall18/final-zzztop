@@ -167,6 +167,8 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
         pickedDate = datePicker.date
+        
+        self.mapViewController?.dateSelected(datePicker: datePicker)
     }
     
     

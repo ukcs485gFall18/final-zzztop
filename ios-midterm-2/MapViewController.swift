@@ -10,9 +10,9 @@ import MapKit
 //import Firebase
 
 class MapViewController: UIViewController {
-    
+
     // MARK: - properties
-    
+
     var parkingData: [NSDictionary]?
     var gameday: [NSDictionary]?
     var gamedates: NSDictionary?
@@ -35,10 +35,10 @@ class MapViewController: UIViewController {
     var headerHeight = CGFloat()
     let calendar = Calendar.current
     var timeAndDurationButton:UIButton?
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         // designs and positions views
         // create a button for select time and date
         timeAndDurationButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
@@ -52,34 +52,35 @@ class MapViewController: UIViewController {
         timeAndDurationButton!.setTitleColor(UIColor.black, for: [])
         timeAndDurationButton!.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
         self.view.addSubview(timeAndDurationButton!)
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
         print(dateFormatter.string(from: pickedDate!))
-        
+
         setUpViews()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         pickedDate = now
-        
+
         // get user's current location
         configureLocationManager()
-        
+
         readJson()
         parking = parkingData
-        
+
         for p in parking! {
             let coords = p["coords"] as! [Double]
             let dict = [coords[0], coords[1]]
             setPins(dict: dict, title: p["name"] as! String)
         }
-        
+
         checkGameDay()
+
     }
-    
+
     //-----------------------------------------------
     // viewDidAppear()
     //-----------------------------------------------
@@ -90,21 +91,21 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if UserDefaults.standard.array(forKey: "userPasses") != nil {
             usersPermits = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         } else {
             usersPermits = [PassType.noPermitRequired.rawValue]
         }
-        
+
         // save parking data and set pins
 //        readFirebaseParkingData()
-        
+
         // place the overlays in the correct places
 //        accessDataForOverlaysFromFirebase(pickedDate: now)
         accessDataForOverlays(pickedDate: now)
     }
-    
+
     // save parking data and set pins
 //    func readFirebaseParkingData() {
 //        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
@@ -124,17 +125,17 @@ class MapViewController: UIViewController {
 //            }
 //        }
 //    }
-    
+
     @objc func openSettingsVC() {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
-    
+
     //COMMENT THIS
     @objc func presentDurationView(){
         DurationViewVC.mapViewController = self
         self.present(DurationViewVC, animated:true, completion:nil)
     }
-    
+
     //-----------------------------------------------
     // choosePassTouched()
     //-----------------------------------------------
@@ -145,13 +146,13 @@ class MapViewController: UIViewController {
     @objc func choosePassTouched() {
         self.present(choosePassVC, animated: true, completion: nil)
     }
-    
+
     @objc func listViewTouched() {
         parkingTableVC.parkingNames = parkingNames
         parkingTableVC.spotsAndTimes = spotsAndTimes
         self.present(parkingTableVC, animated: true, completion: nil)
     }
-    
+
     //-----------------------------------------------
     // zoomToCurrentLocation()
     //-----------------------------------------------
@@ -164,13 +165,13 @@ class MapViewController: UIViewController {
             let viewRegion = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             map.setRegion(viewRegion, animated: false)
         }
-        
+
         // send updating to a background thread
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
     }
-    
+
     //-----------------------------------------------
     // resetDateTime()
     //-----------------------------------------------
@@ -183,13 +184,13 @@ class MapViewController: UIViewController {
 //        accessDataForOverlaysFromFirebase(pickedDate: now)
         accessDataForOverlays(pickedDate: now)
     }
-    
+
     func createPickerView() {
         // allow the user to get out of the date picker by tapping
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
         view.addGestureRecognizer(tapGesture)
     }
-    
+
     //-----------------------------------------------
     // tapToLeave()
     //-----------------------------------------------
@@ -203,7 +204,7 @@ class MapViewController: UIViewController {
 //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
         accessDataForOverlays(pickedDate: now)
     }
-    
+
     //-----------------------------------------------
     // dateSelected()
     //-----------------------------------------------
@@ -226,12 +227,12 @@ class MapViewController: UIViewController {
             gameDayLabel.text = ""
             gameDayLabel.isHidden = true
         }
-        
+
 //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
         accessDataForOverlays(pickedDate: pickedDate!)
     }
-    
-    
+
+
     //-----------------------------------------------
     // accessDataForOverlays()
     //-----------------------------------------------
@@ -300,7 +301,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
+
     //-----------------------------------------------
     // accessDataForOverlaysFromFirebase()
     //-----------------------------------------------
@@ -382,7 +383,7 @@ class MapViewController: UIViewController {
 //            }
 //        }
 //    }
-    
+
     //-----------------------------------------------
     // rangeLoop()
     //-----------------------------------------------
@@ -398,7 +399,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
+
     //-----------------------------------------------
     // checkDateRange()
     //-----------------------------------------------
@@ -413,18 +414,18 @@ class MapViewController: UIViewController {
             let startHour = start["hour"] as! Int
             let startMinute = start["minute"] as! Int
             let startDate = time.dateAt(hours: startHour, minutes: startMinute)
-            
+
             let end = open["end"] as! NSDictionary
             let endHour = end["hour"] as! Int
             let endMinute = end["minute"] as! Int
-            
+
             var endDate = Date()
             if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
                 endDate = time.tomorrow(hour: endHour, minute: endMinute)
             } else { // for am-pm/pm-pm (same day)
                 endDate = time.dateAt(hours: endHour, minutes: endMinute)
             }
-            
+
             if (time >= startDate) && (time < endDate) {
                 if !parkingNames.contains(name){
                     parkingNames.append(name)
@@ -433,18 +434,18 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
+
     func checkGameDay() -> String {
         var gameDay = "None"
         let format = "MM/dd/yyyy"
         let formatter = DateFormatter()
         formatter.dateFormat = format
-        
+
         guard let pickedDate = pickedDate else { return "" }
-        
+
         let hour = calendar.component(.hour, from: pickedDate)
         let min = calendar.component(.minute, from: pickedDate)
-        
+
         for g in gameDates {
             let gameDate = formatter.date(from: g)
             if calendar.isDate(pickedDate, inSameDayAs: gameDate!) {
@@ -462,7 +463,7 @@ class MapViewController: UIViewController {
         }
         return gameDay
     }
-    
+
     //-----------------------------------------------
     // addToDictionary()
     //-----------------------------------------------
@@ -473,7 +474,7 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     func addToDictionary(pass: String, spotName: String, timeDict: NSDictionary) {
         var timeCategories: [[String: String]: [NSDictionary]] = [:]
-        
+
         // go through each day range and add to dictionary if not previously appended
         if let MT = timeDict["MT"] {
             if (timeCategories[[pass:"MT"]] == nil) {
@@ -515,7 +516,7 @@ class MapViewController: UIViewController {
                 existingSSDict?.append(SS as! NSDictionary)
             }
         }
-        
+
         // add all of the timeCategories to the appropriate spot in the dictionary
         if (spotsAndTimes[spotName] == nil) {
             spotsAndTimes[spotName] = timeCategories
@@ -525,7 +526,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
+
     //-----------------------------------------------
     // readJson()
     //-----------------------------------------------
@@ -544,7 +545,7 @@ class MapViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-        
+
         do {
             if let file = Bundle.main.url(forResource: "gameday", withExtension: "json") {
                 let data = try Data(contentsOf: file)
@@ -556,7 +557,7 @@ class MapViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-        
+
         do {
             if let file = Bundle.main.url(forResource: "gamedates", withExtension: "json") {
                 let data = try Data(contentsOf: file)
@@ -571,7 +572,7 @@ class MapViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
+
     //-----------------------------------------------
     // toGMT()
     //-----------------------------------------------
@@ -580,20 +581,20 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     func toGMT(date: Date) -> String {
         let dateStr = "\(date)"
-        
+
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        
+
         var str = String()
         if let date2 = formatter.date(from: dateStr) {
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
             str = formatter.string(from: date2)
         }
-        
+
         return str
     }
-    
+
     //-----------------------------------------------
     // setPins()
     //-----------------------------------------------
@@ -604,16 +605,16 @@ class MapViewController: UIViewController {
     func setPins(dict: [Double], title: String) {
         let latitude = dict[0]
         let longitude = dict[1]
-        
+
         // creating a blank pin
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         annotation.title = title;
-        
+
         // adding pin to the map
         self.map.addAnnotation(annotation)
     }
-    
+
     //-----------------------------------------------
     // setOverlays()
     //-----------------------------------------------
@@ -625,14 +626,14 @@ class MapViewController: UIViewController {
         // get the long and latitude that the circle centers on
         let latitude = dict[0]
         let longitude = dict[1]
-        
+
         // creating a circle annotation around the pin set earlier
         let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let radius = CLLocationDistance(radius)
         let circle = MKCircle(center: center, radius: radius)
         map.addOverlay(circle)
     }
-    
+
     //-----------------------------------------------
     // configureLocationManager()
     //-----------------------------------------------
@@ -646,9 +647,9 @@ class MapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
-    
+
     // MARK: - views
-    
+
     //-----------------------------------------------
     // setUpViews()
     //-----------------------------------------------
@@ -657,51 +658,51 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     func setUpViews() {
         headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
-        
+
         navigationController?.navigationBar.addSubview(resetButton)
         navigationController?.navigationBar.addSubview(parkingTableButton)
         navigationController?.navigationBar.addSubview(zoomButton)
         navigationController?.navigationBar.addSubview(passButton)
         navigationController?.navigationBar.addSubview(adminButton)
-        
+
         view.addSubview(map)
         view.addSubview(gameDayLabel)
         view.addSubview(timeAndDurationButton!)
-        
-        
+
+
         setUpMap()
     }
-    
+
     lazy var detailsView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: self.view.frame.height-self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height/2))
         view.backgroundColor = .white
         return view
     }()
-    
+
     // button to display passes screen
     lazy var passButton: UIButton = {
         let passesImage = UIImage(named: "permitIcon")
         let x: CGFloat = (view.frame.width/5)*3.5 - xPadding*2
-        
+
         let button = UIButton(frame: CGRect(x: x, y: ynavPadding, width: navButtonW, height: navButtonH))
         button.setImage(passesImage, for: .normal)
         button.addTarget(self, action: #selector(choosePassTouched), for: .touchUpInside)
         return button
     }()
-    
+
     // button to display passes screen
     lazy var parkingTableButton: UIButton = {
         let width = navButtonW / 2
         let x: CGFloat = (view.frame.width/5) + width
         let tableImage = UIImage(named: "listIcon.png")
-        
+
         let button = UIButton(frame: CGRect(x: x, y: ynavPadding, width: width, height: navButtonH))
         button.layer.cornerRadius = 5
         button.setImage(tableImage, for: .normal)
         button.addTarget(self, action: #selector(listViewTouched), for: .touchUpInside)
         return button
     }()
-    
+
     lazy var gameDayLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: buttonHeight+yPadding*2, width: view.frame.width-buttonWidth, height: buttonHeight))
         label.center.x = view.center.x
@@ -721,7 +722,7 @@ class MapViewController: UIViewController {
         }
         return label
     }()
-    
+
     // button to reset the time to the current time
     // FIXME: when pressed has black/gray background; should act like other buttons
     lazy var resetButton: UIButton = {
@@ -731,31 +732,31 @@ class MapViewController: UIViewController {
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
     }()
-    
+
     // creates the zoom button
     // returns to the user's current location
     lazy var zoomButton: UIButton = {
         let img = UIImage(named: "zoom")
         let height_width: CGFloat = 30
         let x: CGFloat = (view.frame.width/5) * 2.50 - xPadding
-        
+
         let button = UIButton(frame: CGRect(x: x, y: ynavPadding, width: height_width, height: height_width))
         button.setImage(img, for: .normal)
         button.addTarget(self, action: #selector(zoomToCurrentLocation), for: .touchUpInside)
         return button
     }()
-    
+
     // creates the zoom button
     lazy var adminButton: UIButton = {
         let img = UIImage(named: "gear")
         let height_width: CGFloat = 30
-        
+
         let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: height_width, height: height_width))
         button.setImage(img, for: .normal)
         button.addTarget(self, action: #selector(openSettingsVC), for: .touchUpInside)
         return button
     }()
-    
+
     // creates the map
     lazy var map: MKMapView = {
         let map = MKMapView()
@@ -763,36 +764,36 @@ class MapViewController: UIViewController {
         map.delegate = self
         return map
     }()
-    
+
     // positions the map to fill most of the view
     func setUpMap() {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
-    
+
 }
 
 // overrides map view functions
 extension MapViewController: MKMapViewDelegate {
-    
+
     // sets the circle overlays
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         guard let circelOverLay = overlay as? MKCircle else { return MKOverlayRenderer() }
-        
+
         let circleRenderer = MKCircleRenderer(circle: circelOverLay)
         circleRenderer.strokeColor = .blue
         circleRenderer.fillColor = .blue
         circleRenderer.alpha = 0.2
         return circleRenderer
     }
-    
+
     // sets the annotations to views so they are clickable w/ actions
     func map(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
-        
+
         let identifier = "Annotation"
         var annotationView = map.dequeueReusableAnnotationView(withIdentifier: identifier)
-        
+
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
 //            annotationView?.backgroundColor = .blue
@@ -801,10 +802,10 @@ extension MapViewController: MKMapViewDelegate {
         } else {
             annotationView!.annotation = annotation
         }
-        
+
         return annotationView
     }
-    
+
     //-----------------------------------------------
     // mapView()
     //-----------------------------------------------
@@ -824,52 +825,52 @@ extension MapViewController: MKMapViewDelegate {
             }
         }
     }
-    
+
 }
 
 // gets user's current location
 extension MapViewController: CLLocationManagerDelegate {
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             self.map.setRegion(region, animated: true)
-            
+
             locationManager.stopUpdatingLocation()
             map.showsUserLocation = true
         }
     }
-    
+
 }
 
 // for date range checking
 extension Date {
-    
+
     func dateAt(hours: Int, minutes: Int) -> Date {
         let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
-        
+
         var date_components = calendar.components(
             [NSCalendar.Unit.year,
              NSCalendar.Unit.month,
              NSCalendar.Unit.day],
             from: self)
-        
+
         date_components.hour = hours
         date_components.minute = minutes
         date_components.second = 0
-        
+
         let newDate = calendar.date(from: date_components)!
-        
+
         return newDate
     }
-    
+
     // get date for tomorrow
     func tomorrow(hour: Int, minute: Int) -> Date {
         let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)! // misses 1 second
         return Calendar.current.date(byAdding: .day, value: 1, to: time)!
     }
-    
+
 }
 
 // Sources for this file:
