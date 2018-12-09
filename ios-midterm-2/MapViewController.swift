@@ -663,7 +663,7 @@ class MapViewController: UIViewController {
         navigationController?.navigationBar.addSubview(parkingTableButton)
         navigationController?.navigationBar.addSubview(zoomButton)
         navigationController?.navigationBar.addSubview(passButton)
-        navigationController?.navigationBar.addSubview(adminButton)
+        navigationController?.navigationBar.addSubview(settingsButton)
 
         view.addSubview(map)
         view.addSubview(gameDayLabel)
@@ -724,10 +724,9 @@ class MapViewController: UIViewController {
     }()
 
     // button to reset the time to the current time
-    // FIXME: when pressed has black/gray background; should act like other buttons
     lazy var resetButton: UIButton = {
         let refreshIcon = UIImage(named: "refreshIcon")
-        let button = UIButton(frame: CGRect(x: xPadding, y: ynavPadding, width: navButtonW, height: navButtonH))
+        let button = UIButton(frame: CGRect(x: xPadding+7, y: 0, width: navButtonW/1.4, height: navButtonH*1.4))
         button.setImage(refreshIcon, for: .normal)
         button.addTarget(self, action: #selector(resetDateTime), for: .touchUpInside)
         return button
@@ -747,7 +746,7 @@ class MapViewController: UIViewController {
     }()
 
     // creates the zoom button
-    lazy var adminButton: UIButton = {
+    lazy var settingsButton: UIButton = {
         let img = UIImage(named: "gear")
         let height_width: CGFloat = 30
 
@@ -781,8 +780,8 @@ extension MapViewController: MKMapViewDelegate {
         guard let circelOverLay = overlay as? MKCircle else { return MKOverlayRenderer() }
 
         let circleRenderer = MKCircleRenderer(circle: circelOverLay)
-        circleRenderer.strokeColor = .blue
-        circleRenderer.fillColor = .blue
+        circleRenderer.strokeColor = .red
+        circleRenderer.fillColor = .red
         circleRenderer.alpha = 0.2
         return circleRenderer
     }
@@ -796,8 +795,6 @@ extension MapViewController: MKMapViewDelegate {
 
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            annotationView?.backgroundColor = .blue
-//            annotationView?.tintColor = .blue
             annotationView!.canShowCallout = true
         } else {
             annotationView!.annotation = annotation

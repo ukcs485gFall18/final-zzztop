@@ -49,7 +49,7 @@ pod install
 ### Image Sources:
 - [Hulk used in presentations](https://www.google.com/search?safe=strict&client=firefox-b-1-ab&biw=1440&bih=781&tbm=isch&sa=1&ei=FcbVW-OoEMzMjwS26JTQCQ&q=hulk&oq=hulk&gs_l=img.3..0i67l2j0j0i67j0l3j0i67l2j0.32104.32571..32783...0.0..0.168.331.3j1......1....1..gws-wiz-img.......35i39.0EZpNXHRQe4#imgrc=IuSm1zmzoiIeoM)
 - [Gear icon](https://www.iconfinder.com/icons/192450/settings_icon)
-- [Reset/refresh icon](https://www.kisspng.com/png-computer-icons-android-synchronization-refresh-ico-2670652/)
+- [Reset/refresh icon](https://static.thenounproject.com/png/2149-200.png)
 - [Permit/pass icon; photoshopped to black](https://uknow.uky.edu/sites/default/files/styles/uknow_story_image/public/externals/ec8f40452989ecb2a59ab6a53d26a1c6.jpg)
 - [Zoom icon; photoshopped to black](http://chittagongit.com/icon/navigation-icon-png-25.html)
 - [Exit icon](https://openclipart.org/image/2400px/svg_to_png/242814/close_icon_black.png)
