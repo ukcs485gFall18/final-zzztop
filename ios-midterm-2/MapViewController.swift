@@ -115,15 +115,9 @@ class MapViewController: UIViewController {
         map.delegate = self
         configureLocationManager()
         
-        //setUpViews()
         readJson()
         checkGameDay()
         
-        /*for p in parkingData! {
-            let coords = p["coords"] as! [Double]
-            let dict = [coords[0], coords[1]]
-            setPins(dict: dict, title: p["name"] as! String)
-        }*/
     }
     
     //-----------------------------------------------
@@ -651,21 +645,7 @@ class MapViewController: UIViewController {
 
         setUpMap()
     }
-    
 
-    // create the UI text field
-    /*lazy var pickerTextField: UITextField = {
-     let textField = UITextField(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
-     textField.center.x = view.center.x
-     textField.textAlignment = NSTextAlignment.center
-     textField.font = UIFont.systemFont(ofSize: regFontSize)
-     textField.backgroundColor = .white
-     textField.textColor = .black
-     textField.borderStyle = UITextField.BorderStyle.none
-     textField.layer.cornerRadius = 5
-     textField.alpha = 0.8
-     return textField
-     }()*/
     
     // create the DatePicker
     lazy var datePicker: UIDatePicker = {
