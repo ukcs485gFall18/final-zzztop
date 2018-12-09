@@ -810,9 +810,9 @@ extension MapViewController: MKMapViewDelegate {
         guard let circelOverLay = overlay as? MKCircle else { return MKOverlayRenderer() }
         
         let circleRenderer = MKCircleRenderer(circle: circelOverLay)
-        circleRenderer.strokeColor = .red
-        circleRenderer.fillColor = .red
-        circleRenderer.alpha = 0.2
+        circleRenderer.strokeColor = red
+        circleRenderer.fillColor = red
+        circleRenderer.alpha = 0.5
         return circleRenderer
     }
     
@@ -829,7 +829,7 @@ extension MapViewController: MKMapViewDelegate {
             view = dequeuedView
         } else {
             view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            view.markerTintColor = .blue
+            view.markerTintColor = lightblue
         }
         return view
     }
