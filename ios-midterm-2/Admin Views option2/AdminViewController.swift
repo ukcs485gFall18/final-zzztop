@@ -81,7 +81,7 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         
         guard let name = vc.name,
             let radius = vc.radius,
-            let passtype = vc.passtype,
+//            let passtype = vc.passtype,
             let coords = vc.coords,
             let times = vc.times else { return }
         
@@ -101,8 +101,8 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
     
     func checkIfUserIsLoggedIn() {
         // for testing
-        //                UserDefaults.standard.set("wrong", forKey: "username")
-        //                UserDefaults.standard.set("wrong", forKey: "password")
+//        UserDefaults.standard.set("wrong", forKey: "username")
+//        UserDefaults.standard.set("wrong", forKey: "password")
         
         let pastUsername = UserDefaults.standard.string(forKey: "username")
         let pastPassword = UserDefaults.standard.string(forKey: "password")
@@ -119,7 +119,6 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
     @objc func logout() {
         present(LoginViewController2(), animated: true, completion: nil)
     }
-    
     
     var str = ""
     var str2 = ""
