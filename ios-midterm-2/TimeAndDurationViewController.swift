@@ -18,6 +18,8 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     let datePicker = UIDatePicker()
     let timePicker = UIPickerView()
     var mapViewController:MapViewController?
+    var fromAdminPanel:Bool = false
+    var settingsViewController:SettingsViewController?
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -143,6 +145,11 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     // Conditions: none
     //-----------------------------------------------
     @objc func closeView() {
+        if(self.fromAdminPanel){
+            if let vc = self.presentingViewController {
+                vc.navigationController?.dismiss(animated: true, completion: nil)
+            }
+        }
         self.dismiss(animated: true, completion:{
             var addingHours = DateComponents()
             addingHours.hour = self.timePicked

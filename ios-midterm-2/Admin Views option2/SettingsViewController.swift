@@ -45,10 +45,14 @@ class SettingsViewController: TableViewController {
             Section(header: "User Settings", rows: [
                 Row(text: "How long will you be parked?", selection: { [unowned self] in
                     // go to some view
+                    let durationVC = TimeAndDurationViewController();
+                    durationVC.fromAdminPanel = true
+                    durationVC.settingsViewController = self
+                    self.present(durationVC, animated: true, completion: nil)
                     }, accessory: .disclosureIndicator)
             ]),
             Section(header: "More Information", rows: [
-                Row(text: "Pay for ticket", selection: { [unowned self] in
+                Row(text: "Parking Tickets", selection: { [unowned self] in
                     // go to some view
                     }, accessory: .disclosureIndicator),
                 Row(text: "View parking info on UKY", selection: { [unowned self] in
