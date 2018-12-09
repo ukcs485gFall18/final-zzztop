@@ -15,7 +15,24 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     private var sortableStrings = [String:String]() //extracts the pass name and uses it as a key to sort
     private var sortedStrings = [(key:String, value:String)]() //dictionary of sorted strings for display in table, only use keys of the tuples
     //private var passImages = [String:UIImage]()
+    var pickedDate: Date?
+    var userPasses = [String]()
+    var times = [[String: String]: [NSDictionary]]()
+    let calendar = Calendar.current
+    var availableRangeForSpot = [String:Bool]()
+    var parkingName = String()
     
+    enum rangeStrings: String {
+        case MF = "Monday - Friday"
+        case MT = "Monday - Thursday"
+        case F = "Friday"
+        case SS = "Saturday - Sunday"
+        case MS = "All Week"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+    }
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayStrings.count
@@ -33,6 +50,55 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //put the value into the imageView
         let passImage = kPassImages[passString]
         cell.imageView?.image = passImage
+        
+        if userPasses.contains(passString) {
+            if (calendar.component(.weekday, from: pickedDate!) - 1 == 1 || calendar.component(.weekday, from: pickedDate!) - 1 == 2 || calendar.component(.weekday, from: pickedDate!) - 1 == 3 || calendar.component(.weekday, from: pickedDate!) - 1 == 4) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MT.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+                for key in availableRangeForSpot.keys {
+                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                        cell.textLabel!.highlightedTextColor = .blue
+                        cell.textLabel!.isHighlighted = true
+                        break
+                    }
+                    else {
+                        if let waitTime = times[[passString:"MT"]] {
+                            for c in waitTime {
+                                let start = c["start"] as! NSDictionary
+                                let startHour = start["hour"] as! Int
+                                let startMinute = start["minute"] as! Int
+                                let startDate = pickedDate!.dateAt(hours: startHour, minutes: startMinute)
+                                if startDate > pickedDate! {
+                                    let delay = startDate.timeIntervalSince(pickedDate!)
+                                    let formatter = DateComponentsFormatter()
+                                    formatter.unitsStyle = .abbreviated
+                                    
+                                    cell.textLabel!.text = cell.textLabel!.text! + "Available in: " + formatter.string(from: delay)!
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+                for key in availableRangeForSpot.keys {
+                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                        cell.textLabel!.highlightedTextColor = .blue
+                        cell.textLabel!.isHighlighted = true
+                        break
+                    }
+                    else {
+                        
+                    }
+                }
+            }
+            else if (calendar.component(.weekday, from: pickedDate!) - 1 == 0 || calendar.component(.weekday, from: pickedDate!) - 1 == 6) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.SS.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+                for key in availableRangeForSpot.keys {
+                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                        cell.textLabel!.highlightedTextColor = .blue
+                        cell.textLabel!.isHighlighted = true
+                    }
+                }
+            }
+        }
         return cell
     }
     
@@ -158,6 +224,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     func onUserAction(title: String, hours: [[String:String]: [NSDictionary]])
     {
         //resetting all of the variables
+        times = hours
+        parkingName = title
         var textToDisplay = ""
         displayStrings = [String]()
         sortableStrings = [String:String]()
@@ -216,22 +284,27 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //formats the dates via a DateFormatter
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm aaa"
-        return "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
+        
+        let displayedRange = "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
+        if pickedDate! >= startDate && pickedDate! <= endDate {
+            availableRangeForSpot[displayedRange] = true
+        }
+        return displayedRange
     }
     
     
     func formatDays(dayRange: String) -> String{
         switch dayRange{
         case "MF":
-            return "Monday - Friday"
+            return rangeStrings.MF.rawValue
         case "MT":
-            return "Monday - Thursday"
+            return rangeStrings.MT.rawValue
         case "F":
-            return "Friday"
+            return rangeStrings.F.rawValue
         case "SS":
-            return "Saturday - Sunday"
+            return rangeStrings.SS.rawValue
         case "MS":
-            return "All Week"
+            return rangeStrings.MS.rawValue
         default:
             return "No date"
         }

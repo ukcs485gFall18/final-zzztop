@@ -112,7 +112,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         view.addSubview(timePickerTextField)
         
         datePicker.datePickerMode = .dateAndTime
-        datePicker.addTarget(self, action: #selector(MapViewController.dateSelected(datePicker:)), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(dateSelected(datePicker:)), for: .valueChanged)
         // add the DatePicker to the UITextField
         pickerTextField.inputView = datePicker
         
@@ -172,10 +172,8 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
-        
-        pickedDate = datePicker.date
-        
-        self.mapViewController?.dateSelected(datePicker: datePicker)
+                
+        self.mapViewController?.dateSelected(datePicked: datePicker.date)
     }
     
     
@@ -191,4 +189,10 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     
     //source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
     //source for adding hours to a date: http://swiftdeveloperblog.com/code-examples/add-days-months-or-years-to-current-date-in-swift/
+}
+
+extension Date {
+    var localizedDescription: String {
+        return description(with: .current)
+    }
 }

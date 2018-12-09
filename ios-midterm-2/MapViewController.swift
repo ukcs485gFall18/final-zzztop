@@ -18,6 +18,7 @@ class MapViewController: UIViewController {
     var gamedates: NSDictionary?
     var gameDates = [String]()
     //    var parking: [String: Any]?
+    var availableRangeForSpot = NSMutableDictionary()
     var parking: [NSDictionary]?
     var parkingNames = [String]()
     var usersPermits: [String] = []
@@ -76,9 +77,34 @@ class MapViewController: UIViewController {
             let dict = [coords[0], coords[1]]
             setPins(dict: dict, title: p["name"] as! String)
         }
+
+        let hour = calendar.component(.hour, from: now)
+        let min = calendar.component(.minute, from: now)
         
-        checkGameDay()
-        
+        if checkGameDay(date: now) == "Tomorrow" {
+            let gameDayAlert = UIAlertController(title: "Game Day Tomorrow", message: "Remember to move your car for the football game tomorrow", preferredStyle: .alert)
+            gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
+                self.dateSelected(datePicked: self.now.tomorrow(hour: hour, minute: min))
+                }))
+            
+            //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+            gameDayAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action: UIAlertAction!) in gameDayAlert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(gameDayAlert, animated: true, completion: nil)
+        }
+        else if checkGameDay(date: now) == "Today" {
+            let gameDayAlert = UIAlertController(title: "Game Day Today", message: "Remember to move your car for the football game today", preferredStyle: .alert)
+            gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
+                self.dateSelected(datePicked:self.now)
+            }))
+            
+            //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+            gameDayAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action: UIAlertAction!) in gameDayAlert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(gameDayAlert, animated: true, completion: nil)
+        }
     }
     
     //-----------------------------------------------
@@ -150,6 +176,7 @@ class MapViewController: UIViewController {
     @objc func listViewTouched() {
         parkingTableVC.parkingNames = parkingNames
         parkingTableVC.spotsAndTimes = spotsAndTimes
+        parkingTableVC.pickedDate = pickedDate!
         self.present(parkingTableVC, animated: true, completion: nil)
     }
     
@@ -181,8 +208,10 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func resetDateTime(){
         // update map after reset
-        //        accessDataForOverlaysFromFirebase(pickedDate: now)
-        accessDataForOverlays(pickedDate: now)
+//        accessDataForOverlaysFromFirebase(pickedDate: now)
+        pickedDate = now
+        checkGameDay(date: pickedDate!)
+        dateSelected(datePicked: pickedDate!)
     }
     
     func createPickerView() {
@@ -213,13 +242,13 @@ class MapViewController: UIViewController {
     // Post: accesses the data to set the pins
     // to match the new date
     //-----------------------------------------------
-    @objc func dateSelected(datePicker: UIDatePicker) {
-        pickedDate = datePicker.date
-        if checkGameDay() == "Today"{
+    @objc func dateSelected(datePicked: Date) {
+        pickedDate = datePicked
+        if checkGameDay(date: pickedDate!) == "Today"{
             gameDayLabel.text = "Game Day"
             gameDayLabel.isHidden = false
         }
-        else if checkGameDay() == "Tomorrow"{
+        else if checkGameDay(date: pickedDate!) == "Tomorrow"{
             gameDayLabel.text = "Game Day Tomorrow"
             gameDayLabel.isHidden = false
         }
@@ -242,6 +271,7 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     func accessDataForOverlays(pickedDate: Date) {
         parkingNames.removeAll()
+        spotsAndTimes.removeAll()
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         
@@ -434,30 +464,30 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
-    func checkGameDay() -> String {
+
+    func checkGameDay(date: Date) -> String {
         var gameDay = "None"
         let format = "MM/dd/yyyy"
         let formatter = DateFormatter()
         formatter.dateFormat = format
-        
-        guard let pickedDate = pickedDate else { return "" }
-        
-        let hour = calendar.component(.hour, from: pickedDate)
-        let min = calendar.component(.minute, from: pickedDate)
-        
+
+//        guard let pickedDate = pickedDate else { return "" }
+
+        let hour = calendar.component(.hour, from: date)
+        let min = calendar.component(.minute, from: date)
+
         for g in gameDates {
             let gameDate = formatter.date(from: g)
-            if calendar.isDate(pickedDate, inSameDayAs: gameDate!) {
-                //                parking = gameday
+            if calendar.isDate(date, inSameDayAs: gameDate!) {
+                parking = gameday
                 gameDay = "Today"
                 break
-            } else if calendar.isDate(pickedDate.tomorrow(hour: hour, minute: min), inSameDayAs: gameDate!) {
-                //                parking = parkingData
+            } else if calendar.isDate(date.tomorrow(hour: hour, minute: min), inSameDayAs: gameDate!) {
+                parking = parkingData
                 gameDay = "Tomorrow"
                 break
             } else {
-                //                parking = parkingData
+                parking = parkingData
                 gameDay = "None"
             }
         }
@@ -704,7 +734,7 @@ class MapViewController: UIViewController {
     }()
     
     lazy var gameDayLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: buttonHeight+yPadding*2, width: view.frame.width-buttonWidth, height: buttonHeight))
+        let label = UILabel(frame: CGRect(x: 0, y: buttonHeight+yPadding*5, width: view.frame.width-buttonWidth, height: buttonHeight))
         label.center.x = view.center.x
         label.textAlignment = NSTextAlignment.center
         label.backgroundColor = .white
@@ -712,9 +742,9 @@ class MapViewController: UIViewController {
         label.alpha = 0.8
         label.clipsToBounds = true
         label.isHidden = false
-        if checkGameDay() == "Today" {
+        if checkGameDay(date: pickedDate!) == "Today" {
             label.text = "Game Day"
-        } else if checkGameDay() == "Tomorrow" {
+        } else if checkGameDay(date: pickedDate!) == "Tomorrow" {
             label.text = "Game Day Tomorrow"
         } else {
             label.text = ""
@@ -813,12 +843,15 @@ extension MapViewController: MKMapViewDelegate {
     //-----------------------------------------------
     func mapView(_ map: MKMapView, didSelect view: MKAnnotationView) {
         // bring up the new view
-        self.present(detailsVC, animated: true, completion: nil)
+        detailsVC.pickedDate = pickedDate
         if let pin = view.annotation as? MKPointAnnotation {
             if let pinTitle = pin.title {
                 if let hours = spotsAndTimes[pinTitle] {
                     // pass the data to the next view
-                    detailsVC.onUserAction(title: pinTitle, hours: hours)
+                    //detailsVC.onUserAction(title: pinTitle, hours: hours)
+                    detailsVC.times = hours
+                    detailsVC.parkingName = pinTitle
+                    self.present(detailsVC, animated: true, completion: nil)
                 }
             }
         }
