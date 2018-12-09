@@ -12,6 +12,7 @@ import Firebase
 class MapViewController: UIViewController {
     
     // MARK: - properties
+    
     var parkingData: [NSDictionary]?
     var gameday: [NSDictionary]?
     var gamedates: NSDictionary?
@@ -27,7 +28,6 @@ class MapViewController: UIViewController {
     var detailsVC = ParkingDetailsViewController()
     let DurationViewVC = TimeAndDurationViewController()
     var pickedDate: Date?
-    //    var didSelectDate: Bool = false
     var spots = [String]()
     var passedText = ""
     let now = Date()
@@ -37,8 +37,9 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         // designs and positions views
-        //create a button for select time and date
+        // create a button for select time and date
         timeAndDurationButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
         timeAndDurationButton!.center.x = view.center.x
         timeAndDurationButton!.layer.cornerRadius = 5
@@ -58,72 +59,17 @@ class MapViewController: UIViewController {
         setUpViews()
     }
     
-    //enum of all pass types in the JSON file
-    enum PassType: String {
-        case e = "E"
-        case e2 = "E2"
-        case e20 = "E20"
-        case e26 = "E26"
-        case e28 = "E28"
-        case e27 = "E27"
-        case r2 = "R2"
-        case r7 = "R7"
-        case r17 = "R17"
-        case r19 = "R19"
-        case r29 = "R29"
-        case r30 = "R30"
-        case c5 = "C5"
-        case c9 = "C9"
-        case c16 = "C16"
-        case k = "K"
-        case ek = "EK"
-        case ck = "CK"
-        case x = "X"
-        case a = "Authorized parking only"
-        case anyPermit = "Any valid permit"
-        case noPermitRequired = "No permit required"
-    }
-    
-    //enum of all possible weekdays in the JSON file
-    enum WeekDay: String {
-        case monday = "Monday"
-        case tuesday = "Tuesday"
-        case wednesday = "Wednesday"
-        case thursday = "Thursday"
-        case friday = "Friday"
-        case saturday = "Saturday"
-        case sunday = "Sunday"
-    }
-    
-    //enum of all date ranges used in the JSON file
-    enum Range: String {
-        case mt = "MT"
-        case mf = "MF"
-        case ss = "SS"
-        case f = "F"
-        case ms = "MS"
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         pickedDate = now
-        
-        //setting up the view
-        headerHeight = (self.navigationController?.navigationBar.frame.size.height)!
-        
-        map.delegate = self
+
+        // get user's current location
         configureLocationManager()
         
-        //setUpViews()
+        // game day config
         readJson()
         checkGameDay()
-        
-        /*for p in parkingData! {
-            let coords = p["coords"] as! [Double]
-            let dict = [coords[0], coords[1]]
-            setPins(dict: dict, title: p["name"] as! String)
-        }*/
     }
     
     //-----------------------------------------------
@@ -145,6 +91,7 @@ class MapViewController: UIViewController {
         
         // save parking data and set pins
         readFirebaseParkingData()
+        
         // place the overlays in the correct places
         accessDataForOverlaysFromFirebase(pickedDate: now)
     }
@@ -256,7 +203,6 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
-//        didSelectDate = true // is this used?
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
