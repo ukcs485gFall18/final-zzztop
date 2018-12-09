@@ -32,6 +32,7 @@
 		80EB847E21B8AED5003448EF /* AdminViewControllerThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB847B21B8AED5003448EF /* AdminViewControllerThree.swift */; };
 		80EB848221B8AF60003448EF /* LoginViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB848121B8AF60003448EF /* LoginViewController1.swift */; };
 		A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */; };
+		A351FD3621BDAC0E002486C6 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD3521BDAC0E002486C6 /* TicketsViewController.swift */; };
 		A3C38205218003DD003D53E7 /* ParkingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		80EB848121B8AF60003448EF /* LoginViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController1.swift; sourceTree = "<group>"; };
 		8D5FCD1DCB6ADBAB7364569C /* Pods-ios-midterm-2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-midterm-2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-midterm-2/Pods-ios-midterm-2.debug.xcconfig"; sourceTree = "<group>"; };
 		A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAndDurationViewController.swift; sourceTree = "<group>"; };
+		A351FD3521BDAC0E002486C6 /* TicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewController.swift; sourceTree = "<group>"; };
 		A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingDetailsViewController.swift; sourceTree = "<group>"; };
 		A86FA118A07857057941F1F4 /* Pods-ios-midterm-2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-midterm-2.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-midterm-2/Pods-ios-midterm-2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,6 +140,7 @@
 				A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */,
 				80EB846921B8AE57003448EF /* ParkingTableViewController.swift */,
 				A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */,
+				A351FD3521BDAC0E002486C6 /* TicketsViewController.swift */,
 				80EB845C21B8AE1D003448EF /* Admin Views option1 */,
 				800045DC21B8B15500C4DE89 /* Admin Views option2 */,
 				8027575B21B8743000813CB9 /* Admin Views option3 */,
@@ -320,6 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A351FD3621BDAC0E002486C6 /* TicketsViewController.swift in Sources */,
 				80EB847D21B8AED5003448EF /* AdminViewControllerOne.swift in Sources */,
 				800045E321B8B17000C4DE89 /* Cells.swift in Sources */,
 				8027575A21B85F5700813CB9 /* staticviews.swift in Sources */,

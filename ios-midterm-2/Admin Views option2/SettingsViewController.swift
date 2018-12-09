@@ -53,7 +53,8 @@ class SettingsViewController: TableViewController {
             ]),
             Section(header: "More Information", rows: [
                 Row(text: "Parking Tickets", selection: { [unowned self] in
-                    // go to some view
+                    let ticketsVC = TicketsViewController();
+                    self.present(ticketsVC, animated: true, completion: nil)
                     }, accessory: .disclosureIndicator),
                 Row(text: "View parking info on UKY", selection: { [unowned self] in
                     // go to some view
