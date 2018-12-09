@@ -76,7 +76,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         addDueDate.addTextField { (textField) in
             textField.text = "Enter pay by date here"
         }
-        addDueDate.addAction(UIAlertAction(title: "Sumbit", style: .default, handler: { action in
+        addDueDate.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             switch action.style{
             case .default:
                 var newTicket = "Created: "
