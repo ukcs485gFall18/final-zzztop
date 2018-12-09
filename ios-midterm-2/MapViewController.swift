@@ -81,7 +81,7 @@ class MapViewController: UIViewController {
         let hour = calendar.component(.hour, from: now)
         let min = calendar.component(.minute, from: now)
         
-        if checkGameDay(date: now) == "Tomorrow" {
+        if checkGameDay(date: now) == gameDay.tomorrow.rawValue {
             let gameDayAlert = UIAlertController(title: "Game Day Tomorrow", message: "Remember to move your car for the football game tomorrow", preferredStyle: .alert)
             gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
                 self.dateSelected(datePicked: self.now.tomorrow(hour: hour, minute: min))
@@ -93,7 +93,7 @@ class MapViewController: UIViewController {
             
             self.present(gameDayAlert, animated: true, completion: nil)
         }
-        else if checkGameDay(date: now) == "Today" {
+        else if checkGameDay(date: now) == gameDay.today.rawValue {
             let gameDayAlert = UIAlertController(title: "Game Day Today", message: "Remember to move your car for the football game today", preferredStyle: .alert)
             gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
                 self.dateSelected(datePicked:self.now)
@@ -244,11 +244,11 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func dateSelected(datePicked: Date) {
         pickedDate = datePicked
-        if checkGameDay(date: pickedDate!) == "Today"{
+        if checkGameDay(date: pickedDate!) == gameDay.today.rawValue{
             gameDayLabel.text = "Game Day"
             gameDayLabel.isHidden = false
         }
-        else if checkGameDay(date: pickedDate!) == "Tomorrow"{
+        else if checkGameDay(date: pickedDate!) == gameDay.tomorrow.rawValue{
             gameDayLabel.text = "Game Day Tomorrow"
             gameDayLabel.isHidden = false
         }
@@ -466,7 +466,7 @@ class MapViewController: UIViewController {
     }
 
     func checkGameDay(date: Date) -> String {
-        var gameDay = "None"
+        var gDay = "None"
         let format = "MM/dd/yyyy"
         let formatter = DateFormatter()
         formatter.dateFormat = format
@@ -480,18 +480,18 @@ class MapViewController: UIViewController {
             let gameDate = formatter.date(from: g)
             if calendar.isDate(date, inSameDayAs: gameDate!) {
                 parking = gameday
-                gameDay = "Today"
+                gDay = gameDay.today.rawValue
                 break
             } else if calendar.isDate(date.tomorrow(hour: hour, minute: min), inSameDayAs: gameDate!) {
                 parking = parkingData
-                gameDay = "Tomorrow"
+                gDay = gameDay.tomorrow.rawValue
                 break
             } else {
                 parking = parkingData
-                gameDay = "None"
+                gDay = gameDay.none.rawValue
             }
         }
-        return gameDay
+        return gDay
     }
     
     //-----------------------------------------------

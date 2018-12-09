@@ -68,8 +68,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 else if times[[passString:"MF"]] != nil{
                     waitTime = times[[passString:"MF"]]!
                 }
-                else if times[[passString:"MF"]] != nil{
-                    waitTime = times[[passString:"MF"]]!
+                else if times[[passString:"MS"]] != nil{
+                    waitTime = times[[passString:"MS"]]!
                 }
                 for c in waitTime! {
                     let start = c["start"] as! NSDictionary
@@ -88,7 +88,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             }
             else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
                 for key in availableRangeForSpot.keys {
-                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                    if (availableRangeForSpot[key]! && sortedStrings[indexPath.row].key.range(of: key) != nil){
                         cell.textLabel!.highlightedTextColor = .blue
                         cell.textLabel!.isHighlighted = true
                         break
@@ -316,7 +316,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     // Post: Returns formatted string
     //-----------------------------------------------
     func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String{
-        let time = Date()
+        let time = pickedDate!
         //accesses the hour and minute for start and end
         let startHour = start["hour"] as! Int
         let startMinute = start["minute"] as! Int
