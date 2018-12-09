@@ -17,8 +17,7 @@ class MapViewController: UIViewController {
     var gameday: [NSDictionary]?
     var gamedates: NSDictionary?
     var gameDates = [String]()
-    //    var parking: [String: Any]?
-    var parking: [NSDictionary]?
+    var parking: [String: Any]?
     var parkingNames = [String]()
     var usersPermits: [String] = []
     var spotsAndTimes: [String: [[String: String]: [NSDictionary]]] = [:]
@@ -69,16 +68,8 @@ class MapViewController: UIViewController {
         configureLocationManager()
         
         readJson()
-        parking = parkingData
-        
-        for p in parking! {
-            let coords = p["coords"] as! [Double]
-            let dict = [coords[0], coords[1]]
-            setPins(dict: dict, title: p["name"] as! String)
-        }
         
         checkGameDay()
-        
     }
     
     //-----------------------------------------------
@@ -99,32 +90,31 @@ class MapViewController: UIViewController {
         }
         
         // save parking data and set pins
-        //        readFirebaseParkingData()
+        readFirebaseParkingData()
         
         // place the overlays in the correct places
-        //        accessDataForOverlaysFromFirebase(pickedDate: now)
-        accessDataForOverlays(pickedDate: now)
+        accessDataForOverlaysFromFirebase(pickedDate: now)
     }
     
     // save parking data and set pins
-    //    func readFirebaseParkingData() {
-    //        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
-    //            // save parking data
-    //            self.parking = snapshot.value as? [String: Any]
-    //
-    //            // set pins
-    //            for p in self.parking! {
-    //                // assign other values to array
-    //                let values = p.value as! [String: Any]
-    //                // get coordinates
-    //                let coordDict = values["coords"] as! [String: Any]
-    //                let lat = coordDict["lat"] as! Double
-    //                let lon = coordDict["lon"] as! Double
-    //                let coords = [lat, lon]
-    //                self.setPins(dict: coords, title: p.key)
-    //            }
-    //        }
-    //    }
+    func readFirebaseParkingData() {
+        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
+            // save parking data
+            self.parking = snapshot.value as? [String: Any]
+            
+            // set pins
+            for p in self.parking! {
+                // assign other values to array
+                let values = p.value as! [String: Any]
+                // get coordinates
+                let coordDict = values["coords"] as! [String: Any]
+                let lat = coordDict["lat"] as! Double
+                let lon = coordDict["lon"] as! Double
+                let coords = [lat, lon]
+                self.setPins(dict: coords, title: p.key)
+            }
+        }
+    }
     
     @objc func openSettingsVC() {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
@@ -181,8 +171,7 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func resetDateTime(){
         // update map after reset
-        //        accessDataForOverlaysFromFirebase(pickedDate: now)
-        accessDataForOverlays(pickedDate: now)
+        accessDataForOverlaysFromFirebase(pickedDate: now)
     }
     
     func createPickerView() {
@@ -201,8 +190,7 @@ class MapViewController: UIViewController {
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
         
-        //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
-        accessDataForOverlays(pickedDate: now)
+        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
     }
     
     //-----------------------------------------------
@@ -228,72 +216,84 @@ class MapViewController: UIViewController {
             gameDayLabel.isHidden = true
         }
         
-        //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
-        accessDataForOverlays(pickedDate: pickedDate!)
+        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
     }
     
     
     //-----------------------------------------------
-    // accessDataForOverlays()
+    // accessDataForOverlaysFromFirebase()
     //-----------------------------------------------
     // accesses and formats the data from the JSON
     // file such that they can be compared to the
     // current time
     //-----------------------------------------------
-    func accessDataForOverlays(pickedDate: Date) {
+    func accessDataForOverlaysFromFirebase(pickedDate: Date) {
         parkingNames.removeAll()
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
         
-        // go through each collection in the JSON file
-        for p in parking! {
-            // get the spot name, circle radius, and coordinates
-            let spotName = p["name"] as! String
-            let radius = p["radius"] as! Int
-            let coords = p["coords"] as! [Double]
+        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
+            let newParking = (snapshot.value)! as! [String: Any]
             
-            // get the current user settings for dates
-            let date = pickedDate
-            let calendar = Calendar.current
-            let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
-            let f = DateFormatter()
-            let weekdaystring = f.weekdaySymbols[weekday]
-            
-            // unwrap all of the times
-            guard let times = p["times"] as? [Any] else {
-                return
-            }
-            
-            // go through all of the times
-            for time in times {
-                // store the times as a NSDictionary
-                let timeDict = time as! NSDictionary
-                let name = timeDict["pass"] as! String
-                addToDictionary(pass: name, spotName: spotName, timeDict: timeDict)
+            // for each parking spot
+            for p in newParking {
+                // get name
+                let spotName = p.key
                 
-                // store all of the parking spots and their names
-                if spots.contains(spotName) {
-                    continue
-                } else {
-                    spots.append(spotName)
+                // assign other values to array
+                let values = p.value as! [String: Any]
+                
+                // get radius
+                let radius = values["radius"] as! Int
+                
+                // get coordinates
+                let coordDict = values["coords"] as! [String: Any]
+                let lat = coordDict["lat"] as! Double
+                let lon = coordDict["lon"] as! Double
+                let coords = [lat, lon]
+                
+                // get the current user settings for dates
+                let date = pickedDate
+                let weekday = self.calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
+                let f = DateFormatter()
+                let weekdaystring = f.weekdaySymbols[weekday]
+                
+                // unwrap all of the times
+                guard let times = values["times"] as? [String: Any] else {
+                    return
+                }
+                
+                // go through all of the times
+                for time in times {
+                    // store time as dictionary
+                    let timeDict = time.value as! [String: Any]
+                    let passName = time.key
+                    self.addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
                     
-                    // go through all of the permits possible
-                    for permit in usersPermits {
-                        // if the permit name is a match, check the date ranges and format them
-                        if name == permit {
-                            let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-                            let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-                            let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-                            
-                            if (weekdaystring == WeekDay.monday.rawValue) ||
-                                (weekdaystring == WeekDay.tuesday.rawValue) ||
-                                (weekdaystring == WeekDay.wednesday.rawValue) ||
-                                (weekdaystring == WeekDay.thursday.rawValue) {
-                                rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-                            } else if weekdaystring == WeekDay.friday.rawValue {
-                                rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-                            } else {
-                                rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+                    // store all of the parking spots and their names
+                    if self.spots.contains(spotName) {
+                        continue
+                    } else {
+                        self.spots.append(spotName)
+                        
+                        // go through all of the permits possible
+                        for permit in self.usersPermits {
+                            // if the permit name is a match, check the date ranges and format them
+                            if passName == permit {
+                                let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
+                                let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
+                                let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
+                                
+                                if (weekdaystring == WeekDay.monday.rawValue) ||
+                                    (weekdaystring == WeekDay.tuesday.rawValue) ||
+                                    (weekdaystring == WeekDay.wednesday.rawValue) ||
+                                    (weekdaystring == WeekDay.thursday.rawValue) {
+                                    self.rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+                                } else if weekdaystring == WeekDay.friday.rawValue {
+                                    self.rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+                                } else {
+                                    self.rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
+                                }
                             }
                         }
                     }
@@ -303,95 +303,12 @@ class MapViewController: UIViewController {
     }
     
     //-----------------------------------------------
-    // accessDataForOverlaysFromFirebase()
-    //-----------------------------------------------
-    // accesses and formats the data from the JSON
-    // file such that they can be compared to the
-    // current time
-    //-----------------------------------------------
-    //    func accessDataForOverlaysFromFirebase(pickedDate: Date) {
-    //        parkingNames.removeAll()
-    //        map.removeOverlays(map.overlays) // remove previous overlays
-    //        spots = []
-    //
-    //        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
-    //            let newParking = (snapshot.value)! as! [String: Any]
-    //
-    //            // for each parking spot
-    //            for p in newParking {
-    //                // get name
-    //                let spotName = p.key
-    //
-    //                // assign other values to array
-    //                let values = p.value as! [String: Any]
-    //
-    //                // get radius
-    //                let radius = values["radius"] as! Int
-    //
-    //                // get coordinates
-    //                let coordDict = values["coords"] as! [String: Any]
-    //                let lat = coordDict["lat"] as! Double
-    //                let lon = coordDict["lon"] as! Double
-    //                let coords = [lat, lon]
-    //
-    //                // get the current user settings for dates
-    //                let date = pickedDate
-    //                let weekday = self.calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
-    //                let f = DateFormatter()
-    //                let weekdaystring = f.weekdaySymbols[weekday]
-    //
-    //                // unwrap all of the times
-    //                guard let times = values["times"] as? [String: Any] else {
-    //                    return
-    //                }
-    //
-    //                // go through all of the times
-    //                for time in times {
-    //                    // store time as dictionary
-    //                    let timeDict = time.value as! [String: Any]
-    //                    let passName = time.key
-    //                    self.addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
-    //
-    //                    // store all of the parking spots and their names
-    //                    if self.spots.contains(spotName) {
-    //                        continue
-    //                    } else {
-    //                        self.spots.append(spotName)
-    //
-    //                        // go through all of the permits possible
-    //                        for permit in self.usersPermits {
-    //                            // if the permit name is a match, check the date ranges and format them
-    //                            if passName == permit {
-    //                                let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-    //                                let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-    //                                let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-    //
-    //                                if (weekdaystring == WeekDay.monday.rawValue) ||
-    //                                    (weekdaystring == WeekDay.tuesday.rawValue) ||
-    //                                    (weekdaystring == WeekDay.wednesday.rawValue) ||
-    //                                    (weekdaystring == WeekDay.thursday.rawValue) {
-    //                                    self.rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-    //                                } else if weekdaystring == WeekDay.friday.rawValue {
-    //                                    self.rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-    //                                } else {
-    //                                    self.rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-    //                                }
-    //                            }
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    
-    //-----------------------------------------------
     // rangeLoop()
     //-----------------------------------------------
     // checks that the given date is within the
     // given date range by calling the function below
     //-----------------------------------------------
-    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int, name:String) { // for json
-        //    func rangeLoop(check: [String], timeDict: [String: Any], coords: [Double], radius: Int, name:String) { // for firebase
+    func rangeLoop(check: [String], timeDict: [String: Any], coords: [Double], radius: Int, name:String) { // for firebase
         for c in check {
             if let range = timeDict[c] {
                 checkDateRange(open: range as! [String: Any], coords: coords, radius: radius, name: name)
@@ -472,7 +389,7 @@ class MapViewController: UIViewController {
     // Pre: requires the pass name, spot name, and
     // the time range as a NSDictionary
     //-----------------------------------------------
-    func addToDictionary(pass: String, spotName: String, timeDict: NSDictionary) {
+    func addToDictionary(pass: String, spotName: String, timeDict: [String: Any]) {
         var timeCategories: [[String: String]: [NSDictionary]] = [:]
         
         // go through each day range and add to dictionary if not previously appended
@@ -534,18 +451,6 @@ class MapViewController: UIViewController {
     // a NSDictionary
     //-----------------------------------------------
     func readJson() {
-        do {
-            if let file = Bundle.main.url(forResource: "parkingData", withExtension: "json") {
-                let data = try Data(contentsOf: file)
-                let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                parkingData = jsonResult["parking"] as? [NSDictionary]
-            } else {
-                print("no json file")
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        
         do {
             if let file = Bundle.main.url(forResource: "gameday", withExtension: "json") {
                 let data = try Data(contentsOf: file)
