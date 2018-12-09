@@ -24,13 +24,13 @@
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
 		806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */; };
+		809053C621BC915B0077730D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 809053C521BC915B0077730D /* GoogleService-Info.plist */; };
 		80EB846B21B8AE58003448EF /* ParkingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB846921B8AE57003448EF /* ParkingTableViewController.swift */; };
 		80EB847C21B8AED5003448EF /* AdminViewControllerTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB847921B8AED5003448EF /* AdminViewControllerTwo.swift */; };
 		80EB847D21B8AED5003448EF /* AdminViewControllerOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB847A21B8AED5003448EF /* AdminViewControllerOne.swift */; };
 		80EB847E21B8AED5003448EF /* AdminViewControllerThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB847B21B8AED5003448EF /* AdminViewControllerThree.swift */; };
 		80EB848221B8AF60003448EF /* LoginViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB848121B8AF60003448EF /* LoginViewController1.swift */; };
 		A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */; };
-		A351FD3221BC7E64002486C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A351FD3121BC7E64002486C6 /* GoogleService-Info.plist */; };
 		A3C38205218003DD003D53E7 /* ParkingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +55,7 @@
 		806A91DF21729D3C00EDA648 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		806A91E221729D3C00EDA648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		806A91E421729D3C00EDA648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		809053C521BC915B0077730D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80EB846921B8AE57003448EF /* ParkingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingTableViewController.swift; sourceTree = "<group>"; };
 		80EB847921B8AED5003448EF /* AdminViewControllerTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewControllerTwo.swift; sourceTree = "<group>"; };
 		80EB847A21B8AED5003448EF /* AdminViewControllerOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewControllerOne.swift; sourceTree = "<group>"; };
@@ -62,7 +63,6 @@
 		80EB848121B8AF60003448EF /* LoginViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController1.swift; sourceTree = "<group>"; };
 		8D5FCD1DCB6ADBAB7364569C /* Pods-ios-midterm-2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-midterm-2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-midterm-2/Pods-ios-midterm-2.debug.xcconfig"; sourceTree = "<group>"; };
 		A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAndDurationViewController.swift; sourceTree = "<group>"; };
-		A351FD3121BC7E64002486C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingDetailsViewController.swift; sourceTree = "<group>"; };
 		A86FA118A07857057941F1F4 /* Pods-ios-midterm-2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-midterm-2.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-midterm-2/Pods-ios-midterm-2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,7 +143,7 @@
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
-				A351FD3121BC7E64002486C6 /* GoogleService-Info.plist */,
+				809053C521BC915B0077730D /* GoogleService-Info.plist */,
 				0F1D9D9F21B362C300D272E1 /* ios-midterm-2.entitlements */,
 			);
 			path = "ios-midterm-2";
@@ -252,7 +252,7 @@
 				806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */,
 				0F1D9D9C21B3053700D272E1 /* gamedates.json in Resources */,
 				0FB9F07D217D531200752425 /* parkingData.json in Resources */,
-				A351FD3221BC7E64002486C6 /* GoogleService-Info.plist in Resources */,
+				809053C621BC915B0077730D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

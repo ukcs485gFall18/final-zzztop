@@ -118,4 +118,5 @@ let tfHeight = CGFloat(40)
 let separation = CGFloat(12)
 let tfFontSize = CGFloat(20)
 
+// Firebase
 let databaseRef = Database.database().reference()
