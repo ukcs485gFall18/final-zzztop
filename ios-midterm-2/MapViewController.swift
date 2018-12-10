@@ -847,11 +847,20 @@ extension MapViewController: MKMapViewDelegate {
         if let pin = view.annotation as? MKPointAnnotation {
             if let pinTitle = pin.title {
                 if let hours = spotsAndTimes[pinTitle] {
-                    // pass the data to the next view
-                    //detailsVC.onUserAction(title: pinTitle, hours: hours)
                     detailsVC.times = hours
                     detailsVC.parkingName = pinTitle
+                    // pass the data to the next view
+                    //detailsVC.onUserAction(title: pinTitle, hours: hours)
                     self.present(detailsVC, animated: true, completion: nil)
+                }
+                else {
+                    let noAvailableParkingAlert = UIAlertController(title: "No Available Parking", message: "You cannot park at this location", preferredStyle: .alert)
+                    
+                    //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+                    noAvailableParkingAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action: UIAlertAction!) in noAvailableParkingAlert.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    self.present(noAvailableParkingAlert, animated: true, completion: nil)
                 }
             }
         }

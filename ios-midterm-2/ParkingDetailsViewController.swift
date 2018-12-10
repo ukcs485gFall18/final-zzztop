@@ -30,9 +30,35 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         case MS = "All Week"
     }
     
+    lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:100 ,y:200, width:50, height:50)) as UIActivityIndicatorView
+        activityIndicatorView.center = self.view.center
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.style = UIActivityIndicatorView.Style.gray
+        self.view.addSubview(activityIndicatorView)
+        return activityIndicatorView
+    }()
+    
+    lazy var activityLabel :UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: self.view.center.y+15, width: 125, height: 50))
+        label.text = "Loading Details"
+        label.textColor = .gray
+        label.center.x = self.view.center.x
+        self.view.addSubview(label)
+        return label
+    }()
+
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         onUserAction(title: parkingName, hours: times)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        activityIndicatorView.startAnimating()
+        activityLabel.isHidden = false
+        myTableView.isHidden = true
     }
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -304,7 +330,10 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //write the name of the parking location
         nameOfLocation = ("   Parking Location: \n   \(title)")
         sortStrings()
+        activityIndicatorView.stopAnimating()
+        activityLabel.isHidden = true
         myTableView.reloadData()
+        myTableView.isHidden = false
     }
     
     //-----------------------------------------------
