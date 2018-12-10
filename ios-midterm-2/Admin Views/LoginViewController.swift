@@ -209,20 +209,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
    
 }
 
-extension UITextField {
-    
-    func setBottomBorder(color: UIColor) {
-        self.borderStyle = UITextField.BorderStyle.none
-        self.backgroundColor = UIColor.clear
-        
-        let line = UIView()
-        let height = 1.0
-        line.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
-        line.backgroundColor = color
-        
-        self.addSubview(line)
-    }
-    
-}
 
 // source: https://codepany.com/blog/swift-3-custom-uitextfield-with-single-line-input/
