@@ -2367,563 +2367,563 @@
       ]
     },
     {
-      "name": "Agriculture Loop",
-      "radius": 70,
-      "coords": [
-        38.028593,
-        -84.510114
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Agriculture Loop",
+        "radius": 70,
+        "coords": [
+            38.028593,
+            -84.510114
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MT": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Kelley Hall Lot",
-      "radius": 70,
-      "coords": [
-        38.0303765,
-        -84.5061365
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Kelley Hall Lot",
+        "radius": 70,
+        "coords": [
+            38.0303765,
+            -84.5061365
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MT": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Veterans Drive Lot",
-      "radius": 70,
-      "coords": [
-        38.0300723,
-        -84.5058308
-      ],
-      "times": [
-        {
-          "pass": "E25",
-          "MF": {
-            "start": {
-              "hour": 0,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 23,
-              "minute": 59,
-              "12hour": "pm"
+        "name": "Veterans Drive Lot",
+        "radius": 70,
+        "coords": [
+           38.0300723,
+           -84.5058308
+        ],
+        "times": [
+            {
+                "pass": "E25",
+                "MF": {
+                    "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "KY Tobacco Ctr Lot",
-      "radius": 70,
-      "coords": [
-        38.0253895,
-        -84.5069024
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "KY Tobacco Ctr Lot",
+        "radius": 70,
+        "coords": [
+            38.0253895,
+            -84.5069024
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MT": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Small Gluck Lot",
-      "radius": 70,
-      "coords": [
-        38.0258545,
-        -84.5101036
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Small Gluck Lot",
+        "radius": 70,
+        "coords": [
+            38.0258545,
+            -84.5101036
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MT": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Large Gluck Lot",
-      "radius": 70,
-      "coords": [
-        38.0252527,
-        -84.5097802
-      ],
-      "times": [
-        {
-          "pass": "EK",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Large Gluck Lot",
+        "radius": 70,
+        "coords": [
+            38.0252527,
+            -84.5097802
+        ],
+        "times": [
+            {
+                "pass": "EK",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MT": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Barnhart Lot",
-      "radius": 70,
-      "coords": [
-        38.0269488,
-        -84.5101799
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
+        "name": "Barnhart Lot",
+        "radius": 70,
+        "coords": [
+            38.0269488,
+            -84.5101799
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Ag North/Greenhouse Lot",
-      "radius": 70,
-      "coords": [
-        38.028783,
-        -84.508051
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Ag North/Greenhouse Lot",
+        "radius": 70,
+        "coords": [
+            38.028783,
+            -84.508051
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MT": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Regulatory Services Lot",
-      "radius": 70,
-      "coords": [
-        38.0210206,
-        -84.5094971
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Regulatory Services Lot",
+        "radius": 70,
+        "coords": [
+            38.0210206,
+            -84.5094971
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MF": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MF": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Shawneetown Lot",
-      "radius": 70,
-      "coords": [
-        38.0191365,
-        -84.5101679
-      ],
-      "times": [
-        {
-          "pass": "X",
-          "MF": {
-            "start": {
-              "hour": 0,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Shawneetown Lot",
+        "radius": 70,
+        "coords": [
+            38.0191365,
+            -84.5101679
+        ],
+        "times": [
+            {
+                "pass": "X",
+                "MF": {
+                    "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 23,
-              "minute": 59,
-              "12hour": "pm"
+            {
+                "pass": "R19",
+                "MF": {
+                    "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "R19",
-          "MF": {
-            "start": {
-              "hour": 0,
-              "minute": 0,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 23,
-              "minute": 59,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Baseball Lot",
-      "radius": 70,
-      "coords": [
-        38.0192034,
-        -84.5041396
-      ],
-      "times": [
-        {
-          "pass": "C16",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Baseball Lot",
+        "radius": 70,
+        "coords": [
+            38.0192034,
+            -84.5041396
+        ],
+        "times": [
+            {
+                "pass": "C16",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MT": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MT": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "No permit required",
+                "MT": {
+                    "start": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    }
+                },
+                "F": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                },
+                "SS": {
+                    "start": {
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "No permit required",
-          "MT": {
-            "start": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            }
-          },
-          "F": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            },
-            "end": {
-              "hour": 23,
-              "minute": 59,
-              "12hour": "pm"
-            }
-          },
-          "SS": {
-            "start": {
-              "hour": 0,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 23,
-              "minute": 59,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Soccer Lot",
-      "radius": 70,
-      "coords": [
-        38.0183597,
-        -84.5004895
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Soccer Lot",
+        "radius": 70,
+        "coords": [
+           38.0183597,
+           -84.5004895
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MF": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MF": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "K",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "K",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     },
     {
-      "name": "Blue Lot",
-      "radius": 70,
-      "coords": [
-        38.0221754,
-        -84.5056418
-      ],
-      "times": [
-        {
-          "pass": "E",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
+        "name": "Blue Lot",
+        "radius": 70,
+        "coords": [
+            38.0221754,
+            -84.5056418
+        ],
+        "times": [
+            {
+                "pass": "E",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        },
-        {
-          "pass": "Any valid permit",
-          "MF": {
-            "start": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "Any valid permit",
+                "MF": {
+                    "start": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    },
+                    "end": {
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             },
-            "end": {
-              "hour": 19,
-              "minute": 30,
-              "12hour": "pm"
+            {
+                "pass": "K",
+                "MF": {
+                    "start": {
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    },
+                    "end": {
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    }
+                }
             }
-          }
-        },
-        {
-          "pass": "K",
-          "MF": {
-            "start": {
-              "hour": 5,
-              "minute": 0,
-              "12hour": "am"
-            },
-            "end": {
-              "hour": 15,
-              "minute": 30,
-              "12hour": "pm"
-            }
-          }
-        }
-      ]
+        ]
     }
   ]
 }

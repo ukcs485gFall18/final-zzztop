@@ -20,11 +20,17 @@ class SettingsViewController: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        removeNavButtons()
-        setUpStatic()
-    }
-    
-    func setUpStatic() {
+        
+        // remove buttons in nav bar from MapViewController
+        let navsubviews = navigationController?.navigationBar.subviews
+        let numofsubviews = navsubviews!.count
+        if numofsubviews > 5 {
+            let navbuttons = navsubviews![4...numofsubviews-1]
+            for button in navbuttons {
+                button.removeFromSuperview()
+            }
+        }
+        
         title = "Settings"
         
         tableView.rowHeight = 50
@@ -54,18 +60,6 @@ class SettingsViewController: TableViewController {
                 Row(text: "Delete parking spot", accessory: .disclosureIndicator)
                 ], footer: "For admin use only.")
         ]
-    }
-    
-    func removeNavButtons() {
-        // remove buttons in nav bar from MapViewController
-        let navsubviews = navigationController?.navigationBar.subviews
-        let numofsubviews = navsubviews!.count
-        if numofsubviews > 5 {
-            let navbuttons = navsubviews![4...numofsubviews-1]
-            for button in navbuttons {
-                button.removeFromSuperview()
-            }
-        }
     }
     
 }
