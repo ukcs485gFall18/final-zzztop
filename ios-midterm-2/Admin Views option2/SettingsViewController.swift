@@ -42,12 +42,7 @@ class SettingsViewController: TableViewController {
         
         dataSource = DataSource(tableViewDelegate: self)
         dataSource.sections = [
-            Section(header: "User Settings", rows: [
-                Row(text: "How long will you be parked?", selection: { [unowned self] in
-                    // go to some view
-                    }, accessory: .disclosureIndicator)
-            ]),
-            Section(header: "More Information", rows: [
+            Section(header: "Additional Information", rows: [
                 Row(text: "Pay for ticket", selection: { [unowned self] in
                     // go to some view
                     }, accessory: .disclosureIndicator),

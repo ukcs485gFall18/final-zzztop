@@ -34,6 +34,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
     
     // dismisses a view
     @objc func dismissView() {
+//        print(userPasses)
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -134,10 +135,11 @@ extension ChoosePassViewController: UITableViewDelegate {
             let firstCharacter = passName[0]
             if firstCharacter == "C" || firstCharacter == "R" {
                 // if k lot is not already in userPasses
-                let kLot = kPassTypes[15]
+                let kLotNumInArray = 16
+                let kLot = kPassTypes[kLotNumInArray]
                 if !userPasses.contains(kLot) {
                     // add check mark for k lot cell
-                    tableView.cellForRow(at: [0, 15])?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    tableView.cellForRow(at: [0, kLotNumInArray])?.accessoryType = UITableViewCell.AccessoryType.checkmark
                     // FIXME: make gray as well
                     // append k lot
                     userPasses.append(kLot)

@@ -1,0 +1,45 @@
+{
+    "parking": [
+        {
+            "name":"Rose Street Garage",
+            "radius": 70,
+            "coords": {
+                "lat": 38.034046,
+                "lon": -84.503911
+            },
+            "times": [
+                {
+                    "pass": "No permit required",
+                    "days":[
+                        {
+                            "dayrange":"MT",
+                            "start": {
+                                "hour": 19,
+                                "minute": 30,
+                                "hourtype": "pm"
+                            },
+                            "end": {
+                                "hour": 5,
+                                "minute": 0,
+                                "hourtype": "am"
+                            }
+                        },
+                        {
+                            "dayrange":"F",
+                            "start": {
+                                "hour": 19,
+                                "minute": 30,
+                                "hourtype": "pm"
+                            },
+                            "end": {
+                                "hour": 5,
+                                "minute": 0,
+                                "hourtype": "am"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
