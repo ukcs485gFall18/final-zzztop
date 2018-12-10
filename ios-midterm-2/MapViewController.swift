@@ -799,6 +799,7 @@ class MapViewController: UIViewController {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
+        map.isRotateEnabled = false
         return map
     }()
 
