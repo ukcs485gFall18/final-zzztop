@@ -6,6 +6,7 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
+import UIKit
 import MapKit
 //import Firebase
 
@@ -41,7 +42,7 @@ class MapViewController: UIViewController {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        print(dateFormatter.string(from: pickedDate!))
+//        print(dateFormatter.string(from: pickedDate!))
 
         // designs and positions views
         setUpViews()
@@ -61,6 +62,43 @@ class MapViewController: UIViewController {
         pins()
 
         gameDayStuff()
+    }
+    
+    func pins() {
+        for p in parking! {
+            let coords = p["coords"] as! [Double]
+            let dict = [coords[0], coords[1]]
+            setPins(dict: dict, title: p["name"] as! String)
+        }
+    }
+    
+    func gameDayStuff() {
+        let hour = calendar.component(.hour, from: now)
+        let min = calendar.component(.minute, from: now)
+        
+        if checkGameDay(date: now) == gameDay.tomorrow.rawValue {
+            let gameDayAlert = UIAlertController(title: "Game Day Tomorrow", message: "Remember to move your car for the football game tomorrow", preferredStyle: .alert)
+            gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
+                self.dateSelected(datePicked: self.now.tomorrow(hour: hour, minute: min))
+            }))
+            
+            // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+            gameDayAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action: UIAlertAction!) in gameDayAlert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(gameDayAlert, animated: true, completion: nil)
+        } else if checkGameDay(date: now) == gameDay.today.rawValue {
+            let gameDayAlert = UIAlertController(title: "Game Day Today", message: "Remember to move your car for the football game today", preferredStyle: .alert)
+            gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
+                self.dateSelected(datePicked:self.now)
+            }))
+            
+            // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+            gameDayAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action: UIAlertAction!) in gameDayAlert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(gameDayAlert, animated: true, completion: nil)
+        }
     }
 
     //-----------------------------------------------
@@ -565,7 +603,29 @@ class MapViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-
+    
+    //-----------------------------------------------
+    // toGMT()
+    //-----------------------------------------------
+    // for checking that date is formatted correctly
+    // Post: returns the correctly formatted string
+    //-----------------------------------------------
+    func toGMT(date: Date) -> String {
+        let dateStr = "\(date)"
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        var str = String()
+        if let date2 = formatter.date(from: dateStr) {
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+            str = formatter.string(from: date2)
+        }
+        
+        return str
+    }
+    
     //-----------------------------------------------
     // setPins()
     //-----------------------------------------------
@@ -864,28 +924,6 @@ extension Date {
     func tomorrow(hour: Int, minute: Int) -> Date {
         let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)! // misses 1 second
         return Calendar.current.date(byAdding: .day, value: 1, to: time)!
-    }
-
-    //-----------------------------------------------
-    // toGMT()
-    //-----------------------------------------------
-    // for checking that date is formatted correctly
-    // Post: returns the correctly formatted string
-    //-----------------------------------------------
-    func toGMT(date: Date) -> String {
-        let dateStr = "\(date)"
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-
-        var str = String()
-        if let date2 = formatter.date(from: dateStr) {
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
-            str = formatter.string(from: date2)
-        }
-
-        return str
     }
 
 }

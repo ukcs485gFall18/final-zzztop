@@ -209,5 +209,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
    
 }
 
-
 // source: https://codepany.com/blog/swift-3-custom-uitextfield-with-single-line-input/

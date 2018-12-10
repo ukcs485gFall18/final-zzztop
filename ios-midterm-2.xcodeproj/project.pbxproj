@@ -25,7 +25,6 @@
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
 		806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */; };
 		809053C821BC93860077730D /* firebase-test-data-to-import.json in Resources */ = {isa = PBXBuildFile; fileRef = 809053C721BC93860077730D /* firebase-test-data-to-import.json */; };
-		80E968B621BF03D200BE4E78 /* Map+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E968B521BF03D200BE4E78 /* Map+handlers.swift */; };
 		80E968B821BF047800BE4E78 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E968B721BF047800BE4E78 /* Extensions.swift */; };
 		80EB846B21B8AE58003448EF /* ParkingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB846921B8AE57003448EF /* ParkingTableViewController.swift */; };
 		A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */; };
@@ -55,7 +54,6 @@
 		806A91E221729D3C00EDA648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		806A91E421729D3C00EDA648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		809053C721BC93860077730D /* firebase-test-data-to-import.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "firebase-test-data-to-import.json"; sourceTree = "<group>"; };
-		80E968B521BF03D200BE4E78 /* Map+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map+handlers.swift"; sourceTree = "<group>"; };
 		80E968B721BF047800BE4E78 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		80EB846921B8AE57003448EF /* ParkingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingTableViewController.swift; sourceTree = "<group>"; };
 		8D5FCD1DCB6ADBAB7364569C /* Pods-ios-midterm-2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-midterm-2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-midterm-2/Pods-ios-midterm-2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 				806A91D821729D3B00EDA648 /* AppDelegate.swift */,
 				0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */,
 				806A91DA21729D3B00EDA648 /* MapViewController.swift */,
-				80E968B521BF03D200BE4E78 /* Map+handlers.swift */,
 				A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */,
 				80EB846921B8AE57003448EF /* ParkingTableViewController.swift */,
 				A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */,
@@ -312,7 +309,6 @@
 				806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */,
 				A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */,
 				0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */,
-				80E968B621BF03D200BE4E78 /* Map+handlers.swift in Sources */,
 				806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */,
 				80EB846B21B8AE58003448EF /* ParkingTableViewController.swift in Sources */,
 				800045E221B8B17000C4DE89 /* AddParkingViewController.swift in Sources */,

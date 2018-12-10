@@ -63,11 +63,3 @@ class SettingsViewController: TableViewController {
     }
     
 }
-
-extension TableViewController: UITableViewDelegate {
-    
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {}
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {}
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
-    
-}
