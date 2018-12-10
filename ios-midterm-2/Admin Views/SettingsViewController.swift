@@ -55,7 +55,9 @@ class SettingsViewController: TableViewController {
             Section(header: "Admin", rows: [
                 Row(text: "Add parking spot", selection: { [unowned self] in
                     self.navigationController?.pushViewController(AddParkingViewController(), animated: true)
-                    }, accessory: .disclosureIndicator)
+                    }, accessory: .disclosureIndicator),
+                Row(text: "Edit parking spot", accessory: .disclosureIndicator),
+                Row(text: "Delete parking spot", accessory: .disclosureIndicator)
                 ], footer: "For admin use only.")
         ]
     }
