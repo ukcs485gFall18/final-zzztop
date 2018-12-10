@@ -20,8 +20,12 @@ class SettingsViewController: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // remove buttons in nav bar from MapViewController
+        removeNavButtons()
+        setUpStatic()
+    }
+    
+    // remove buttons in nav bar from MapViewController
+    func removeNavButtons() {
         let navsubviews = navigationController?.navigationBar.subviews
         let numofsubviews = navsubviews!.count
         if numofsubviews > 5 {
@@ -30,7 +34,9 @@ class SettingsViewController: TableViewController {
                 button.removeFromSuperview()
             }
         }
-        
+    }
+    
+    func setUpStatic() {
         title = "Settings"
         
         tableView.rowHeight = 50

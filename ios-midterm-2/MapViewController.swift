@@ -255,7 +255,6 @@ class MapViewController: UIViewController {
         accessDataForOverlays(pickedDate: pickedDate!)
     }
 
-
     //-----------------------------------------------
     // accessDataForOverlays()
     //-----------------------------------------------
@@ -268,51 +267,45 @@ class MapViewController: UIViewController {
         spotsAndTimes.removeAll()
         map.removeOverlays(map.overlays) // remove previous overlays
         spots = []
-
+        
         // go through each collection in the JSON file
         for p in parking! {
             // get the spot name, circle radius, and coordinates
             let spotName = p["name"] as! String
             let radius = p["radius"] as! Int
             let coords = p["coords"] as! [Double]
-
+            
             // get the current user settings for dates
             let date = pickedDate
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
             let f = DateFormatter()
             let weekdaystring = f.weekdaySymbols[weekday]
-
+            
             // unwrap all of the times
             guard let times = p["times"] as? [Any] else {
                 return
             }
-
+            
             // go through all of the times
             for time in times {
                 // store the times as a NSDictionary
                 let timeDict = time as! NSDictionary
                 let passName = timeDict["pass"] as! String
                 addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
-
+                
                 // store all of the parking spots and their names
                 if spots.contains(spotName) {
                     continue
                 } else {
-                    spots.append(spotName)
-
                     // go through all of the permits possible
                     for permit in usersPermits {
                         // if the permit name is a match, check the date ranges and format them
                         if passName == permit {
-
-                            print(passName)
-                            print(spotName)
-
                             let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
                             let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
                             let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-
+                            
                             if (weekdaystring == WeekDay.monday.rawValue) ||
                                 (weekdaystring == WeekDay.tuesday.rawValue) ||
                                 (weekdaystring == WeekDay.wednesday.rawValue) ||
@@ -327,6 +320,7 @@ class MapViewController: UIViewController {
                     }
                 }
             }
+            spots.append(spotName)
         }
     }
 
@@ -441,24 +435,23 @@ class MapViewController: UIViewController {
             let start = open["start"] as! NSDictionary
             let startHour = start["hour"] as! Int
             let startMinute = start["minute"] as! Int
+            let startType = start["12hour"] as! String
             let startDate = time.dateAt(hours: startHour, minutes: startMinute)
-
+            
             let end = open["end"] as! NSDictionary
             let endHour = end["hour"] as! Int
             let endMinute = end["minute"] as! Int
-
+            let endType = end["12hour"] as! String
+            
             var endDate = Date()
-            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+            if startType == "pm" && endType  == "am" { // for pm-am (overnight parking)
                 endDate = time.tomorrow(hour: endHour, minute: endMinute)
-            } else { // for am-pm/pm-pm (same day)
+            } else { // for am-pm/am-am/pm-pm (same day)
                 endDate = time.dateAt(hours: endHour, minutes: endMinute)
             }
-
-            print(startDate)
-            print(time)
-            print(endDate)
+            
             if (time >= startDate) && (time < endDate) {
-                if !parkingNames.contains(name){
+                if !parkingNames.contains(name) {
                     parkingNames.append(name)
                 }
                 setOverlays(dict: coords, radius: radius)
