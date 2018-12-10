@@ -26,8 +26,7 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         ["MF", "SS"],
         ["MS"]
     ]
-    var times:[String:Any]?
-    //    var selectedTimes:[String:Any]?
+    
     
     // MARK: - initializers
     
@@ -50,134 +49,20 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         
         
         
-        getJson()
-        codable()
-//        writetofile()
-//        mergeobjects()
-        encode()
+        
     }
     var json = JSON()
     var jsonString = String()
-    func getJson() {
-//        let filename = "parkingData2"
-        let filename = "parkingData3"
-        let path = Bundle.main.path(forResource: filename, ofType: "json")!
-        let jsonString = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
-        
-        self.jsonString = jsonString!
-        self.jsonString.remove(at: self.jsonString.index(before: self.jsonString.endIndex))
-        
-        
-        json = JSON(parseJSON: jsonString!)
-        //        print(json)
-        //        print(json["parking"][0]["name"])
-        //        print(self.jsonString)
-    }
-    func codable() {
-        if let jsonData = jsonString.data(using: .utf8) {
-            let decoder = JSONDecoder()
-            //            let spots = try? decoder.decode([ParkingSpot].self, from: jsonData)
-            //            let spots = try? decoder.decode([String:ParkingSpot].self, from: jsonData)
-            //            let spots = try? decoder.decode([String:[ParkingSpot]].self, from: jsonData)
-            //            let spots = try? decoder.decode([[String:ParkingSpot]].self, from: jsonData)
-            let spots = try? decoder.decode(ParkingList.self, from: jsonData)
-            //            let spots = try? decoder.decode([ParkingList].self, from: jsonData)
-//            dump(spots)
-        }
-    }
-    func writetofile(){
-        let path = Bundle.main.path(forResource: "parkingData3", ofType: "json")
-        print(path!)
-        let url = URL(fileURLWithPath: path!)
-//        let str = "boom"
-        try? jsonString.write(to: url, atomically: true, encoding: .utf8)
-//        print("done")
-    }
-    func mergeobjects(){
-        let newobject = """
-{
-            "name":"ranodm ",
-            "radius": 70,
-            "coords": {
-                "lat": 38.034046,
-                "lon": -84.503911
-            },
-            "times": [
-                {
-                    "pass": "No permit required",
-                    "days":[
-                        {
-                            "dayrange":"MT",
-                            "start": {
-                                "hour": 19,
-                                "minute": 30,
-                                "hourtype": "pm"
-                            },
-                            "end": {
-                                "hour": 5,
-                                "minute": 0,
-                                "hourtype": "am"
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-"""
-        
-        
-    }
-    func encode() {
     
-        let parkingObj = ParkingSpot(
-            name: "Hibiscus",
-            radius:70,
-            coords:Coords(
-                lat: 38.033142,
-                lon: -84.50028
-            ),
-            times: [
-                Times(
-                    pass: "asdfa",
-                    days: [
-                        days(
-                            dayrange: "MT",
-                            start: start(
-                                hour: 3,
-                                minute: 1,
-                                hourtype: "am"
-                            ),
-                            end: end(
-                                hour: 2,
-                                minute: 4,
-                                hourtype: "am"
-                            )
-                        )
-                    ]
-                )
-            ]
-        )
-        let encodedData = try? JSONEncoder().encode(parkingObj)
-        print(encodedData)
-    }
+    
+    
+    
     
     
     
     
     
     @objc func submit() {
-        //        let values = JSON([
-        //            "name": "Columbia Ave East Lot2",
-        //            "radius": 70,
-        //            "coords":  [
-        //                "lat": 38.033142,
-        //                "lon": -84.50028
-        //            ]
-        //        ])
-        // add data to json file
-        //        print(values["name"])
-        //        let updated = try? json.merge(with: values)
-        //        print(updated)
     }
     override func viewDidAppear(_ animated: Bool) {
         //         UserDefaults.standard.set([], forKey: "coords") // testing
@@ -325,40 +210,6 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
 }
 
 
-
-
-struct ParkingList : Codable {
-    let parking: [ParkingSpot]
-}
-struct ParkingSpot: Codable {
-    var name: String
-    var radius: Int
-    var coords: Coords
-    var times: [Times]
-}
-struct Coords:Codable {
-    var lat: Double
-    var lon: Double
-}
-struct Times:Codable {
-    var pass: String
-    var days:[days]
-}
-struct days:Codable{
-    var dayrange:String
-    var start: start
-    var end: end
-}
-struct start:Codable{
-    var hour:Int
-    var minute:Int
-    var hourtype:String
-}
-struct end:Codable{
-    var hour:Int
-    var minute:Int
-    var hourtype:String
-}
 
 
 
