@@ -84,7 +84,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                     if (sortedStrings[indexPath.row].key.range(of: key) != nil){
                         cell.textLabel!.highlightedTextColor = .blue
                         cell.textLabel!.isHighlighted = true
-                        break
+//                        break
                     }
                 }
                 var waitTime: [NSDictionary]?
@@ -102,10 +102,10 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                     let startHour = start["hour"] as! Int
                     let startMinute = start["minute"] as! Int
                     let startDate = pickedDate!.dateAt(hours: startHour, minutes: startMinute)
-                    if startDate > pickedDate! {
-                        let delay = startDate.timeIntervalSince(pickedDate!)
-                        let formatter = DateComponentsFormatter()
-                        formatter.unitsStyle = .abbreviated
+                    let delay = startDate.timeIntervalSince(pickedDate!)
+                    let formatter = DateComponentsFormatter()
+                    formatter.unitsStyle = .abbreviated
+                    if startDate > pickedDate! && delay <= 10800{ //if becomes available in 3 hours or less highlight in red
                         cell.textLabel!.text = cell.textLabel!.text! + "\nAvailable in: " + formatter.string(from: delay)!
                         cell.textLabel!.highlightedTextColor = .red
                         cell.textLabel!.isHighlighted = true
