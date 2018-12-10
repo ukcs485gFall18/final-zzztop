@@ -6,10 +6,9 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import Static
 
-class AdminViewController: TableViewController, UITextFieldDelegate {
+class AddParkingViewController: TableViewController, UITextFieldDelegate {
     
     // MARK: - properties
     
@@ -117,6 +116,8 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
     }
     
     @objc func logout() {
+        UserDefaults.standard.set("", forKey: "username")
+        UserDefaults.standard.set("", forKey: "password")
         present(LoginViewController(), animated: true, completion: nil)
     }
     

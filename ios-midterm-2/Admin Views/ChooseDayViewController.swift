@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import Static
 
 class ChooseDayViewController: TableViewController {

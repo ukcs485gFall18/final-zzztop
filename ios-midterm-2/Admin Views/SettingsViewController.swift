@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import Static
 
 class SettingsViewController: TableViewController {
@@ -55,7 +54,7 @@ class SettingsViewController: TableViewController {
                 ]),
             Section(header: "Admin", rows: [
                 Row(text: "Add parking spot", selection: { [unowned self] in
-                    self.navigationController?.pushViewController(AdminViewController(), animated: true)
+                    self.navigationController?.pushViewController(AddParkingViewController(), animated: true)
                     }, accessory: .disclosureIndicator)
                 ], footer: "For admin use only.")
         ]

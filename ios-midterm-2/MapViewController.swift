@@ -5,7 +5,7 @@
 //  Created by Jordan George on 10/13/18.
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
-import UIKit
+
 import MapKit
 //import Firebase
 
@@ -312,8 +312,8 @@ class MapViewController: UIViewController {
                         // if the permit name is a match, check the date ranges and format them
                         if passName == permit {
                             
-//                            print(passName)
-//                            print(spotName)
+                            print(passName)
+                            print(spotName)
                             
                             let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
                             let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
@@ -460,9 +460,9 @@ class MapViewController: UIViewController {
                 endDate = time.dateAt(hours: endHour, minutes: endMinute)
             }
             
-//            print(startDate)
-//            print(time)
-//            print(endDate)
+            print(startDate)
+            print(time)
+            print(endDate)
             if (time >= startDate) && (time < endDate) {
                 if !parkingNames.contains(name){
                     parkingNames.append(name)
