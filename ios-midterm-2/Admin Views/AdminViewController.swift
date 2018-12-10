@@ -110,14 +110,14 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         let rightPassword = "123"
         
         if pastUsername != rightUsername || pastPassword != rightPassword {
-            present(LoginViewController2(), animated: true, completion: nil)
+            present(LoginViewController(), animated: true, completion: nil)
         } else {
             return
         }
     }
     
     @objc func logout() {
-        present(LoginViewController2(), animated: true, completion: nil)
+        present(LoginViewController(), animated: true, completion: nil)
     }
     
     var str = ""

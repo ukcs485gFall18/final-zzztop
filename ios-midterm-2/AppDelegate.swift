@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let rootVC = SettingsViewController() // for testing
 //        let rootVC = AdminViewController() // for testing
 //        let rootVC = ChooseDayViewController() // for testing
-//        let rootVC = LoginViewController2() // for testing
+//        let rootVC = LoginViewController() // for testing
         let nav = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = nav
         

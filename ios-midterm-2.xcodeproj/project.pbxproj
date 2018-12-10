@@ -19,7 +19,6 @@
 		800045E521B8B17000C4DE89 /* AdminMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E021B8B17000C4DE89 /* AdminMapViewController.swift */; };
 		800045E621B8B17000C4DE89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E121B8B17000C4DE89 /* SettingsViewController.swift */; };
 		800045E821B8D70C00C4DE89 /* ChooseDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */; };
-		8027575A21B85F5700813CB9 /* staticviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8027575921B85F5700813CB9 /* staticviews.swift */; };
 		806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91D821729D3B00EDA648 /* AppDelegate.swift */; };
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
@@ -27,10 +26,6 @@
 		809053C621BC915B0077730D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 809053C521BC915B0077730D /* GoogleService-Info.plist */; };
 		809053C821BC93860077730D /* firebase-test-data-to-import.json in Resources */ = {isa = PBXBuildFile; fileRef = 809053C721BC93860077730D /* firebase-test-data-to-import.json */; };
 		80EB846B21B8AE58003448EF /* ParkingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB846921B8AE57003448EF /* ParkingTableViewController.swift */; };
-		80EB847C21B8AED5003448EF /* AdminViewControllerTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB847921B8AED5003448EF /* AdminViewControllerTwo.swift */; };
-		80EB847D21B8AED5003448EF /* AdminViewControllerOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB847A21B8AED5003448EF /* AdminViewControllerOne.swift */; };
-		80EB847E21B8AED5003448EF /* AdminViewControllerThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB847B21B8AED5003448EF /* AdminViewControllerThree.swift */; };
-		80EB848221B8AF60003448EF /* LoginViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB848121B8AF60003448EF /* LoginViewController1.swift */; };
 		A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */; };
 		A351FD3621BDAC0E002486C6 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD3521BDAC0E002486C6 /* TicketsViewController.swift */; };
 		A3C38205218003DD003D53E7 /* ParkingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C38203218003DD003D53E7 /* ParkingDetailsViewController.swift */; };
@@ -50,7 +45,6 @@
 		800045E021B8B17000C4DE89 /* AdminMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminMapViewController.swift; sourceTree = "<group>"; };
 		800045E121B8B17000C4DE89 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDayViewController.swift; sourceTree = "<group>"; };
-		8027575921B85F5700813CB9 /* staticviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = staticviews.swift; sourceTree = "<group>"; };
 		806A91D521729D3B00EDA648 /* ios-midterm-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-midterm-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		806A91D821729D3B00EDA648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		806A91DA21729D3B00EDA648 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -60,10 +54,6 @@
 		809053C521BC915B0077730D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		809053C721BC93860077730D /* firebase-test-data-to-import.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "firebase-test-data-to-import.json"; sourceTree = "<group>"; };
 		80EB846921B8AE57003448EF /* ParkingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingTableViewController.swift; sourceTree = "<group>"; };
-		80EB847921B8AED5003448EF /* AdminViewControllerTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewControllerTwo.swift; sourceTree = "<group>"; };
-		80EB847A21B8AED5003448EF /* AdminViewControllerOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewControllerOne.swift; sourceTree = "<group>"; };
-		80EB847B21B8AED5003448EF /* AdminViewControllerThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewControllerThree.swift; sourceTree = "<group>"; };
-		80EB848121B8AF60003448EF /* LoginViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController1.swift; sourceTree = "<group>"; };
 		8D5FCD1DCB6ADBAB7364569C /* Pods-ios-midterm-2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-midterm-2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-midterm-2/Pods-ios-midterm-2.debug.xcconfig"; sourceTree = "<group>"; };
 		A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAndDurationViewController.swift; sourceTree = "<group>"; };
 		A351FD3521BDAC0E002486C6 /* TicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +81,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		800045DC21B8B15500C4DE89 /* Admin Views option2 */ = {
+		800045DC21B8B15500C4DE89 /* Admin Views */ = {
 			isa = PBXGroup;
 			children = (
 				800045E121B8B17000C4DE89 /* SettingsViewController.swift */,
@@ -101,15 +91,7 @@
 				800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */,
 				800045DE21B8B17000C4DE89 /* Cells.swift */,
 			);
-			path = "Admin Views option2";
-			sourceTree = "<group>";
-		};
-		8027575B21B8743000813CB9 /* Admin Views option3 */ = {
-			isa = PBXGroup;
-			children = (
-				8027575921B85F5700813CB9 /* staticviews.swift */,
-			);
-			path = "Admin Views option3";
+			path = "Admin Views";
 			sourceTree = "<group>";
 		};
 		806A91CC21729D3B00EDA648 = {
@@ -141,9 +123,7 @@
 				80EB846921B8AE57003448EF /* ParkingTableViewController.swift */,
 				A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */,
 				A351FD3521BDAC0E002486C6 /* TicketsViewController.swift */,
-				80EB845C21B8AE1D003448EF /* Admin Views option1 */,
-				800045DC21B8B15500C4DE89 /* Admin Views option2 */,
-				8027575B21B8743000813CB9 /* Admin Views option3 */,
+				800045DC21B8B15500C4DE89 /* Admin Views */,
 				80F65C3E21B453470019FEB9 /* data */,
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
@@ -152,17 +132,6 @@
 				0F1D9D9F21B362C300D272E1 /* ios-midterm-2.entitlements */,
 			);
 			path = "ios-midterm-2";
-			sourceTree = "<group>";
-		};
-		80EB845C21B8AE1D003448EF /* Admin Views option1 */ = {
-			isa = PBXGroup;
-			children = (
-				80EB848121B8AF60003448EF /* LoginViewController1.swift */,
-				80EB847A21B8AED5003448EF /* AdminViewControllerOne.swift */,
-				80EB847B21B8AED5003448EF /* AdminViewControllerThree.swift */,
-				80EB847921B8AED5003448EF /* AdminViewControllerTwo.swift */,
-			);
-			path = "Admin Views option1";
 			sourceTree = "<group>";
 		};
 		80F65C3E21B453470019FEB9 /* data */ = {
@@ -324,14 +293,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A351FD3621BDAC0E002486C6 /* TicketsViewController.swift in Sources */,
-				80EB847D21B8AED5003448EF /* AdminViewControllerOne.swift in Sources */,
 				800045E321B8B17000C4DE89 /* Cells.swift in Sources */,
-				8027575A21B85F5700813CB9 /* staticviews.swift in Sources */,
 				800045E421B8B17000C4DE89 /* LoginViewController2.swift in Sources */,
 				806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */,
 				A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */,
 				0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */,
-				80EB847C21B8AED5003448EF /* AdminViewControllerTwo.swift in Sources */,
 				806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */,
 				80EB846B21B8AE58003448EF /* ParkingTableViewController.swift in Sources */,
 				800045E221B8B17000C4DE89 /* AdminViewController.swift in Sources */,
@@ -339,9 +305,7 @@
 				800045E621B8B17000C4DE89 /* SettingsViewController.swift in Sources */,
 				A3C38205218003DD003D53E7 /* ParkingDetailsViewController.swift in Sources */,
 				800045E521B8B17000C4DE89 /* AdminMapViewController.swift in Sources */,
-				80EB848221B8AF60003448EF /* LoginViewController1.swift in Sources */,
 				800045E821B8D70C00C4DE89 /* ChooseDayViewController.swift in Sources */,
-				80EB847E21B8AED5003448EF /* AdminViewControllerThree.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

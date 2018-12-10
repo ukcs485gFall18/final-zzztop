@@ -21,7 +21,7 @@ class SettingsViewController: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // remove buttons in nav bar from MapViewController
         let navsubviews = navigationController?.navigationBar.subviews
         let numofsubviews = navsubviews!.count
@@ -42,24 +42,17 @@ class SettingsViewController: TableViewController {
         
         dataSource = DataSource(tableViewDelegate: self)
         dataSource.sections = [
-            Section(header: "User Settings", rows: [
-                Row(text: "How long will you be parked?", selection: { [unowned self] in
-                    // go to some view
-                    let durationVC = TimeAndDurationViewController();
-                    durationVC.fromAdminPanel = true
-                    durationVC.settingsViewController = self
-                    self.present(durationVC, animated: true, completion: nil)
-                    }, accessory: .disclosureIndicator)
-            ]),
             Section(header: "More Information", rows: [
                 Row(text: "Parking Tickets", selection: { [unowned self] in
                     let ticketsVC = TicketsViewController();
                     self.present(ticketsVC, animated: true, completion: nil)
                     }, accessory: .disclosureIndicator),
-                Row(text: "View parking info on UKY", selection: { [unowned self] in
-                    // go to some view
-                    }, accessory: .disclosureIndicator)
-            ]),
+                Row(text: "View parking info on UKY", selection: {
+                    let ukParkingUrl = "https://www.uky.edu/transportation/parking-info"
+                    guard let url = URL(string: ukParkingUrl) else { return }
+                    UIApplication.shared.open(url)
+                }, accessory: .disclosureIndicator)
+                ]),
             Section(header: "Admin", rows: [
                 Row(text: "Add parking spot", selection: { [unowned self] in
                     self.navigationController?.pushViewController(AdminViewController(), animated: true)
@@ -77,5 +70,3 @@ extension TableViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
     
 }
-
-// todo: login

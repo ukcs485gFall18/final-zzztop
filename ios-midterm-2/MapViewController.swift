@@ -298,8 +298,8 @@ class MapViewController: UIViewController {
             for time in times {
                 // store the times as a NSDictionary
                 let timeDict = time as! NSDictionary
-                let name = timeDict["pass"] as! String
-                addToDictionary(pass: name, spotName: spotName, timeDict: timeDict)
+                let passName = timeDict["pass"] as! String
+                addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
                 
                 // store all of the parking spots and their names
                 if spots.contains(spotName) {
@@ -310,7 +310,11 @@ class MapViewController: UIViewController {
                     // go through all of the permits possible
                     for permit in usersPermits {
                         // if the permit name is a match, check the date ranges and format them
-                        if name == permit {
+                        if passName == permit {
+                            
+//                            print(passName)
+//                            print(spotName)
+                            
                             let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
                             let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
                             let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
@@ -456,6 +460,9 @@ class MapViewController: UIViewController {
                 endDate = time.dateAt(hours: endHour, minutes: endMinute)
             }
             
+//            print(startDate)
+//            print(time)
+//            print(endDate)
             if (time >= startDate) && (time < endDate) {
                 if !parkingNames.contains(name){
                     parkingNames.append(name)
@@ -601,28 +608,6 @@ class MapViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-    }
-    
-    //-----------------------------------------------
-    // toGMT()
-    //-----------------------------------------------
-    // for checking that date is formatted correctly
-    // Post: returns the correctly formatted string
-    //-----------------------------------------------
-    func toGMT(date: Date) -> String {
-        let dateStr = "\(date)"
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        var str = String()
-        if let date2 = formatter.date(from: dateStr) {
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
-            str = formatter.string(from: date2)
-        }
-        
-        return str
     }
     
     //-----------------------------------------------
@@ -909,6 +894,28 @@ extension Date {
     func tomorrow(hour: Int, minute: Int) -> Date {
         let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)! // misses 1 second
         return Calendar.current.date(byAdding: .day, value: 1, to: time)!
+    }
+    
+    //-----------------------------------------------
+    // toGMT()
+    //-----------------------------------------------
+    // for checking that date is formatted correctly
+    // Post: returns the correctly formatted string
+    //-----------------------------------------------
+    func toGMT(date: Date) -> String {
+        let dateStr = "\(date)"
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        var str = String()
+        if let date2 = formatter.date(from: dateStr) {
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss xxxxx"
+            str = formatter.string(from: date2)
+        }
+        
+        return str
     }
     
 }
