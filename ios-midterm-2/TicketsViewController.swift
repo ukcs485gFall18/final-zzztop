@@ -11,13 +11,16 @@ import UIKit
 class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var ticketsArray = [String]()
+    var ticketsArrayRetrieved = [String]()
     private var myTableView: UITableView!
     var textField = UITextField()
     let datePicker = UIDatePicker()
     var didSelectDate: Bool = false
+    let defaults = UserDefaults.standard
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ticketsArray.count
+        ticketsArrayRetrieved = defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
+        return ticketsArrayRetrieved.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -25,7 +28,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         //references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
         cell.textLabel!.numberOfLines = 0
         cell.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
-        cell.textLabel!.text = "\(ticketsArray[indexPath.row])"
+        cell.textLabel!.text = "\(ticketsArrayRetrieved[indexPath.row])"
         return cell
     }
     
@@ -87,9 +90,11 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "EEEEEEEE LLL d yyyy"
                 newTicket = newTicket + dateFormatter.string(from: Date())
-                self.textField = addDueDate.textFields![0] // Force unwrapping because we know it exists.
+                self.textField = addDueDate.textFields![0]
                 newTicket = newTicket+"\nDue: "+self.textField.text!
-                self.ticketsArray.append(newTicket)
+                self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
+                self.ticketsArrayRetrieved.append(newTicket)
+                self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
                 self.myTableView.reloadData()
             case .cancel:
                 print("cancel")
@@ -118,7 +123,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         datePicker.datePickerMode = .dateAndTime
         datePicker.addTarget(self, action: #selector(dateSelected(datePicker:)), for: .valueChanged)
         // add the DatePicker to the UITextField
-        textField.inputView = datePicker
+        //textField.inputView = datePicker
         
         // allow the user to get out of the date picker by tapping
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
@@ -148,7 +153,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func dateSelected(datePicker: UIDatePicker){
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
-        textField.text = dateFormatter.string(from: datePicker.date)
+        //textField.text = dateFormatter.string(from: datePicker.date)
     }
     
     /*
