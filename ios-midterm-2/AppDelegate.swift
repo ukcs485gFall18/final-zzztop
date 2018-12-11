@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         // set app to open to the map
-                let rootVC = MapViewController()
+        let rootVC = MapViewController()
         //        let rootVC = TimeAndDurationViewController() // for testing
         //        let rootVC = LoginViewController() // for testing
         //        let rootVC = SettingsViewController() // for testing

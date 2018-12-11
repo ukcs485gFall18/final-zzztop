@@ -11,7 +11,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     
     var pickedDate: Date?
     var timePicked: Int = 0
-//    var didSelectDate: Bool = false
+    //    var didSelectDate: Bool = false
     let now = Date()
     var pickerTextField = UITextField()
     var timePickerTextField = UITextField()
@@ -91,8 +91,8 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: pickedDate!)
-//        timePickerTextField.text = "Current times only: 0 hours"
-//        timePickerTextField.text = "Current times only: " + kDurationHours[0] + " hours"
+        //        timePickerTextField.text = "Current times only: 0 hours"
+        //        timePickerTextField.text = "Current times only: " + kDurationHours[0] + " hours"
         timePickerTextField.text = "\(kDurationHours[0]) hours"
         
         // declaring and adding a back button to the view
@@ -141,7 +141,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     //-----------------------------------------------
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
-//        didSelectDate = true
+        //        didSelectDate = true
     }
     
     //-----------------------------------------------
@@ -161,7 +161,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
             var addingHours = DateComponents()
             addingHours.hour = self.timePicked
             let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
-//            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
+            //            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
             self.mapViewController?.accessDataForOverlays(pickedDate: futureTime!)
             print(futureTime!)
         })
@@ -179,16 +179,10 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
-                
+        
         self.mapViewController?.dateSelected(datePicked: datePicker.date)
     }
-  
+    
     // source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
     // source for adding hours to a date: http://swiftdeveloperblog.com/code-examples/add-days-months-or-years-to-current-date-in-swift/
-}
-
-extension Date {
-    var localizedDescription: String {
-        return description(with: .current)
-    }
 }

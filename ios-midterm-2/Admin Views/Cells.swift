@@ -243,7 +243,7 @@ class submitButtonCell: UITableViewCell, Cell {
     }
     func setUpbutton() {
         button.heightAnchor.constraint(equalToConstant: self.bounds.height+5).isActive = true
-//        button.widthAnchor.constraint(equalToConstant: self.bounds.width+100).isActive = true
+        //        button.widthAnchor.constraint(equalToConstant: self.bounds.width+100).isActive = true
         button.widthAnchor.constraint(equalToConstant: self.bounds.width).isActive = true
     }
 }

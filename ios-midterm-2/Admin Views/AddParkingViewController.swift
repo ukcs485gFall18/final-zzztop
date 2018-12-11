@@ -219,10 +219,10 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
                     chooseDayVC.options = self.dayOptions[2]
                     self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator)
-                ], footer: "Choose days for which you'd like to enter times.")
-            ,Section(rows: [
+                ], footer: "Choose days for which you'd like to enter times."),
+            Section(rows: [
                 Row(cellClass: submitButtonCell.self)
-                ])
+                ]),
         ]
         
 //        view.addSubview(submitButton)

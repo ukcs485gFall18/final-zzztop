@@ -39,7 +39,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
         displayHeight = self.view.frame.height
         
         view.addSubview(tableView)
-//        view.addSubview(applyButton)
+        //        view.addSubview(applyButton)
         
         let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
         headerView.backgroundColor = .black
@@ -79,9 +79,9 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
     }()
     
 }
-    
-extension ParkingTableViewController: UITableViewDelegate {
 
+extension ParkingTableViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return parkingNames.count
     }

@@ -14,7 +14,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         setUpViews()
     }
-
+    
     @objc func checkIfLoginCredentialsAreRight() {
         guard let username = usernameTextField.text,
             let password = passwordTextField.text else {
@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // set admin username and password
         let rightUsername = "Admin"
         let rightPassword = "123"
-
+        
         // check if entered values are right
         if attemptedUsername == rightUsername || attemptedPassword == rightPassword {
             dismiss(animated: true, completion: nil)
@@ -112,7 +112,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         setUpLoginButton()
         setUpExitButton()
     }
-
+    
     lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -189,7 +189,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         exitButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
     }
-   
+    
 }
 
 // source: https://codepany.com/blog/swift-3-custom-uitextfield-with-single-line-input/
