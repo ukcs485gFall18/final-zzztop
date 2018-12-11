@@ -134,11 +134,11 @@ extension ChoosePassViewController: UITableViewDelegate {
             let firstCharacter = passName[0]
             if firstCharacter == "C" || firstCharacter == "R" {
                 // if k lot is not already in userPasses
-                let kLotNum = 16
-                let kLot = kPassTypes[kLotNum]
+                let kLotNumInArray = 16
+                let kLot = kPassTypes[kLotNumInArray]
                 if !userPasses.contains(kLot) {
                     // add check mark for k lot cell
-                    tableView.cellForRow(at: [0, kLotNum])?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    tableView.cellForRow(at: [0, kLotNumInArray])?.accessoryType = UITableViewCell.AccessoryType.checkmark
                     // FIXME: make gray as well
                     // append k lot
                     userPasses.append(kLot)
