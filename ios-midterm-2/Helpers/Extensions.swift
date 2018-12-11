@@ -34,3 +34,35 @@ extension TableViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
     
 }
+
+extension Date {
+    
+    func dateAt(hours: Int, minutes: Int) -> Date {
+        let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        
+        var date_components = calendar.components(
+            [NSCalendar.Unit.year,
+             NSCalendar.Unit.month,
+             NSCalendar.Unit.day],
+            from: self)
+        
+        date_components.hour = hours
+        date_components.minute = minutes
+        date_components.second = 0
+        
+        let newDate = calendar.date(from: date_components)!
+        
+        return newDate
+    }
+    
+    // get date for tomorrow
+    func tomorrow(hour: Int, minute: Int) -> Date {
+        let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)! // misses 1 second
+        return Calendar.current.date(byAdding: .day, value: 1, to: time)!
+    }
+    
+    var localizedDescription: String {
+        return description(with: .current)
+    }
+    
+}

@@ -10,16 +10,16 @@ import UIKit
 class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var pickedDate: Date?
-    var timePicked:Int = 0
-    var didSelectDate: Bool = false
+    var timePicked: Int = 0
+    //    var didSelectDate: Bool = false
     let now = Date()
     var pickerTextField = UITextField()
     var timePickerTextField = UITextField()
     let datePicker = UIDatePicker()
     let timePicker = UIPickerView()
-    var mapViewController:MapViewController?
-    var fromAdminPanel:Bool = false
-    var settingsViewController:SettingsViewController?
+    var mapViewController: MapViewController?
+    var fromAdminPanel: Bool = false
+    var settingsViewController: SettingsViewController?
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -30,7 +30,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return kDurationHours[row]
+        return kDurationHours[row] + " hours"
     }
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         timePickerTextField.text = kDurationHours[row] + " hours"
@@ -50,9 +50,13 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         pleaseSelect.layer.cornerRadius = 5
         pleaseSelect.textAlignment = .center
         pleaseSelect.isEditable = false
+        pleaseSelect.sizeToFit()
+        let fixedWidth = CGFloat(view.frame.width-buttonWidth)
+        let newSize = pleaseSelect.sizeThatFits(CGSize(width: fixedWidth, height: pleaseSelect.frame.height))
+        pleaseSelect.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
         self.view.addSubview(pleaseSelect)
         
-        pickerTextField = UITextField(frame: CGRect(x: 0, y: buttonHeight+yPadding+70+60, width: view.frame.width-buttonWidth, height: buttonHeight))
+        pickerTextField = UITextField(frame: CGRect(x: 0, y: buttonHeight+yPadding+70+70, width: view.frame.width-buttonWidth, height: buttonHeight))
         pickerTextField.center.x = view.center.x
         pickerTextField.textAlignment = NSTextAlignment.center
         pickerTextField.font = UIFont.systemFont(ofSize: regFontSize)
@@ -68,9 +72,12 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         pleaseSelectTime.layer.cornerRadius = 5
         pleaseSelectTime.textAlignment = .center
         pleaseSelectTime.isEditable = false
+        let fixedWidth2 = CGFloat(view.frame.width-buttonWidth)
+        let newSize2 = pleaseSelectTime.sizeThatFits(CGSize(width: fixedWidth2, height: pleaseSelectTime.frame.height))
+        pleaseSelectTime.frame.size = CGSize(width: max(newSize2.width, fixedWidth2), height: newSize2.height)
         self.view.addSubview(pleaseSelectTime)
         
-        timePickerTextField = UITextField(frame: CGRect(x: 0, y: (2*buttonHeight)+(2*yPadding)+180+60, width: view.frame.width-buttonWidth, height: buttonHeight))
+        timePickerTextField = UITextField(frame: CGRect(x: 0, y: (2*buttonHeight)+(2*yPadding)+180+70, width: view.frame.width-buttonWidth, height: buttonHeight))
         timePickerTextField.center.x = view.center.x
         timePickerTextField.textAlignment = NSTextAlignment.center
         timePickerTextField.font = UIFont.systemFont(ofSize: regFontSize)
@@ -84,19 +91,19 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: pickedDate!)
-        timePickerTextField.text = "Current times only: 0 hours"
+        //        timePickerTextField.text = "Current times only: 0 hours"
+        //        timePickerTextField.text = "Current times only: " + kDurationHours[0] + " hours"
+        timePickerTextField.text = "\(kDurationHours[0]) hours"
         
-        //declaring and adding a back button to the view
+        // declaring and adding a back button to the view
         let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 30, height: 30))
         backButton.layer.cornerRadius = 5
-        //backButton.backgroundColor = .blue
-        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+        // backButton.backgroundColor = .blue
+        // Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
         let backIcon = UIImage(named: "backIconBlack.png")
         backButton.setImage(backIcon, for: .normal)
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         view.addSubview(backButton)
-        
-        // Do any additional setup after loading the view.
     }
     
     
@@ -134,7 +141,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     //-----------------------------------------------
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
-        didSelectDate = true
+        //        didSelectDate = true
     }
     
     //-----------------------------------------------
@@ -145,16 +152,16 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     // Conditions: none
     //-----------------------------------------------
     @objc func closeView() {
-        if(self.fromAdminPanel){
+        if (self.fromAdminPanel) {
             if let vc = self.presentingViewController {
                 vc.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
-        self.dismiss(animated: true, completion:{
+        self.dismiss(animated: true, completion: {
             var addingHours = DateComponents()
             addingHours.hour = self.timePicked
             let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
-//            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
+            //            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
             self.mapViewController?.accessDataForOverlays(pickedDate: futureTime!)
             print(futureTime!)
         })
@@ -168,20 +175,14 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     // Post: accesses the data to set the pins
     // to match the new date
     //-----------------------------------------------
-    @objc func dateSelected(datePicker: UIDatePicker){
+    @objc func dateSelected(datePicker: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
-                
+        
         self.mapViewController?.dateSelected(datePicked: datePicker.date)
     }
-  
-    //source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
-    //source for adding hours to a date: http://swiftdeveloperblog.com/code-examples/add-days-months-or-years-to-current-date-in-swift/
-}
-
-extension Date {
-    var localizedDescription: String {
-        return description(with: .current)
-    }
+    
+    // source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
+    // source for adding hours to a date: http://swiftdeveloperblog.com/code-examples/add-days-months-or-years-to-current-date-in-swift/
 }

@@ -14,7 +14,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         setUpViews()
     }
-
+    
     @objc func checkIfLoginCredentialsAreRight() {
         guard let username = usernameTextField.text,
             let password = passwordTextField.text else {
@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // set admin username and password
         let rightUsername = "Admin"
         let rightPassword = "123"
-
+        
         // check if entered values are right
         if attemptedUsername == rightUsername || attemptedPassword == rightPassword {
             dismiss(animated: true, completion: nil)
@@ -102,32 +102,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func setUpViews() {
         view.backgroundColor = UIColor.white
         
-        view.addSubview(logo)
         view.addSubview(usernameTextField)
         view.addSubview(passwordTextField)
         view.addSubview(loginButton)
         view.addSubview(exitButton)
         
-        setUpLogo()
         setUpUsernameTextField()
         setUpPasswordTextField()
         setUpLoginButton()
         setUpExitButton()
-    }
-    
-    lazy var logo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "logo")
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
-    
-    func setUpLogo() {
-        logo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        logo.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
-        logo.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        logo.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     lazy var usernameTextField: UITextField = {
@@ -145,7 +128,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func setUpUsernameTextField() {
         usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        usernameTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 50).isActive = true
+        usernameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
         usernameTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
@@ -206,7 +189,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         exitButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
     }
-   
+    
 }
 
 // source: https://codepany.com/blog/swift-3-custom-uitextfield-with-single-line-input/

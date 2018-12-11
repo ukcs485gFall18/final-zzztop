@@ -47,7 +47,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         self.view.addSubview(label)
         return label
     }()
-
+    
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         onUserAction(title: parkingName, hours: times)
@@ -395,7 +395,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             let passInfo = parkingInfoArray[0] //get the first line
             let passNoColonArray = passInfo.components(separatedBy: ": ")
             let nameOfPass = passNoColonArray[1].trimmingCharacters(in: .whitespaces)
-//            print(nameOfPass)
+            //            print(nameOfPass)
             sortableStrings[string] = nameOfPass
         }
         sortedStrings = sortableStrings.sorted(by: { $0.value < $1.value })

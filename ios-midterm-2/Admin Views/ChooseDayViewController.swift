@@ -58,7 +58,7 @@ class ChooseDayViewController: TableViewController {
         
         dataSource = DataSource(tableViewDelegate: self)
         dataSource.sections = sections
-
+        
         // FIXME: not appearing
         view.addSubview(useButton)
         setUpUseButton()
@@ -98,8 +98,8 @@ var chooseDayVC: ChooseDayViewController = ChooseDayViewController()
 //todo:
 //- tap gesture for tapping outside of cell text field
 //- save times
-    //- "use this time" button
-        //-user defaults
+//  - "use this time" button
+//      -user defaults
 //----------------
 //later:
 //- section headers not changing to day name correctly

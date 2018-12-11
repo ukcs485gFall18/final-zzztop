@@ -219,3 +219,31 @@ class passPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIPi
         textField.text = "\(passItems[row])"
     }
 }
+
+class submitButtonCell: UITableViewCell, Cell {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.addSubview(button)
+        setUpbutton()
+    }
+    lazy var button: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = darkerAppleBlue
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Submit", for: .normal)
+        button.addTarget(self, action: #selector(submit), for: .touchUpInside)
+        return button
+    }()
+    @objc func submit() {
+        // submit to firebase
+    }
+    func setUpbutton() {
+        button.heightAnchor.constraint(equalToConstant: self.bounds.height+5).isActive = true
+        //        button.widthAnchor.constraint(equalToConstant: self.bounds.width+100).isActive = true
+        button.widthAnchor.constraint(equalToConstant: self.bounds.width).isActive = true
+    }
+}

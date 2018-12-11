@@ -12,11 +12,11 @@ import UIKit
 //view where user selects which passes they have
 
 class ChoosePassViewController: UIViewController, UITableViewDataSource {
-
+    
     var userPasses: [String] = []
     var displayWidth = CGFloat()
     var displayHeight = CGFloat()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +36,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     // changes status bar style to be light instead of dark
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -45,16 +45,16 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
     func setUpViews() {
         displayWidth = self.view.frame.width
         displayHeight = self.view.frame.height
-
+        
         view.addSubview(tableView)
         view.addSubview(applyButton)
-
+        
         let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
         headerView.backgroundColor = .black
         view.addSubview(headerView)
         headerView.addSubview(addPassesLabel)
     }
-
+    
     // creates table view to hold UK pass options user can select from
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight-buttonHeight-barHeight*2))
@@ -78,7 +78,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         applyButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         return applyButton
     }()
-
+    
     // creates add pass label
     lazy var addPassesLabel: UILabel = {
         let addPassesLabel = UILabel(frame: CGRect(x: 0, y: ynavPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
@@ -89,7 +89,7 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         addPassesLabel.textColor = .white
         return addPassesLabel
     }()
-
+    
 }
 
 // overrides table view functions
@@ -97,12 +97,12 @@ extension ChoosePassViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kPassTypes.count
     }
-
+    
     // make each cell of table contain a pass name
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "passCell", for: indexPath as IndexPath)
         cell.textLabel!.text = "\(kPassTypes[indexPath.row])"
-
+        
         // if a user has selected that pass, leaves the view, and returns to view
         // the passes they selected previously will still be selected and have a checkmark by them
         if userPasses.contains(cell.textLabel?.text ?? "") {
@@ -111,7 +111,7 @@ extension ChoosePassViewController: UITableViewDelegate {
         } else {
             cell.accessoryType = UITableViewCell.AccessoryType.none
         }
-
+        
         let passString = kPassTypes[indexPath.row]
         //look in the dictionary of pass names and UIImages
         //put the value into the imageView
@@ -134,11 +134,11 @@ extension ChoosePassViewController: UITableViewDelegate {
             let firstCharacter = passName[0]
             if firstCharacter == "C" || firstCharacter == "R" {
                 // if k lot is not already in userPasses
-                let kLotNum = 16
-                let kLot = kPassTypes[kLotNum]
+                let kLotNumInArray = 16
+                let kLot = kPassTypes[kLotNumInArray]
                 if !userPasses.contains(kLot) {
                     // add check mark for k lot cell
-                    tableView.cellForRow(at: [0, kLotNum])?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    tableView.cellForRow(at: [0, kLotNumInArray])?.accessoryType = UITableViewCell.AccessoryType.checkmark
                     // FIXME: make gray as well
                     // append k lot
                     userPasses.append(kLot)
@@ -148,7 +148,7 @@ extension ChoosePassViewController: UITableViewDelegate {
             UserDefaults.standard.set(userPasses, forKey: "userPasses")
         }
     }
-
+    
     // if user deselects a cell remove the checkmark and remove from user defaults
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.none
