@@ -329,7 +329,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
-        myTableView.isScrollEnabled
         self.view.addSubview(myTableView)
         
         //declaring and adding a back button to the view

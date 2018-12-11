@@ -24,7 +24,8 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         if (UserDefaults.standard.array(forKey: "userPasses") != nil) {
             userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         } else {
-            userPasses = [kPassTypes[21]] // if user has no pass, make their pass type no pass required
+            let noPassNumInArray = 22
+            userPasses = [kPassTypes[noPassNumInArray]] // if user has no pass, make their pass type no pass required
             UserDefaults.standard.set(userPasses, forKey: "userPasses") // set user defaults
         }
         

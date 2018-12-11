@@ -219,14 +219,14 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
                     chooseDayVC.options = self.dayOptions[2]
                     self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator)
-                ], footer: "Choose days for which you'd like to enter times."),
-            Section(rows: [
-                Row(cellClass: submitButtonCell.self)
-                ]),
+                ], footer: "Choose days for which you'd like to enter times.")
+//            ,Section(rows: [
+//                Row(cellClass: submitButtonCell.self)
+//                ])
         ]
         
-//        view.addSubview(submitButton)
-//        setUpSubmitButton()
+        view.addSubview(submitButton)
+        setUpSubmitButton()
     }
     
     lazy var submitButton: UIButton = {
@@ -244,7 +244,7 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
         submitButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         submitButton.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        submitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 300).isActive = true // does not work as expected
+        submitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200).isActive = true // does not work as expected
     }
     
 }
