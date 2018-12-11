@@ -99,10 +99,13 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func createNewTicket(){
-        let addDueDate = UIAlertController(title: "Alert", message: "When is your ticket due?", preferredStyle: .alert)
+        let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
         addDueDate.addTextField { (textField) in
             textField.text = "Enter pay by date here"
         }
+        addDueDate.view.addSubview(datePicker)
+        //datePicker.center.x = addDueDate.view.center.x
+        //datePicker.top.equalTo(addDueDate.view).offset(8)
         addDueDate.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             switch action.style{
             case .default:
@@ -177,18 +180,9 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         //textField.text = dateFormatter.string(from: datePicker.date)
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 //Reference for back icon used as button: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
 //Reference for adding a textfield to an alert:https://stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
 //Reference for user defaults: https://www.hackingwithswift.com/example-code/system/how-to-save-user-settings-using-userdefaults
+//Reference for removing from an array: https://stackoverflow.com/questions/24051633/how-to-remove-an-element-from-an-array-in-swift
