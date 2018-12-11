@@ -30,6 +30,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         case MS = "All Week"
     }
     
+    //https://teamtreehouse.com/community/how-do-you-have-an-activity-indicator-show-up-before-your-table-view-loads
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:100 ,y:200, width:50, height:50)) as UIActivityIndicatorView
         activityIndicatorView.center = self.view.center
@@ -80,13 +81,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         
         if userPasses.contains(passString) {
             if (calendar.component(.weekday, from: pickedDate!) - 1 == 1 || calendar.component(.weekday, from: pickedDate!) - 1 == 2 || calendar.component(.weekday, from: pickedDate!) - 1 == 3 || calendar.component(.weekday, from: pickedDate!) - 1 == 4) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MT.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
-                for key in availableRangeForSpot.keys {
-                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
-                        cell.textLabel!.highlightedTextColor = .blue
-                        cell.textLabel!.isHighlighted = true
-                        break
-                    }
-                }
                 var waitTime: [NSDictionary]?
                 if times[[passString:"MT"]] != nil{
                     waitTime = times[[passString:"MT"]]!
@@ -97,37 +91,87 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 else if times[[passString:"MS"]] != nil{
                     waitTime = times[[passString:"MS"]]!
                 }
+                for key in availableRangeForSpot.keys {
+                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                        for c in waitTime! {
+                            let end = c["end"] as! NSDictionary
+                            let endHour = end["hour"] as! Int
+                            let endMinute = end["minute"] as! Int
+                            var endDate = Date()
+                            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+                                endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
+                            } else { // for am-pm/pm-pm (same day)
+                                endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
+                            }
+                            //https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
+                            let expire = endDate.timeIntervalSince(pickedDate!)
+                            let formatter = DateComponentsFormatter()
+                            formatter.unitsStyle = .abbreviated
+                            if expire <= 3600 {
+                                cell.textLabel!.text = cell.textLabel!.text! + "\nUnavailable in: " + formatter.string(from: expire)!
+                                cell.textLabel!.highlightedTextColor = .orange
+                                cell.textLabel!.isHighlighted = true
+                            }
+                            else {
+                                cell.textLabel!.highlightedTextColor = UIColor(red: 0.0353, green: 0.549, blue: 0, alpha: 1.0)
+                                cell.textLabel!.isHighlighted = true
+                            }
+                        }
+                    }
+                }
                 for c in waitTime! {
                     let start = c["start"] as! NSDictionary
                     let startHour = start["hour"] as! Int
                     let startMinute = start["minute"] as! Int
                     let startDate = pickedDate!.dateAt(hours: startHour, minutes: startMinute)
-                    if startDate > pickedDate! {
-                        let delay = startDate.timeIntervalSince(pickedDate!)
-                        let formatter = DateComponentsFormatter()
-                        formatter.unitsStyle = .abbreviated
+                    //https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
+                    let delay = startDate.timeIntervalSince(pickedDate!)
+                    let formatter = DateComponentsFormatter()
+                    formatter.unitsStyle = .abbreviated
+                    if startDate > pickedDate! && delay <= 10800 {
                         cell.textLabel!.text = cell.textLabel!.text! + "\nAvailable in: " + formatter.string(from: delay)!
-                        cell.textLabel!.highlightedTextColor = .red
+                        cell.textLabel!.highlightedTextColor = .blue
                         cell.textLabel!.isHighlighted = true
                     }
                 }
             }
             else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+                var waitTime: [NSDictionary]?
+                if times[[passString:"MF"]] != nil{
+                    waitTime = times[[passString:"MF"]]!
+                }
+                else if times[[passString:"F"]] != nil{
+                    waitTime = times[[passString:"F"]]!
+                }
+                else if times[[passString:"MS"]] != nil{
+                    waitTime = times[[passString:"MS"]]!
+                }
                 for key in availableRangeForSpot.keys {
                     if (availableRangeForSpot[key]! && sortedStrings[indexPath.row].key.range(of: key) != nil){
-                        cell.textLabel!.highlightedTextColor = .blue
-                        cell.textLabel!.isHighlighted = true
-                        break
-                    }
-                    var waitTime: [NSDictionary]?
-                    if times[[passString:"MF"]] != nil{
-                        waitTime = times[[passString:"MF"]]!
-                    }
-                    else if times[[passString:"F"]] != nil{
-                        waitTime = times[[passString:"F"]]!
-                    }
-                    else if times[[passString:"MS"]] != nil{
-                        waitTime = times[[passString:"MS"]]!
+                        for c in waitTime! {
+                            let end = c["end"] as! NSDictionary
+                            let endHour = end["hour"] as! Int
+                            let endMinute = end["minute"] as! Int
+                            var endDate = Date()
+                            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+                                endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
+                            } else { // for am-pm/pm-pm (same day)
+                                endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
+                            }
+                            //https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
+                            let expire = endDate.timeIntervalSince(pickedDate!)
+                            let formatter = DateComponentsFormatter()
+                            formatter.unitsStyle = .abbreviated
+                            if expire <= 3600 {
+                                cell.textLabel!.text = cell.textLabel!.text! + "\nUnavailable in: " + formatter.string(from: expire)!
+                                cell.textLabel!.highlightedTextColor = .orange
+                                cell.textLabel!.isHighlighted = true
+                            }
+                            else {
+                                cell.textLabel!.highlightedTextColor = UIColor(red: 0.0353, green: 0.549, blue: 0, alpha: 1.0)
+                                cell.textLabel!.isHighlighted = true
+                            }
+                        }
                     }
                     for c in waitTime! {
                         let start = c["start"] as! NSDictionary
@@ -146,12 +190,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 }
             }
             else if (calendar.component(.weekday, from: pickedDate!) - 1 == 0 || calendar.component(.weekday, from: pickedDate!) - 1 == 6) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.SS.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
-                for key in availableRangeForSpot.keys {
-                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
-                        cell.textLabel!.highlightedTextColor = .blue
-                        cell.textLabel!.isHighlighted = true
-                    }
-                }
                 var waitTime: [NSDictionary]?
                 if times[[passString:"SS"]] != nil{
                     waitTime = times[[passString:"SS"]]!
@@ -159,6 +197,35 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 else if times[[passString:"MS"]] != nil{
                     waitTime = times[[passString:"MS"]]!
                 }
+                for key in availableRangeForSpot.keys {
+                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                        for c in waitTime! {
+                            let end = c["end"] as! NSDictionary
+                            let endHour = end["hour"] as! Int
+                            let endMinute = end["minute"] as! Int
+                            var endDate = Date()
+                            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+                                endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
+                            } else { // for am-pm/pm-pm (same day)
+                                endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
+                            }
+                            //https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
+                            let expire = endDate.timeIntervalSince(pickedDate!)
+                            let formatter = DateComponentsFormatter()
+                            formatter.unitsStyle = .abbreviated
+                            if expire <= 3600 {
+                                cell.textLabel!.text = cell.textLabel!.text! + "\nUnavailable in: " + formatter.string(from: expire)!
+                                cell.textLabel!.highlightedTextColor = .orange
+                                cell.textLabel!.isHighlighted = true
+                            }
+                            else {
+                                cell.textLabel!.highlightedTextColor = UIColor(red: 0.0353, green: 0.549, blue: 0, alpha: 1.0)
+                                cell.textLabel!.isHighlighted = true
+                            }
+                        }
+                    }
+                }
+
                 for c in waitTime! {
                     let start = c["start"] as! NSDictionary
                     let startHour = start["hour"] as! Int
@@ -262,6 +329,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
+        myTableView.isScrollEnabled
         self.view.addSubview(myTableView)
         
         //declaring and adding a back button to the view
