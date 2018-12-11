@@ -19,12 +19,12 @@
 		800045E521B8B17000C4DE89 /* AdminMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E021B8B17000C4DE89 /* AdminMapViewController.swift */; };
 		800045E621B8B17000C4DE89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E121B8B17000C4DE89 /* SettingsViewController.swift */; };
 		800045E821B8D70C00C4DE89 /* ChooseDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */; };
-		8002EDBB21BED8660020B2DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8002EDBA21BED8660020B2DB /* GoogleService-Info.plist */; };
 		806A91D921729D3B00EDA648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91D821729D3B00EDA648 /* AppDelegate.swift */; };
 		806A91DB21729D3B00EDA648 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A91DA21729D3B00EDA648 /* MapViewController.swift */; };
 		806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 806A91DF21729D3C00EDA648 /* Assets.xcassets */; };
 		806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */; };
 		809053C821BC93860077730D /* firebase-test-data-to-import.json in Resources */ = {isa = PBXBuildFile; fileRef = 809053C721BC93860077730D /* firebase-test-data-to-import.json */; };
+		80C118F421C08142009EDACC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80C118F321C08141009EDACC /* GoogleService-Info.plist */; };
 		80E968B821BF047800BE4E78 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E968B721BF047800BE4E78 /* Extensions.swift */; };
 		80EB846B21B8AE58003448EF /* ParkingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB846921B8AE57003448EF /* ParkingTableViewController.swift */; };
 		A351FD3021B8BD41002486C6 /* TimeAndDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A351FD2F21B8BD41002486C6 /* TimeAndDurationViewController.swift */; };
@@ -45,7 +45,6 @@
 		800045E021B8B17000C4DE89 /* AdminMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminMapViewController.swift; sourceTree = "<group>"; };
 		800045E121B8B17000C4DE89 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		800045E721B8D70C00C4DE89 /* ChooseDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDayViewController.swift; sourceTree = "<group>"; };
-		8002EDBA21BED8660020B2DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80682CC421C02A7000E05650 /* ios-midterm-2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ios-midterm-2.entitlements"; sourceTree = "<group>"; };
 		806A91D521729D3B00EDA648 /* ios-midterm-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-midterm-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		806A91D821729D3B00EDA648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +53,7 @@
 		806A91E221729D3C00EDA648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		806A91E421729D3C00EDA648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		809053C721BC93860077730D /* firebase-test-data-to-import.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "firebase-test-data-to-import.json"; sourceTree = "<group>"; };
+		80C118F321C08141009EDACC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80E968B721BF047800BE4E78 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		80EB846921B8AE57003448EF /* ParkingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingTableViewController.swift; sourceTree = "<group>"; };
 		8D5FCD1DCB6ADBAB7364569C /* Pods-ios-midterm-2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-midterm-2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-midterm-2/Pods-ios-midterm-2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 				806A91DF21729D3C00EDA648 /* Assets.xcassets */,
 				806A91E121729D3C00EDA648 /* LaunchScreen.storyboard */,
 				806A91E421729D3C00EDA648 /* Info.plist */,
-				8002EDBA21BED8660020B2DB /* GoogleService-Info.plist */,
+				80C118F321C08141009EDACC /* GoogleService-Info.plist */,
 				80682CC421C02A7000E05650 /* ios-midterm-2.entitlements */,
 			);
 			path = "ios-midterm-2";
@@ -239,7 +239,7 @@
 				0F1D9D9C21B3053700D272E1 /* gamedates.json in Resources */,
 				0FB9F07D217D531200752425 /* parkingData.json in Resources */,
 				809053C821BC93860077730D /* firebase-test-data-to-import.json in Resources */,
-				8002EDBB21BED8660020B2DB /* GoogleService-Info.plist in Resources */,
+				80C118F421C08142009EDACC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
