@@ -33,10 +33,24 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        ticketsArrayRetrieved = defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
-        ticketsArrayRetrieved.remove(at: indexPath.row)
-        defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
-        myTableView.reloadData()
+        //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        let paidTicket = UIAlertController(title: "Alert", message: "Pay this parking ticket?", preferredStyle: .alert)
+        paidTicket.addAction(UIAlertAction(title: "Pay", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
+                self.ticketsArrayRetrieved.remove(at: indexPath.row)
+                self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
+                self.myTableView.reloadData()
+            case .cancel:
+                print("cancel")
+            case .destructive:
+                print("destructive")
+            }}))
+        paidTicket.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in paidTicket.dismiss(animated: true, completion: nil)
+        }))
+        self.present(paidTicket, animated: true, completion: nil)
+        
     }
     
     override func viewDidLoad() {
