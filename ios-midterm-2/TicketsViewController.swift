@@ -32,6 +32,13 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        ticketsArrayRetrieved = defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
+        ticketsArrayRetrieved.remove(at: indexPath.row)
+        defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
+        myTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -170,3 +177,4 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
 //Reference for back icon used as button: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
 //Reference for adding a textfield to an alert:https://stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
+//Reference for user defaults: https://www.hackingwithswift.com/example-code/system/how-to-save-user-settings-using-userdefaults
