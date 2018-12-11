@@ -246,10 +246,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        print(displayStrings.count)
-        print("Value: \(displayStrings[indexPath.row])")
-        
         //help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let parkHere = UIAlertController(title: "Alert", message: "Do you want to learn more?", preferredStyle: .alert)
         parkHere.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
@@ -276,7 +272,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 }
             case .cancel:
                 print("cancel")
-                
             case .destructive:
                 print("destructive")
             }}))
@@ -329,7 +324,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
-        myTableView.isScrollEnabled
         self.view.addSubview(myTableView)
         
         //declaring and adding a back button to the view
