@@ -5,9 +5,9 @@
 //  Created by Jordan George on 10/13/18.
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
+
 import UIKit
 import MapKit
-//import Firebase
 
 class MapViewController: UIViewController {
     
@@ -17,7 +17,6 @@ class MapViewController: UIViewController {
     var gameday: [NSDictionary]?
     var gamedates: NSDictionary?
     var gameDates = [String]()
-    //    var parking: [String: Any]?
     var availableRangeForSpot = NSMutableDictionary()
     var parking: [NSDictionary]?
     var parkingNames = [String]()
@@ -35,29 +34,11 @@ class MapViewController: UIViewController {
     let now = Date()
     var headerHeight = CGFloat()
     let calendar = Calendar.current
-    var timeAndDurationButton:UIButton?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // designs and positions views
-        // create a button for select time and date
-        timeAndDurationButton = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
-        timeAndDurationButton!.center.x = view.center.x
-        timeAndDurationButton!.layer.cornerRadius = 5
-        timeAndDurationButton!.backgroundColor = .white
-        timeAndDurationButton!.alpha = 0.8
-        timeAndDurationButton!.setTitle("Change Time and Duration", for: .normal)
-        //Source for title color:
-        //https://stackoverflow.com/questions/31088172/how-to-set-the-title-text-color-of-uibutton/41853921
-        timeAndDurationButton!.setTitleColor(UIColor.black, for: [])
-        timeAndDurationButton!.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
-        self.view.addSubview(timeAndDurationButton!)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL dd h:mm aaa"
-        print(dateFormatter.string(from: pickedDate!))
-        
         setUpViews()
     }
     
@@ -72,12 +53,20 @@ class MapViewController: UIViewController {
         readJson()
         parking = parkingData
         
+        pins()
+        
+        gameDayStuff()
+    }
+    
+    func pins() {
         for p in parking! {
             let coords = p["coords"] as! [Double]
             let dict = [coords[0], coords[1]]
             setPins(dict: dict, title: p["name"] as! String)
         }
-
+    }
+    
+    func gameDayStuff() {
         let hour = calendar.component(.hour, from: now)
         let min = calendar.component(.minute, from: now)
         
@@ -85,21 +74,20 @@ class MapViewController: UIViewController {
             let gameDayAlert = UIAlertController(title: "Game Day Tomorrow", message: "Remember to move your car for the football game tomorrow", preferredStyle: .alert)
             gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
                 self.dateSelected(datePicked: self.now.tomorrow(hour: hour, minute: min))
-                }))
+            }))
             
-            //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+            // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
             gameDayAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action: UIAlertAction!) in gameDayAlert.dismiss(animated: true, completion: nil)
             }))
             
             self.present(gameDayAlert, animated: true, completion: nil)
-        }
-        else if checkGameDay(date: now) == gameDay.today.rawValue {
+        } else if checkGameDay(date: now) == gameDay.today.rawValue {
             let gameDayAlert = UIAlertController(title: "Game Day Today", message: "Remember to move your car for the football game today", preferredStyle: .alert)
             gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
                 self.dateSelected(datePicked:self.now)
             }))
             
-            //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+            // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
             gameDayAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action: UIAlertAction!) in gameDayAlert.dismiss(animated: true, completion: nil)
             }))
             
@@ -124,33 +112,9 @@ class MapViewController: UIViewController {
             usersPermits = [PassType.noPermitRequired.rawValue]
         }
         
-        // save parking data and set pins
-        //        readFirebaseParkingData()
-        
         // place the overlays in the correct places
-        //        accessDataForOverlaysFromFirebase(pickedDate: now)
         accessDataForOverlays(pickedDate: now)
     }
-    
-    // save parking data and set pins
-    //    func readFirebaseParkingData() {
-    //        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
-    //            // save parking data
-    //            self.parking = snapshot.value as? [String: Any]
-    //
-    //            // set pins
-    //            for p in self.parking! {
-    //                // assign other values to array
-    //                let values = p.value as! [String: Any]
-    //                // get coordinates
-    //                let coordDict = values["coords"] as! [String: Any]
-    //                let lat = coordDict["lat"] as! Double
-    //                let lon = coordDict["lon"] as! Double
-    //                let coords = [lat, lon]
-    //                self.setPins(dict: coords, title: p.key)
-    //            }
-    //        }
-    //    }
     
     @objc func openSettingsVC() {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
@@ -206,9 +170,8 @@ class MapViewController: UIViewController {
     // UI Date picker upon selecting the reset button
     // Post: Updates the pins on the map
     //-----------------------------------------------
-    @objc func resetDateTime(){
+    @objc func resetDateTime() {
         // update map after reset
-//        accessDataForOverlaysFromFirebase(pickedDate: now)
         pickedDate = now
         checkGameDay(date: pickedDate!)
         dateSelected(datePicked: pickedDate!)
@@ -229,8 +192,6 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
-        
-        //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
         accessDataForOverlays(pickedDate: now)
     }
     
@@ -244,6 +205,7 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func dateSelected(datePicked: Date) {
         pickedDate = datePicked
+        
         if checkGameDay(date: pickedDate!) == gameDay.today.rawValue{
             gameDayLabel.text = "Game Day"
             gameDayLabel.isHidden = false
@@ -257,10 +219,8 @@ class MapViewController: UIViewController {
             gameDayLabel.isHidden = true
         }
         
-        //        accessDataForOverlaysFromFirebase(pickedDate: pickedDate!)
         accessDataForOverlays(pickedDate: pickedDate!)
     }
-    
     
     //-----------------------------------------------
     // accessDataForOverlays()
@@ -298,19 +258,17 @@ class MapViewController: UIViewController {
             for time in times {
                 // store the times as a NSDictionary
                 let timeDict = time as! NSDictionary
-                let name = timeDict["pass"] as! String
-                addToDictionary(pass: name, spotName: spotName, timeDict: timeDict)
+                let passName = timeDict["pass"] as! String
+                addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
                 
                 // store all of the parking spots and their names
                 if spots.contains(spotName) {
                     continue
                 } else {
-                    spots.append(spotName)
-                    
                     // go through all of the permits possible
                     for permit in usersPermits {
                         // if the permit name is a match, check the date ranges and format them
-                        if name == permit {
+                        if passName == permit {
                             let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
                             let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
                             let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
@@ -329,90 +287,9 @@ class MapViewController: UIViewController {
                     }
                 }
             }
+            spots.append(spotName)
         }
     }
-    
-    //-----------------------------------------------
-    // accessDataForOverlaysFromFirebase()
-    //-----------------------------------------------
-    // accesses and formats the data from the JSON
-    // file such that they can be compared to the
-    // current time
-    //-----------------------------------------------
-    //    func accessDataForOverlaysFromFirebase(pickedDate: Date) {
-    //        parkingNames.removeAll()
-    //        map.removeOverlays(map.overlays) // remove previous overlays
-    //        spots = []
-    //
-    //        databaseRef.child("parking").observeSingleEvent(of: .value) { (snapshot) in
-    //            let newParking = (snapshot.value)! as! [String: Any]
-    //
-    //            // for each parking spot
-    //            for p in newParking {
-    //                // get name
-    //                let spotName = p.key
-    //
-    //                // assign other values to array
-    //                let values = p.value as! [String: Any]
-    //
-    //                // get radius
-    //                let radius = values["radius"] as! Int
-    //
-    //                // get coordinates
-    //                let coordDict = values["coords"] as! [String: Any]
-    //                let lat = coordDict["lat"] as! Double
-    //                let lon = coordDict["lon"] as! Double
-    //                let coords = [lat, lon]
-    //
-    //                // get the current user settings for dates
-    //                let date = pickedDate
-    //                let weekday = self.calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
-    //                let f = DateFormatter()
-    //                let weekdaystring = f.weekdaySymbols[weekday]
-    //
-    //                // unwrap all of the times
-    //                guard let times = values["times"] as? [String: Any] else {
-    //                    return
-    //                }
-    //
-    //                // go through all of the times
-    //                for time in times {
-    //                    // store time as dictionary
-    //                    let timeDict = time.value as! [String: Any]
-    //                    let passName = time.key
-    //                    self.addToDictionary(pass: passName, spotName: spotName, timeDict: timeDict)
-    //
-    //                    // store all of the parking spots and their names
-    //                    if self.spots.contains(spotName) {
-    //                        continue
-    //                    } else {
-    //                        self.spots.append(spotName)
-    //
-    //                        // go through all of the permits possible
-    //                        for permit in self.usersPermits {
-    //                            // if the permit name is a match, check the date ranges and format them
-    //                            if passName == permit {
-    //                                let mondayChecks = [Range.mt.rawValue, Range.mf.rawValue, Range.ms.rawValue]
-    //                                let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
-    //                                let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
-    //
-    //                                if (weekdaystring == WeekDay.monday.rawValue) ||
-    //                                    (weekdaystring == WeekDay.tuesday.rawValue) ||
-    //                                    (weekdaystring == WeekDay.wednesday.rawValue) ||
-    //                                    (weekdaystring == WeekDay.thursday.rawValue) {
-    //                                    self.rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-    //                                } else if weekdaystring == WeekDay.friday.rawValue {
-    //                                    self.rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-    //                                } else {
-    //                                    self.rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-    //                                }
-    //                            }
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
     
     //-----------------------------------------------
     // rangeLoop()
@@ -420,8 +297,7 @@ class MapViewController: UIViewController {
     // checks that the given date is within the
     // given date range by calling the function below
     //-----------------------------------------------
-    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int, name:String) { // for json
-        //    func rangeLoop(check: [String], timeDict: [String: Any], coords: [Double], radius: Int, name:String) { // for firebase
+    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int, name:String) {
         for c in check {
             if let range = timeDict[c] {
                 checkDateRange(open: range as! [String: Any], coords: coords, radius: radius, name: name)
@@ -443,39 +319,41 @@ class MapViewController: UIViewController {
             let start = open["start"] as! NSDictionary
             let startHour = start["hour"] as! Int
             let startMinute = start["minute"] as! Int
+            let startType = start["12hour"] as! String
             let startDate = time.dateAt(hours: startHour, minutes: startMinute)
             
             let end = open["end"] as! NSDictionary
             let endHour = end["hour"] as! Int
             let endMinute = end["minute"] as! Int
+            let endType = end["12hour"] as! String
             
             var endDate = Date()
-            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+            if startType == "pm" && endType  == "am" { // for pm-am (overnight parking)
                 endDate = time.tomorrow(hour: endHour, minute: endMinute)
-            } else { // for am-pm/pm-pm (same day)
+            } else { // for am-pm/am-am/pm-pm (same day)
                 endDate = time.dateAt(hours: endHour, minutes: endMinute)
             }
             
             if (time >= startDate) && (time < endDate) {
-                if !parkingNames.contains(name){
+                if !parkingNames.contains(name) {
                     parkingNames.append(name)
                 }
                 setOverlays(dict: coords, radius: radius)
             }
         }
     }
-
+    
     func checkGameDay(date: Date) -> String {
         var gDay = "None"
         let format = "MM/dd/yyyy"
         let formatter = DateFormatter()
         formatter.dateFormat = format
-
-//        guard let pickedDate = pickedDate else { return "" }
-
+        
+        //        guard let pickedDate = pickedDate else { return "" }
+        
         let hour = calendar.component(.hour, from: date)
         let min = calendar.component(.minute, from: date)
-
+        
         for g in gameDates {
             let gameDate = formatter.date(from: g)
             if calendar.isDate(date, inSameDayAs: gameDate!) {
@@ -697,8 +575,7 @@ class MapViewController: UIViewController {
         
         view.addSubview(map)
         view.addSubview(gameDayLabel)
-        view.addSubview(timeAndDurationButton!)
-        
+        view.addSubview(timeAndDurationButton)
         
         setUpMap()
     }
@@ -775,14 +652,30 @@ class MapViewController: UIViewController {
         return button
     }()
     
-    // creates the zoom button
+    // creates the settings button
     lazy var settingsButton: UIButton = {
         let img = UIImage(named: "gear")
         let height_width: CGFloat = 30
+        let x = view.frame.width-navButtonW
         
-        let button = UIButton(frame: CGRect(x: view.frame.width-navButtonW-xPadding, y: ynavPadding, width: height_width, height: height_width))
+        let button = UIButton(frame: CGRect(x: x, y: ynavPadding, width: height_width, height: height_width))
         button.setImage(img, for: .normal)
         button.addTarget(self, action: #selector(openSettingsVC), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var timeAndDurationButton: UIButton = {
+        // create a button for select time and date
+        let button = UIButton(frame: CGRect(x: 0, y: view.frame.height-buttonHeight-yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+        button.center.x = view.center.x
+        button.layer.cornerRadius = 5
+        button.backgroundColor = .white
+        button.alpha = 0.8
+        button.setTitle("Change Time and Duration", for: .normal)
+        // Source for title color:
+        // https://stackoverflow.com/questions/31088172/how-to-set-the-title-text-color-of-uibutton/41853921
+        button.setTitleColor(UIColor.black, for: [])
+        button.addTarget(self, action: #selector(presentDurationView), for: .touchUpInside)
         return button
     }()
     
@@ -791,6 +684,8 @@ class MapViewController: UIViewController {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
+        //        map.isRotateEnabled = false
+        //        map.isPitchEnabled = false
         return map
     }()
     
@@ -880,35 +775,6 @@ extension MapViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             map.showsUserLocation = true
         }
-    }
-    
-}
-
-// for date range checking
-extension Date {
-    
-    func dateAt(hours: Int, minutes: Int) -> Date {
-        let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
-        
-        var date_components = calendar.components(
-            [NSCalendar.Unit.year,
-             NSCalendar.Unit.month,
-             NSCalendar.Unit.day],
-            from: self)
-        
-        date_components.hour = hours
-        date_components.minute = minutes
-        date_components.second = 0
-        
-        let newDate = calendar.date(from: date_components)!
-        
-        return newDate
-    }
-    
-    // get date for tomorrow
-    func tomorrow(hour: Int, minute: Int) -> Date {
-        let time = Calendar.current.date(bySettingHour: hour, minute: minute, second: 59, of: self)! // misses 1 second
-        return Calendar.current.date(byAdding: .day, value: 1, to: time)!
     }
     
 }

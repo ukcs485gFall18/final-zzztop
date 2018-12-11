@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import Static
 
 class SettingsViewController: TableViewController {
@@ -21,8 +20,12 @@ class SettingsViewController: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // remove buttons in nav bar from MapViewController
+        removeNavButtons()
+        setUpStatic()
+    }
+    
+    // remove buttons in nav bar from MapViewController
+    func removeNavButtons() {
         let navsubviews = navigationController?.navigationBar.subviews
         let numofsubviews = navsubviews!.count
         if numofsubviews > 5 {
@@ -31,7 +34,9 @@ class SettingsViewController: TableViewController {
                 button.removeFromSuperview()
             }
         }
-        
+    }
+    
+    func setUpStatic() {
         title = "Settings"
         
         tableView.rowHeight = 50
@@ -42,40 +47,25 @@ class SettingsViewController: TableViewController {
         
         dataSource = DataSource(tableViewDelegate: self)
         dataSource.sections = [
-            Section(header: "User Settings", rows: [
-                Row(text: "How long will you be parked?", selection: { [unowned self] in
-                    // go to some view
-                    let durationVC = TimeAndDurationViewController();
-                    durationVC.fromAdminPanel = true
-                    durationVC.settingsViewController = self
-                    self.present(durationVC, animated: true, completion: nil)
-                    }, accessory: .disclosureIndicator)
-            ]),
             Section(header: "More Information", rows: [
                 Row(text: "Parking Tickets", selection: { [unowned self] in
                     let ticketsVC = TicketsViewController();
                     self.present(ticketsVC, animated: true, completion: nil)
                     }, accessory: .disclosureIndicator),
-                Row(text: "View parking info on UKY", selection: { [unowned self] in
-                    // go to some view
-                    }, accessory: .disclosureIndicator)
-            ]),
+                Row(text: "View parking info on UKY", selection: {
+                    let ukParkingUrl = "https://www.uky.edu/transportation/parking-info"
+                    guard let url = URL(string: ukParkingUrl) else { return }
+                    UIApplication.shared.open(url)
+                }, accessory: .disclosureIndicator)
+                ]),
             Section(header: "Admin", rows: [
                 Row(text: "Add parking spot", selection: { [unowned self] in
-                    self.navigationController?.pushViewController(AdminViewController(), animated: true)
-                    }, accessory: .disclosureIndicator)
+                    self.navigationController?.pushViewController(AddParkingViewController(), animated: true)
+                    }, accessory: .disclosureIndicator),
+                Row(text: "Edit parking spot", accessory: .disclosureIndicator),
+                Row(text: "Delete parking spot", accessory: .disclosureIndicator)
                 ], footer: "For admin use only.")
         ]
     }
     
 }
-
-extension TableViewController: UITableViewDelegate {
-    
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {}
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {}
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
-    
-}
-
-// todo: login

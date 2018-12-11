@@ -6,10 +6,9 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import Static
 
-let vc: AdminViewController = AdminViewController()
+let vc: AddParkingViewController = AddParkingViewController()
 
 extension TableViewController {
     func hideKeyboard() {
@@ -221,58 +220,30 @@ class passPickerTextFieldCell: UITableViewCell, Cell, UIPickerViewDelegate, UIPi
     }
 }
 
-
-
-
-
-
-//class submitbuttoncell: UITableViewCell, Cell {
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        self.addSubview(button)
-//        setUpbutton()
-//    }
-//    lazy var button: UIButton = {
-//        let button = UIButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.backgroundColor = darkerAppleBlue
-//        button.setTitleColor(.white, for: .normal)
-//        button.setTitle("Submit", for: .normal)
-//        button.addTarget(self, action: #selector(submit), for: .touchUpInside)
-//        return button
-//    }()
-//    @objc func submit() {
-//        guard let name = vc.name,
-//            let radius = vc.radius,
-//            let passtype = vc.passtype,
-//            let coords = vc.coords else { return }
-//
-//        var lat = Double()
-//        var lon = Double()
-//        if !coords.isEmpty {
-//            lat = coords["lat"]!
-//            lon = coords["lon"]!
-//        }
-//
-////        print("name=",name)
-////        print("radius=",radius)
-////        print("passtype=",passtype)
-////        print("lat=",lat," lon=",lon)
-//
-//
-//        // get days and vars
-//
-//        // save to db
-//
-//        // dismiss view
-//    }
-//
-//    func setUpbutton() {
-//        button.heightAnchor.constraint(equalToConstant: self.bounds.height+5).isActive = true
-//        button.widthAnchor.constraint(equalToConstant: self.bounds.width+100).isActive = true
-//    }
-//
-//}
+class submitButtonCell: UITableViewCell, Cell {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.addSubview(button)
+        setUpbutton()
+    }
+    lazy var button: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = darkerAppleBlue
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Submit", for: .normal)
+        button.addTarget(self, action: #selector(submit), for: .touchUpInside)
+        return button
+    }()
+    @objc func submit() {
+        // submit to firebase
+    }
+    func setUpbutton() {
+        button.heightAnchor.constraint(equalToConstant: self.bounds.height+5).isActive = true
+        //        button.widthAnchor.constraint(equalToConstant: self.bounds.width+100).isActive = true
+        button.widthAnchor.constraint(equalToConstant: self.bounds.width).isActive = true
+    }
+}

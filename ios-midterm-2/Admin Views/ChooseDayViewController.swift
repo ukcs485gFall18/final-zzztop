@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import Static
 
 class ChooseDayViewController: TableViewController {
@@ -15,6 +14,7 @@ class ChooseDayViewController: TableViewController {
     
     var options = [String]()
     var tag = Int()
+    var count = 0
     
     // MARK: - initializers
     
@@ -26,8 +26,7 @@ class ChooseDayViewController: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        options = chooseDayVC.options
-        options = ["MF","SS"]
+        options = chooseDayVC.options
         setUpViews()
     }
     
@@ -54,34 +53,53 @@ class ChooseDayViewController: TableViewController {
                     }, cellClass: timesPickerTextFieldCell.self)
                 ])
             sections.append(section)
-            count+=2
-//            print(count)
+            count += 2
         }
         
         dataSource = DataSource(tableViewDelegate: self)
         dataSource.sections = sections
+        
+        // FIXME: not appearing
+        view.addSubview(useButton)
+        setUpUseButton()
     }
-    var count = 0
+    
     func updateTag() {
-        count+=1
+        count += 1
         tag = count
-        print(tag)
+    }
+    
+    lazy var useButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = red
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Submit", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 23)
+        button.addTarget(self, action: #selector(useThisTime), for: .touchUpInside)
+        return button
+    }()
+    
+    func setUpUseButton() {
+        useButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        useButton.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        useButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        useButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 300).isActive = true // does not work as expected
+    }
+    
+    @objc func useThisTime() {
+        print(1)
     }
     
 }
 
 var chooseDayVC: ChooseDayViewController = ChooseDayViewController()
 
-
 //todo:
 //- tap gesture for tapping outside of cell text field
 //- save times
-    //- "use this time" button
-        //-user defaults
-
-
-
+//  - "use this time" button
+//      -user defaults
 //----------------
 //later:
 //- section headers not changing to day name correctly
-

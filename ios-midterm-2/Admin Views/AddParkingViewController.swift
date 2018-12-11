@@ -6,14 +6,13 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import Static
 
-class AdminViewController: TableViewController, UITextFieldDelegate {
+class AddParkingViewController: TableViewController, UITextFieldDelegate {
     
     // MARK: - properties
     
-    //    var tag = Int()
+    var tag = Int()
     var name: String?
     var radius: Int?
     var passtype:String?
@@ -24,8 +23,7 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         ["MF", "SS"],
         ["MS"]
     ]
-    var times:[String:Any]?
-//    var selectedTimes:[String:Any]?
+    var times: [String? : [String : [String : [String : Any]]]]?
     
     // MARK: - initializers
     
@@ -38,16 +36,17 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//         UserDefaults.standard.set([], forKey: "coords") // testing
+        //         UserDefaults.standard.set([], forKey: "coords") // testing
         
         // check if the user is logged in before allowing the user to make any admin changes
         checkIfUserIsLoggedIn()
         
         getCoords()
+        
+        setTempTimes()
         
         str = ""
         str2 = ""
@@ -71,17 +70,53 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         vc.coords = coords
     }
     
-    func getTimes() {
-//        let times = []
-        
+    func setTempTimes() {
+        guard let passtype = vc.passtype else { return }
+        vc.times = [
+            passtype: [
+                "MT": [
+                    "start": [
+                        "hour": 19,
+                        "minute": 30,
+                        "12hour": "pm"
+                    ],
+                    "end": [
+                        "hour": 5,
+                        "minute": 0,
+                        "12hour": "am"
+                    ]
+                ],
+                "F": [
+                    "start": [
+                        "hour": 15,
+                        "minute": 30,
+                        "12hour": "pm"
+                    ],
+                    "end": [
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    ]
+                ],
+                "SS": [
+                    "start": [
+                        "hour": 0,
+                        "minute": 0,
+                        "12hour": "am"
+                    ],
+                    "end": [
+                        "hour": 23,
+                        "minute": 59,
+                        "12hour": "pm"
+                    ]
+                ]
+            ]
+        ]
     }
     
-    @objc func submit() {
-        getTimes()
-        
+    @objc func submitToFirebase() {
         guard let name = vc.name,
             let radius = vc.radius,
-//            let passtype = vc.passtype,
             let coords = vc.coords,
             let times = vc.times else { return }
         
@@ -97,27 +132,6 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         
         // dismiss view
         navigationController?.popViewController(animated: true)
-    }
-    
-    func checkIfUserIsLoggedIn() {
-        // for testing
-//        UserDefaults.standard.set("wrong", forKey: "username")
-//        UserDefaults.standard.set("wrong", forKey: "password")
-        
-        let pastUsername = UserDefaults.standard.string(forKey: "username")
-        let pastPassword = UserDefaults.standard.string(forKey: "password")
-        let rightUsername = "Admin"
-        let rightPassword = "123"
-        
-        if pastUsername != rightUsername || pastPassword != rightPassword {
-            present(LoginViewController2(), animated: true, completion: nil)
-        } else {
-            return
-        }
-    }
-    
-    @objc func logout() {
-        present(LoginViewController2(), animated: true, completion: nil)
     }
     
     var str = ""
@@ -147,6 +161,27 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         }
     }
     
+    func checkIfUserIsLoggedIn() {
+        let attemptedUsername = UserDefaults.standard.string(forKey: "username")
+        let attemptedPassword = UserDefaults.standard.string(forKey: "password")
+        let rightUsername = "Admin"
+        let rightPassword = "123"
+        
+        if attemptedUsername != rightUsername || attemptedPassword != rightPassword {
+            present(LoginViewController(), animated: true, completion: nil)
+        } else {
+            return
+        }
+    }
+    
+    @objc func logout() {
+        UserDefaults.standard.set("", forKey: "username")
+        UserDefaults.standard.set("", forKey: "password")
+        present(LoginViewController(), animated: true, completion: nil)
+    }
+    
+    // MARK: - views
+    
     func setUpViews() {
         let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
         navigationItem.rightBarButtonItem = logoutButton
@@ -173,22 +208,25 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
                 ]),
             Section(header: "Days", rows: [
                 Row(text: str, selection: { [unowned self] in
-                        chooseDayVC.options = self.dayOptions[0]
-                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    chooseDayVC.options = self.dayOptions[0]
+                    self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator),
                 Row(text: str2,  selection: { [unowned self] in
-                        chooseDayVC.options = self.dayOptions[1]
-                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    chooseDayVC.options = self.dayOptions[1]
+                    self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator),
                 Row(text: str3, selection: { [unowned self] in
-                        chooseDayVC.options = self.dayOptions[2]
-                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    chooseDayVC.options = self.dayOptions[2]
+                    self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator)
-                ], footer: "Choose days for which you'd like to enter times.")
+                ], footer: "Choose days for which you'd like to enter times."),
+            Section(rows: [
+                Row(cellClass: submitButtonCell.self)
+                ]),
         ]
         
-        view.addSubview(submitButton)
-        setUpSubmitButton()
+//        view.addSubview(submitButton)
+//        setUpSubmitButton()
     }
     
     lazy var submitButton: UIButton = {
@@ -197,7 +235,8 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         button.backgroundColor = darkerAppleBlue
         button.setTitleColor(.white, for: .normal)
         button.setTitle("Submit", for: .normal)
-        button.addTarget(self, action: #selector(submit), for: .touchUpInside)
+        button.titleLabel?.font = .systemFont(ofSize: 23)
+        button.addTarget(self, action: #selector(submitToFirebase), for: .touchUpInside)
         return button
     }()
     
@@ -205,11 +244,10 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
         submitButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         submitButton.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        submitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200).isActive = true // does not work as expected
+        submitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 300).isActive = true // does not work as expected
     }
     
 }
-
 
 //----------------
 //later:
@@ -217,74 +255,3 @@ class AdminViewController: TableViewController, UITextFieldDelegate {
 //- How to let multiplier be fraction constant var
 //- refactor cells with tag functionality
 //- swift global var rules? (like vc in this case)
-
-
-
-//[
-//    "No permit required": [
-//        "MT": [
-//            "start": [
-//                "hour": 19,
-//                "minute": 30,
-//                "12hour": "pm"
-//            ],
-//            "end": [
-//                "hour": 5,
-//                "minute": 0,
-//                "12hour": "am"
-//            ]
-//        ],
-//        "F": [
-//            "start": [
-//                "hour": 15,
-//                "minute": 30,
-//                "12hour": "pm"
-//            ],
-//            "end": [
-//                "hour": 23,
-//                "minute": 59,
-//                "12hour": "pm"
-//            ]
-//        ],
-//        "SS": [
-//            "start": [
-//                "hour": 0,
-//                "minute": 0,
-//                "12hour": "am"
-//            ],
-//            "end": [
-//                "hour": 23,
-//                "minute": 59,
-//                "12hour": "pm"
-//            ]
-//        ]
-//    ],
-//    "Any valid permit": [
-//        "MT": [
-//            "start": [
-//                "hour": 15,
-//                "minute": 30,
-//                "12hour": "pm"
-//            ],
-//            "end": [
-//                "hour": 19,
-//                "minute": 30,
-//                "12hour": "pm"
-//            ]
-//        ]
-//    ],
-//    "E": [
-//        "MF": [
-//            "start": [
-//                "hour": 5,
-//                "minute": 0,
-//                "12hour": "am"
-//            ],
-//            "end": [
-//                "hour": 15,
-//                "minute": 30,
-//                "12hour": "pm"
-//            ]
-//        ]
-//    ]
-//]

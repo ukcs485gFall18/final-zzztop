@@ -11,10 +11,16 @@ import UIKit
 class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var ticketsArray = [String]()
+    var ticketsArrayRetrieved = [String]()
     private var myTableView: UITableView!
+    var textField = UITextField()
+    let datePicker = UIDatePicker()
+    var didSelectDate: Bool = false
+    let defaults = UserDefaults.standard
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ticketsArray.count
+        ticketsArrayRetrieved = defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
+        return ticketsArrayRetrieved.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -22,13 +28,34 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         //references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
         cell.textLabel!.numberOfLines = 0
         cell.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
-        cell.textLabel!.text = "\(ticketsArray[indexPath.row])"
+        cell.textLabel!.text = "\(ticketsArrayRetrieved[indexPath.row])"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        let paidTicket = UIAlertController(title: "Alert", message: "Pay this parking ticket?", preferredStyle: .alert)
+        paidTicket.addAction(UIAlertAction(title: "Pay", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
+                self.ticketsArrayRetrieved.remove(at: indexPath.row)
+                self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
+                self.myTableView.reloadData()
+            case .cancel:
+                print("cancel")
+            case .destructive:
+                print("destructive")
+            }}))
+        paidTicket.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in paidTicket.dismiss(animated: true, completion: nil)
+        }))
+        self.present(paidTicket, animated: true, completion: nil)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //setting the background of this current view to white
         view.backgroundColor = .white
         
@@ -72,20 +99,26 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func createNewTicket(){
-        let addDueDate = UIAlertController(title: "Alert", message: "When is your ticket due?", preferredStyle: .alert)
+        let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
         addDueDate.addTextField { (textField) in
             textField.text = "Enter pay by date here"
         }
+        addDueDate.view.addSubview(datePicker)
+        //datePicker.center.x = addDueDate.view.center.x
+        //datePicker.top.equalTo(addDueDate.view).offset(8)
         addDueDate.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             switch action.style{
             case .default:
+                self.createPickerView()
                 var newTicket = "Created: "
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "EEEEEEEE LLL d yyyy"
                 newTicket = newTicket + dateFormatter.string(from: Date())
-                let textField = addDueDate.textFields![0] // Force unwrapping because we know it exists.
-                newTicket = newTicket+"\nDue: "+textField.text!
-                self.ticketsArray.append(newTicket)
+                self.textField = addDueDate.textFields![0]
+                newTicket = newTicket+"\nDue: "+self.textField.text!
+                self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
+                self.ticketsArrayRetrieved.append(newTicket)
+                self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
                 self.myTableView.reloadData()
             case .cancel:
                 print("cancel")
@@ -101,17 +134,55 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //-----------------------------------------------
+    // createPickerView()
+    //-----------------------------------------------
+    // A function to create the UIPickerView and
+    // place it on the view
+    // Conditions: none
+    //-----------------------------------------------
+    func createPickerView() {
+        view.addSubview(textField)
+        
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.addTarget(self, action: #selector(dateSelected(datePicker:)), for: .valueChanged)
+        // add the DatePicker to the UITextField
+        //textField.inputView = datePicker
+        
+        // allow the user to get out of the date picker by tapping
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
+        view.addGestureRecognizer(tapGesture)
     }
-    */
-
+    
+    //-----------------------------------------------
+    // tapToLeave()
+    //-----------------------------------------------
+    // allows the user to leave the UI picker by
+    // tapping elsewhere
+    // Conditions: none
+    //-----------------------------------------------
+    @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
+        view.endEditing(true)
+        didSelectDate = true
+    }
+    
+    //-----------------------------------------------
+    // dateSelected()
+    //-----------------------------------------------
+    // formats the date selected and places it into
+    // the UI Text Field
+    // Post: accesses the data to set the pins
+    // to match the new date
+    //-----------------------------------------------
+    @objc func dateSelected(datePicker: UIDatePicker){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
+        //textField.text = dateFormatter.string(from: datePicker.date)
+    }
+    
 }
 
-  //Reference for back icon used as button: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+//Reference for back icon used as button: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+//Reference for adding a textfield to an alert:https://stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
+//Reference for user defaults: https://www.hackingwithswift.com/example-code/system/how-to-save-user-settings-using-userdefaults
+//Reference for removing from an array: https://stackoverflow.com/questions/24051633/how-to-remove-an-element-from-an-array-in-swift
