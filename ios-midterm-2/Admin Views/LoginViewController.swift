@@ -8,15 +8,13 @@
 
 import UIKit
 
-class LoginViewController1: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
     }
-    
-    
-    
+
     @objc func checkIfLoginCredentialsAreRight() {
         guard let username = usernameTextField.text,
             let password = passwordTextField.text else {
@@ -48,23 +46,19 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // FIXME: Views not dismissing correctly
+    // FIXME: Views not dismissing correctly; would like to go back to settings view
     var count = 0
     @objc func closeViews() {
         count += 1
-        print(count)
-
-        // dismisses with two clicks
-        // Error printed when dismissed: 2018-12-03 19:17:20.530008-0500 ios-midterm-2[64885:4664648] Warning: Attempt to present <ios_midterm_2.LoginViewController: 0x7fed996ce3f0> on <ios_midterm_2.AdminViewController: 0x7fed99574e50> whose view is not in the window hierarchy!
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        print("in login vc, count==", count)
+        
         self.presentingViewController?.dismiss(animated: true, completion: {
             let secondPresentingVC = self.presentingViewController?.presentingViewController;
             secondPresentingVC?.dismiss(animated: true, completion: {});
-        });
-        
-//        dismiss(animated: true, completion: nil) //dismisses first/one view and is pulled back up since they're not logged in
-//        self.presentingViewController!.dismiss(animated: true, completion: nil) // dismisses first
-//        self.view.window?.rootViewController?.presentedViewController!.dismiss(animated: true, completion: nil) //dismisses first
+        }); // does not go back to root view
+        //        dismiss(animated: true, completion: nil) //dismisses first/one view and is pulled back up since they're not logged in
+        //        self.presentingViewController!.dismiss(animated: true, completion: nil) // dismisses first
+        //        self.view.window?.rootViewController?.presentedViewController!.dismiss(animated: true, completion: nil) //dismisses first
     }
     
     // MARK: - keyboard
@@ -215,21 +209,4 @@ class LoginViewController1: UIViewController, UITextFieldDelegate {
    
 }
 
-extension UITextField {
-    
-    func setBottomBorder(color: UIColor) {
-        self.borderStyle = UITextField.BorderStyle.none
-        self.backgroundColor = UIColor.clear
-        
-        let line = UIView()
-        let height = 1.0
-        line.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
-        line.backgroundColor = color
-        
-        self.addSubview(line)
-    }
-    
-}
-
-// Source: my own code; looks similar to other login views I've made
 // source: https://codepany.com/blog/swift-3-custom-uitextfield-with-single-line-input/

@@ -30,9 +30,35 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         case MS = "All Week"
     }
     
+    lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:100 ,y:200, width:50, height:50)) as UIActivityIndicatorView
+        activityIndicatorView.center = self.view.center
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.style = UIActivityIndicatorView.Style.gray
+        self.view.addSubview(activityIndicatorView)
+        return activityIndicatorView
+    }()
+    
+    lazy var activityLabel :UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: self.view.center.y+15, width: 125, height: 50))
+        label.text = "Loading Details"
+        label.textColor = .gray
+        label.center.x = self.view.center.x
+        self.view.addSubview(label)
+        return label
+    }()
+
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         onUserAction(title: parkingName, hours: times)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        activityIndicatorView.startAnimating()
+        activityLabel.isHidden = false
+        myTableView.isHidden = true
     }
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,8 +94,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 else if times[[passString:"MF"]] != nil{
                     waitTime = times[[passString:"MF"]]!
                 }
-                else if times[[passString:"MF"]] != nil{
-                    waitTime = times[[passString:"MF"]]!
+                else if times[[passString:"MS"]] != nil{
+                    waitTime = times[[passString:"MS"]]!
                 }
                 for c in waitTime! {
                     let start = c["start"] as! NSDictionary
@@ -88,7 +114,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             }
             else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
                 for key in availableRangeForSpot.keys {
-                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                    if (availableRangeForSpot[key]! && sortedStrings[indexPath.row].key.range(of: key) != nil){
                         cell.textLabel!.highlightedTextColor = .blue
                         cell.textLabel!.isHighlighted = true
                         break
@@ -304,7 +330,10 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //write the name of the parking location
         nameOfLocation = ("   Parking Location: \n   \(title)")
         sortStrings()
+        activityIndicatorView.stopAnimating()
+        activityLabel.isHidden = true
         myTableView.reloadData()
+        myTableView.isHidden = false
     }
     
     //-----------------------------------------------
@@ -316,7 +345,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     // Post: Returns formatted string
     //-----------------------------------------------
     func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String{
-        let time = Date()
+        let time = pickedDate!
         //accesses the hour and minute for start and end
         let startHour = start["hour"] as! Int
         let startMinute = start["minute"] as! Int
@@ -366,7 +395,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             let passInfo = parkingInfoArray[0] //get the first line
             let passNoColonArray = passInfo.components(separatedBy: ": ")
             let nameOfPass = passNoColonArray[1].trimmingCharacters(in: .whitespaces)
-            print(nameOfPass)
+//            print(nameOfPass)
             sortableStrings[string] = nameOfPass
         }
         sortedStrings = sortableStrings.sorted(by: { $0.value < $1.value })

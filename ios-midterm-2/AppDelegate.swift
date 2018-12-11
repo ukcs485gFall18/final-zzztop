@@ -26,9 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // set app to open to the map
         let rootVC = MapViewController()
 //        let rootVC = SettingsViewController() // for testing
-//        let rootVC = AdminViewController() // for testing
+//        let rootVC = AddParkingViewController() // for testing
 //        let rootVC = ChooseDayViewController() // for testing
-//        let rootVC = LoginViewController2() // for testing
         let nav = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = nav
         

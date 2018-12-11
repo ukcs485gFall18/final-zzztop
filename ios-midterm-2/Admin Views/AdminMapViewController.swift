@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
 
-import UIKit
 import MapKit
 
 class AdminMapViewController: UIViewController {
