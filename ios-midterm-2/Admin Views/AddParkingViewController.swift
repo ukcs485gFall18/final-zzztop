@@ -39,7 +39,7 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//         UserDefaults.standard.set([], forKey: "coords") // testing
+        //         UserDefaults.standard.set([], forKey: "coords") // testing
         
         // check if the user is logged in before allowing the user to make any admin changes
         checkIfUserIsLoggedIn()
@@ -162,12 +162,12 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
     }
     
     func checkIfUserIsLoggedIn() {
-        let pastUsername = UserDefaults.standard.string(forKey: "username")
-        let pastPassword = UserDefaults.standard.string(forKey: "password")
+        let attemptedUsername = UserDefaults.standard.string(forKey: "username")
+        let attemptedPassword = UserDefaults.standard.string(forKey: "password")
         let rightUsername = "Admin"
         let rightPassword = "123"
         
-        if pastUsername != rightUsername || pastPassword != rightPassword {
+        if attemptedUsername != rightUsername || attemptedPassword != rightPassword {
             present(LoginViewController(), animated: true, completion: nil)
         } else {
             return
@@ -208,22 +208,25 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
                 ]),
             Section(header: "Days", rows: [
                 Row(text: str, selection: { [unowned self] in
-                        chooseDayVC.options = self.dayOptions[0]
-                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    chooseDayVC.options = self.dayOptions[0]
+                    self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator),
                 Row(text: str2,  selection: { [unowned self] in
-                        chooseDayVC.options = self.dayOptions[1]
-                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    chooseDayVC.options = self.dayOptions[1]
+                    self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator),
                 Row(text: str3, selection: { [unowned self] in
-                        chooseDayVC.options = self.dayOptions[2]
-                        self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
+                    chooseDayVC.options = self.dayOptions[2]
+                    self.navigationController?.pushViewController(ChooseDayViewController(), animated: true)
                     }, accessory: .disclosureIndicator)
                 ], footer: "Choose days for which you'd like to enter times.")
+            ,Section(rows: [
+                Row(cellClass: submitButtonCell.self)
+                ])
         ]
         
-        view.addSubview(submitButton)
-        setUpSubmitButton()
+//        view.addSubview(submitButton)
+//        setUpSubmitButton()
     }
     
     lazy var submitButton: UIButton = {
