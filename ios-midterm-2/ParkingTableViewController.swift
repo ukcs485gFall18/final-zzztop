@@ -50,7 +50,6 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
         displayHeight = self.view.frame.height
         
         view.addSubview(tableView)
-//        view.addSubview(applyButton)
         
         let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
         headerView.backgroundColor = .black
@@ -58,12 +57,6 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
         headerView.addSubview(availableParkingLabel)
         headerView.addSubview(backButton)
     }
-    
-    // creates table view to hold UK pass options user can select from
-//    lazy var tableView: UITableView = {
-
-//        return tableView
-//    }()
     
     // creates back button
     lazy var backButton: UIButton = {

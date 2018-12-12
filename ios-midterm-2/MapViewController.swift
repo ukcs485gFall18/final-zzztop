@@ -174,6 +174,9 @@ class MapViewController: UIViewController {
         // update map after reset
         pickedDate = now
         checkGameDay(date: pickedDate!)
+        DurationViewVC.pickedDate = pickedDate!
+        DurationViewVC.datePicker.date = pickedDate!
+        DurationViewVC.dateSelected(datePicker: DurationViewVC.datePicker)
         dateSelected(datePicked: pickedDate!)
     }
     
