@@ -10,19 +10,24 @@ import UIKit
 
 class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var ticketsArray = [String]()
+    //array of all the tickets in user defaults
     var ticketsArrayRetrieved = [String]()
+    //UI components
     private var myTableView: UITableView!
-    var textField = UITextField()
     let datePicker = UIDatePicker()
-    var didSelectDate: Bool = false
     let defaults = UserDefaults.standard
     
+    //------------------------------
+    //TableView Delegate Functions
+    //------------------------------
+    
+    //Displays the amount of cells corresponding to the amount of tickets in user defaults
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         ticketsArrayRetrieved = defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
         return ticketsArrayRetrieved.count
     }
     
+    //Displays the tickets in user defaults in their individual table view cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         //references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
@@ -32,6 +37,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    //sends the user to the approproate UK Transporation website based on pass selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
         let paidTicket = UIAlertController(title: "Alert", message: "Pay this parking ticket?", preferredStyle: .alert)
@@ -53,6 +59,12 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    //-----------------------------------------------
+    // viewDidLoad()
+    //-----------------------------------------------
+    // A function to load the buttons and tableView
+    // Conditions: none
+    //-----------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,6 +110,15 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.dismiss(animated: true, completion: nil)
     }
     
+    
+    //-----------------------------------------------
+    // createNewTicket()
+    //-----------------------------------------------
+    // A function to create a new parking ticket when
+    // the plus button is tapped, storing it in user
+    // defaults
+    // Conditions: none
+    //-----------------------------------------------
     @objc func createNewTicket(){
         let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
         addDueDate.view.addSubview(datePicker)
