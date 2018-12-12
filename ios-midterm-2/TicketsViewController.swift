@@ -155,3 +155,4 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
 // Reference for adding a textfield to an alert:https://stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
 // Reference for user defaults: https://www.hackingwithswift.com/example-code/system/how-to-save-user-settings-using-userdefaults
 // Reference for removing from an array: https://stackoverflow.com/questions/24051633/how-to-remove-an-element-from-an-array-in-swift
+// Reference for using a Date Picker in an Alert: https://gist.github.com/IamAlchemist/c582deb518dfa0535157e1d1f9fe6115

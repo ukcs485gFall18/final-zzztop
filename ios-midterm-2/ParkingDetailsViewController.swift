@@ -121,13 +121,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
 
-        myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight - customView.frame.height))
+        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight+customView.frame.height, width: displayWidth, height: displayHeight - barHeight - customView.frame.height))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
         self.view.addSubview(myTableView)
         view.addSubview(customView)
-
     }
     
     //--------------------------------
@@ -324,6 +323,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return cell
     }
 
+    //if the user selects a cell, take them to the UK transportation website
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let parkHere = UIAlertController(title: "Alert", message: "Do you want to learn more?", preferredStyle: .alert)
@@ -333,6 +333,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 // help regarding openURL being depricated in iOS10:
                 // https://useyourloaf.com/blog/openurl-deprecated-in-ios10/
 //                 let urlString = "https://www.uky.edu/transportation/2018_student_commuter"
+                //open the URL in another Safari window
                 let urlString = kPassURLs[self.sortedStrings[indexPath.row].value]
                 if let url = URL(string: urlString!) {
                     if #available(iOS 10, *) {
@@ -356,9 +357,11 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             }}))
 
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        //add the ability to say no and exit
         parkHere.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in parkHere.dismiss(animated: true, completion: nil)
         }))
 
+        //add to screen
         self.present(parkHere, animated: true, completion: nil)
 
     }
@@ -470,6 +473,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
 
 
+    //for each enum return the raw value
     func formatDays(dayRange: String) -> String {
         switch dayRange{
         case "MF":
@@ -487,11 +491,20 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
 
+    //-----------------------------------------------
+    // sortStrings()
+    //-----------------------------------------------
+    // Parses each string in displayStrings array to
+    // get the pass, trim whitespaces, and sort the
+    // strings alphabetically by pass
+    // Conditions: None
+    //-----------------------------------------------
     func sortStrings() {
         for string in displayStrings {
             let parkingInfoArray = string.components(separatedBy: "\n")
             let passInfo = parkingInfoArray[0] //get the first line
             let passNoColonArray = passInfo.components(separatedBy: ": ")
+            //Ensure no trailing whitespaces
             let nameOfPass = passNoColonArray[1].trimmingCharacters(in: .whitespaces)
             sortableStrings[string] = nameOfPass
         }

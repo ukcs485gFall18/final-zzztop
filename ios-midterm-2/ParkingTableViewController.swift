@@ -21,8 +21,6 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
-
         // designs and positions views
         setUpViews()
     }
