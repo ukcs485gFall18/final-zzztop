@@ -8,7 +8,7 @@
 import UIKit
 
 class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
     private var myTableView: UITableView!
     private var displayStrings = [String]()
     private var nameOfLocation = String()
@@ -21,7 +21,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     let calendar = Calendar.current
     var availableRangeForSpot = [String: Bool]()
     var parkingName = String()
-    
+
     enum rangeStrings: String {
         case MF = "Monday - Friday"
         case MT = "Monday - Thursday"
@@ -29,7 +29,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         case SS = "Saturday - Sunday"
         case MS = "All Week"
     }
-    
+
     // https://teamtreehouse.com/community/how-do-you-have-an-activity-indicator-show-up-before-your-table-view-loads
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:100 ,y:200, width:50, height:50)) as UIActivityIndicatorView
@@ -39,7 +39,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         self.view.addSubview(activityIndicatorView)
         return activityIndicatorView
     }()
-    
+
     lazy var activityLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: self.view.center.y+15, width: 125, height: 50))
         label.text = "Loading Details"
@@ -48,12 +48,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         self.view.addSubview(label)
         return label
     }()
-    
+
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         onUserAction(title: parkingName, hours: times)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -65,7 +65,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayStrings.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         // references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
@@ -78,11 +78,11 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         // put the value into the imageView
         let passImage = kPassImages[passString]
         cell.imageView?.image = passImage
-        
+
         if userPasses.contains(passString) {
             if (calendar.component(.weekday, from: pickedDate!) - 1 == 1 || calendar.component(.weekday, from: pickedDate!) - 1 == 2 || calendar.component(.weekday, from: pickedDate!) - 1 == 3 || calendar.component(.weekday, from: pickedDate!) - 1 == 4) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MT.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
-                
+
                 if times[[passString: "MT"]] != nil {
                     waitTime = times[[passString:"MT"]]!
                 } else if times[[passString: "MF"]] != nil {
@@ -90,7 +90,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 } else if times[[passString: "MS"]] != nil {
                     waitTime = times[[passString:"MS"]]!
                 }
-                
+
                 for key in availableRangeForSpot.keys {
                     if (sortedStrings[indexPath.row].key.range(of: key) != nil) {
                         for c in waitTime! {
@@ -135,7 +135,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 }
             } else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
-                
+
                 if times[[passString:"MF"]] != nil{
                     waitTime = times[[passString:"MF"]]!
                 } else if times[[passString:"F"]] != nil{
@@ -143,7 +143,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 } else if times[[passString:"MS"]] != nil{
                     waitTime = times[[passString:"MS"]]!
                 }
-                
+
                 for key in availableRangeForSpot.keys {
                     if (availableRangeForSpot[key]! && sortedStrings[indexPath.row].key.range(of: key) != nil){
                         for c in waitTime! {
@@ -156,12 +156,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                             } else { // for am-pm/pm-pm (same day)
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
                             }
-                            
+
                             // https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
                             let expire = endDate.timeIntervalSince(pickedDate!)
                             let formatter = DateComponentsFormatter()
                             formatter.unitsStyle = .abbreviated
-                            
+
                             if expire <= 3600 {
                                 cell.textLabel!.text = cell.textLabel!.text! + "\nUnavailable in: " + formatter.string(from: expire)!
                                 cell.textLabel!.highlightedTextColor = .orange
@@ -172,7 +172,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                             }
                         }
                     }
-                    
+
                     for c in waitTime! {
                         let start = c["start"] as! NSDictionary
                         let startHour = start["hour"] as! Int
@@ -190,13 +190,13 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 }
             } else if (calendar.component(.weekday, from: pickedDate!) - 1 == 0 || calendar.component(.weekday, from: pickedDate!) - 1 == 6) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.SS.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
-                
+
                 if times[[passString:"SS"]] != nil{
                     waitTime = times[[passString:"SS"]]!
                 } else if times[[passString:"MS"]] != nil{
                     waitTime = times[[passString:"MS"]]!
                 }
-                
+
                 for key in availableRangeForSpot.keys {
                     if (sortedStrings[indexPath.row].key.range(of: key) != nil){
                         for c in waitTime! {
@@ -243,12 +243,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         }
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        print(displayStrings.count)
-        print("Value: \(displayStrings[indexPath.row])")
-        
         // help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let parkHere = UIAlertController(title: "Alert", message: "Do you want to learn more?", preferredStyle: .alert)
         parkHere.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
@@ -275,24 +271,23 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 }
             case .cancel:
                 print("cancel")
-                
             case .destructive:
                 print("destructive")
             }}))
-        
+
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
         parkHere.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in parkHere.dismiss(animated: true, completion: nil)
         }))
-        
+
         self.present(parkHere, animated: true, completion: nil)
-        
+
     }
-    
+
     // created with help from: https://stackoverflow.com/questions/38139774/how-to-set-a-custom-cell-as-header-or-footer-of-uitableview
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let customView:UIView = UIView()
         customView.backgroundColor = UIColor(patternImage: UIImage(named: "teal-gradient.png")!)
-        
+
         let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 450, height: 70))
         textBox.text = (nameOfLocation)
         textBox.textColor = UIColor.black
@@ -304,32 +299,32 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         customView.sizeToFit()
         return customView
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // links the Parking Details View Controller to the Map View Controller
         let vc = MapViewController(nibName: "MapViewController", bundle: nil)
         vc.detailsVC = self
-        
+
         // setting the background of this current view to white
         view.backgroundColor = .white
-        
+
         // Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
-        
+
         myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
         self.view.addSubview(myTableView)
-        
+
         // declaring and adding a back button to the view
         let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 30, height: 30))
         backButton.layer.cornerRadius = 5
@@ -339,9 +334,9 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         backButton.setImage(backIcon, for: .normal)
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         view.addSubview(backButton)
-        
+
     }
-    
+
     //-----------------------------------------------
     // closeView()
     //-----------------------------------------------
@@ -352,7 +347,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     //-----------------------------------------------
     // onUserAction()
     //-----------------------------------------------
@@ -371,7 +366,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         displayStrings = [String]()
         sortableStrings = [String:String]()
         sortedStrings = [(key:String, value:String)]()
-        
+
         // Dictionary of strings : array of NS Dictionaries
         for (key,value) in hours{
             // for each string pair in the dictionary (day range: pass)
@@ -400,7 +395,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.reloadData()
         myTableView.isHidden = false
     }
-    
+
     //-----------------------------------------------
     // makeDateFromData()
     //-----------------------------------------------
@@ -411,37 +406,37 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     //-----------------------------------------------
     func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String {
         let time = pickedDate!
-        
+
         // accesses the hour and minute for start and end
         let startHour = start["hour"] as! Int
         let startMinute = start["minute"] as! Int
         let startType = start["12hour"] as! String
         let startDate = time.dateAt(hours: startHour, minutes: startMinute)
-        
+
         let endHour = end["hour"] as! Int
         let endMinute = end["minute"] as! Int
         let endType = end["12hour"] as! String
         var endDate = Date()
-        
+
         // deals with time frames that are am to pm AND pm to am
         if startType == "pm" && endType == "am" { // for pm-am (overnight parking)
             endDate = time.tomorrow(hour: endHour, minute: endMinute)
         } else { // for am-pm/am-am/pm-pm (same day)
             endDate = time.dateAt(hours: endHour, minutes: endMinute)
         }
-        
+
         // formats the dates via a DateFormatter
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm aaa"
-        
+
         let displayedRange = "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
         if pickedDate! >= startDate && pickedDate! <= endDate {
             availableRangeForSpot[displayedRange] = true
         }
         return displayedRange
     }
-    
-    
+
+
     func formatDays(dayRange: String) -> String {
         switch dayRange{
         case "MF":
@@ -458,7 +453,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             return "No date"
         }
     }
-    
+
     func sortStrings() {
         for string in displayStrings {
             let parkingInfoArray = string.components(separatedBy: "\n")
@@ -469,10 +464,10 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         }
         sortedStrings = sortableStrings.sorted(by: { $0.value < $1.value })
     }
-    
+
     // Sources for this file:
     // source for font size: https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how
     // source for ViewController background: https://stackoverflow.com/questions/29759224/change-background-color-of-viewcontroller-swift-single-view-application/29759262
     // reference for trimming whitespace: https://www.hackingwithswift.com/example-code/strings/how-to-trim-whitespace-in-a-string
-    
+
 }

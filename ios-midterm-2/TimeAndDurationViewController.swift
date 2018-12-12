@@ -161,7 +161,6 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
             let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
 //            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
             self.mapViewController?.accessDataForOverlays(pickedDate: futureTime!)
-            print(futureTime!)
         })
     }
     

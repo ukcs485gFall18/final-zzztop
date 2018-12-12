@@ -101,7 +101,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func createNewTicket(){
         let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
         addDueDate.view.addSubview(datePicker)
-        datePicker.frame = CGRect(x: 5, y: 0, width: 250, height: 200)
+        datePicker.frame = CGRect(x: 10, y: 0, width: 260, height: 200)
         addDueDate.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             switch action.style{
             case .default:
