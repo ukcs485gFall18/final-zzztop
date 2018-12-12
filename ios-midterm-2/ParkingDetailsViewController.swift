@@ -14,7 +14,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     private var nameOfLocation = String()
     private var sortableStrings = [String:String]() //extracts the pass name and uses it as a key to sort
     private var sortedStrings = [(key:String, value:String)]() //dictionary of sorted strings for display in table, only use keys of the tuples
-    //private var passImages = [String:UIImage]()
     var pickedDate: Date?
     var userPasses = [String]()
     var times = [[String: String]: [NSDictionary]]()
@@ -22,6 +21,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     var availableRangeForSpot = [String:Bool]()
     var parkingName = String()
     
+    //A standard enum for the day ranges
     enum rangeStrings: String {
         case MF = "Monday - Friday"
         case MT = "Monday - Thursday"
@@ -30,6 +30,9 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         case MS = "All Week"
     }
     
+    //----------------------------------
+    //Lazy vars for activity spinner
+    //---------------------------------
     //https://teamtreehouse.com/community/how-do-you-have-an-activity-indicator-show-up-before-your-table-view-loads
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:100 ,y:200, width:50, height:50)) as UIActivityIndicatorView
@@ -49,11 +52,25 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return label
     }()
     
+    //-----------------------------------
+    // viewDidAppear()
+    //-----------------------------------
+    // Executes when the view appears
+    // loads data from user defaults and
+    // runs onUserAction
+    // Conditions: None
+    //-----------------------------------
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         onUserAction(title: parkingName, hours: times)
     }
     
+    //-----------------------------------------------
+    // viewWillAppear()
+    //-----------------------------------------------
+    // Sets conditions for loading data
+    // Conditions: boolean for animated action
+    //-----------------------------------------------
     override func viewWillAppear(_ animated: Bool) {
         myTableView.delegate = self
         myTableView.dataSource = self
