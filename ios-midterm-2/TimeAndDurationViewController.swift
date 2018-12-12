@@ -11,7 +11,6 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     
     var pickedDate: Date?
     var timePicked: Int = 0
-    //    var didSelectDate: Bool = false
     let now = Date()
     var pickerTextField = UITextField()
     var timePickerTextField = UITextField()
@@ -91,8 +90,8 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: pickedDate!)
-        //        timePickerTextField.text = "Current times only: 0 hours"
-        //        timePickerTextField.text = "Current times only: " + kDurationHours[0] + " hours"
+//        timePickerTextField.text = "Current times only: 0 hours"
+//        timePickerTextField.text = "Current times only: " + kDurationHours[0] + " hours"
         timePickerTextField.text = "\(kDurationHours[0]) hours"
         
         // declaring and adding a back button to the view
@@ -141,7 +140,6 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     //-----------------------------------------------
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
-        //        didSelectDate = true
     }
     
     //-----------------------------------------------
@@ -161,7 +159,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
             var addingHours = DateComponents()
             addingHours.hour = self.timePicked
             let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
-            //            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
+//            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
             self.mapViewController?.accessDataForOverlays(pickedDate: futureTime!)
             print(futureTime!)
         })

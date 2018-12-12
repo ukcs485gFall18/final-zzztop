@@ -39,7 +39,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
         displayHeight = self.view.frame.height
         
         view.addSubview(tableView)
-        //        view.addSubview(applyButton)
+//        view.addSubview(applyButton)
         
         let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
         headerView.backgroundColor = .black
@@ -95,7 +95,7 @@ extension ParkingTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         detailsVC.pickedDate = pickedDate
         self.present(detailsVC,animated: true, completion: nil)
-        if let hours = spotsAndTimes[parkingNames[indexPath.row]]{
+        if let hours = spotsAndTimes[parkingNames[indexPath.row]] {
             detailsVC.onUserAction(title: parkingNames[indexPath.row], hours: hours)
         }
     }
