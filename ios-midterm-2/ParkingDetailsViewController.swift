@@ -169,9 +169,9 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                             let endHour = end["hour"] as! Int
                             let endMinute = end["minute"] as! Int
                             var endDate = Date()
-                            if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
+                            if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" {
                                 endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
-                            } else { // for am-pm/pm-pm (same day)
+                            } else {
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
                             }
                             // https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1

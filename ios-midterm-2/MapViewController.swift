@@ -173,6 +173,8 @@ class MapViewController: UIViewController {
     @objc func resetDateTime() {
         pickedDate = now
         checkGameDay(date: pickedDate!)
+        DurationViewVC.timePicker.selectRow(0, inComponent: 0, animated: true)
+        DurationViewVC.timePickerTextField.text = "0 hours"
         DurationViewVC.pickedDate = pickedDate!
         DurationViewVC.datePicker.date = pickedDate!
         DurationViewVC.dateSelected(datePicker: DurationViewVC.datePicker)
