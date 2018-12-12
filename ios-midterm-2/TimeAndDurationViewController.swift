@@ -155,11 +155,11 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
                 vc.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
+        
         self.dismiss(animated: true, completion: {
             var addingHours = DateComponents()
             addingHours.hour = self.timePicked
             let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
-//            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
             self.mapViewController?.accessDataForOverlays(pickedDate: futureTime!)
         })
     }
