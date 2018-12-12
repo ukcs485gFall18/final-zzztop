@@ -27,6 +27,7 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
     
     // MARK: - initializers
     
+    // for Static
     convenience init() {
         self.init(style: .grouped)
     }
@@ -56,8 +57,10 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
     }
     
     func getCoords() {
-        guard let tempcoords = UserDefaults.standard.dictionary(forKey: "coords") as? [String : Double] else {return}
-        coords = tempcoords
+        guard let tempCoords = UserDefaults.standard.dictionary(forKey: "coords") as? [String : Double] else { return }
+        
+        coords = tempCoords
+        
         if coords!.isEmpty {
             coordDisplay = "no coordinates selected"
         } else {
@@ -65,6 +68,7 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
             let lon = (coords!["lon"])!
             coordDisplay = "\(lat), \(lon)"
         }
+        
         vc.coords = coords
     }
     

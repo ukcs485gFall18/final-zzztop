@@ -96,8 +96,7 @@ class ChooseDayViewController: TableViewController {
     }
     
     // for later use
-    @objc func useThisTime() {
-    }
+    @objc func useThisTime() {}
     
 }
 
