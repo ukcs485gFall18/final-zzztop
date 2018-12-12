@@ -79,6 +79,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.isHidden = true
     }
     
+    //-----------------------------------------------
+    // viewDidLoad()
+    //-----------------------------------------------
+    // Loads the UI views and links to MapViewController
+    // Conditions: boolean for animated action
+    //-----------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -112,12 +118,18 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
 
     }
     
+    //--------------------------------
+    // TableView Delegate Functions
+    //--------------------------------
+    
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
-
+    
+    //displays the number of cells required to show all passes for that
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayStrings.count
     }
 
+    //displays the strings of pass information in a table view cell per pass
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         // references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
