@@ -198,7 +198,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 }
 
                 for key in availableRangeForSpot.keys {
-                    if (sortedStrings[indexPath.row].key.range(of: key) != nil){
+                    if (sortedStrings[indexPath.row].key.range(of: key) != nil) {
                         for c in waitTime! {
                             let end = c["end"] as! NSDictionary
                             let endHour = end["hour"] as! Int
@@ -209,10 +209,11 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                             } else { // for am-pm/pm-pm (same day)
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
                             }
-                            //https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
+                            // https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
                             let expire = endDate.timeIntervalSince(pickedDate!)
                             let formatter = DateComponentsFormatter()
                             formatter.unitsStyle = .abbreviated
+                            
                             if expire <= 3600 {
                                 cell.textLabel!.text = cell.textLabel!.text! + "\nUnavailable in: " + formatter.string(from: expire)!
                                 cell.textLabel!.highlightedTextColor = .orange

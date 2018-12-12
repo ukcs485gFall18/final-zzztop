@@ -33,18 +33,24 @@ pod install
   - For retrieving and storing data to a database
 
 ### Code Help Sources:
-- [Source for font size](https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how)
-- [Source for ViewController background](https://stackoverflow.com/questions/29759224/change-background-color-of-viewcontroller-swift-single-view-application/29759262)
-- [Source for creating a UITextField programmatically](https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically)
-- [Source for UI Date Picker View implementation](https://www.youtube.com/watch?v=aa-lNWUVY7g)
-- [Source for UI Text Field with rounded corners](https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue)
-- [Source for viewing annotation titles](https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked)
-- [Source for getting user's current location](https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates)
-- [Source for date range check](https://stackoverflow.com/questions/29652771/how-to-check-if-time-is-within-a-specific-range-in-swift/39499504#)
-- [Source for tomorrow date](https://stackoverflow.com/questions/44009804/swift-3-how-to-get-date-for-tomorrow-and-yesterday-take-care-special-case-ne)
-- [Source for checkmarks on table view](https://www.youtube.com/watch?v=5MZ-WJuSdpg)
-- [Source for making status bar icons white](https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3)
-- [Source for making annotations clickable](https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview)
+- [Font size](https://stackoverflow.com/questions/28742018/swift-increase-font-size-of-the-uitextview-how)
+- [ViewController background](https://stackoverflow.com/questions/29759224/change-background-color-of-viewcontroller-swift-single-view-application/29759262)
+- [Creating a UITextField programmatically](https://stackoverflow.com/questions/2728354/add-uitextfield-on-uiview-programmatically)
+- [UI Date Picker View implementation](https://www.youtube.com/watch?v=aa-lNWUVY7g)
+- [UI Text Field with rounded corners](https://stackoverflow.com/questions/13717007/uitextfield-rounded-corner-issue)
+- [Viewing annotation titles](https://stackoverflow.com/questions/37320485/swift-how-to-get-information-from-a-custom-annotation-on-clicked)
+- [Getting user's current location](https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates)
+- [Date range check](https://stackoverflow.com/questions/29652771/how-to-check-if-time-is-within-a-specific-range-in-swift/39499504#)
+- [Tomorrow date](https://stackoverflow.com/questions/44009804/swift-3-how-to-get-date-for-tomorrow-and-yesterday-take-care-special-case-ne)
+- [Checkmarks on table view](https://www.youtube.com/watch?v=5MZ-WJuSdpg)
+- [Making status bar icons white](https://stackoverflow.com/questions/38740648/how-to-set-status-bar-style-in-swift-3)
+- [Making annotations clickable](https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview)
+- Creating multiple component UIPickerView
+  - [iOS/Swift — Creating Multiple Dynamic Picker Views: a Quick Tutorial](https://medium.com/@smehta/ios-swift-creating-a-dynamic-picker-view-843b3290e7f0)
+  - [MultiComponent UIPickerView/ multiple component UIPickerView Swift 4 xcode 9 tutorial for beginners](https://www.youtube.com/watch?v=1-YJLHEIpzU)
+- [How to use 2 UIPickerView's in one View Controller?](https://stackoverflow.com/questions/27642164/how-to-use-2-uipickerviews-in-one-view-controller)
+- [get tapped coordinates with iphone mapkit](https://stackoverflow.com/questions/14580269/get-tapped-coordinates-with-iphone-mapkit)
+- [iOS UIPickerView Example using Swift](http://sourcefreeze.com/ios-uipickerview-example-using-swift/)
 
 ### Image Sources:
 - [Hulk used in presentations](https://www.google.com/search?safe=strict&client=firefox-b-1-ab&biw=1440&bih=781&tbm=isch&sa=1&ei=FcbVW-OoEMzMjwS26JTQCQ&q=hulk&oq=hulk&gs_l=img.3..0i67l2j0j0i67j0l3j0i67l2j0.32104.32571..32783...0.0..0.168.331.3j1......1....1..gws-wiz-img.......35i39.0EZpNXHRQe4#imgrc=IuSm1zmzoiIeoM)
