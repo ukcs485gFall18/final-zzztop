@@ -113,7 +113,7 @@ class MapViewController: UIViewController {
         }
         
         // place the overlays in the correct places
-        accessDataForOverlays(pickedDate: now)
+        accessDataForOverlays(pickedDate: pickedDate!)
     }
     
     @objc func openSettingsVC() {
@@ -195,7 +195,7 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
-        accessDataForOverlays(pickedDate: now)
+        accessDataForOverlays(pickedDate: pickedDate!)
     }
     
     //-----------------------------------------------
