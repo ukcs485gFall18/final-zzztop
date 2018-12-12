@@ -28,7 +28,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight))
+        tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight-barHeight))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier:"parkingCell")
         tableView.delegate = self
         tableView.dataSource = self

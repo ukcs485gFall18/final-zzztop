@@ -21,6 +21,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     let calendar = Calendar.current
     var availableRangeForSpot = [String: Bool]()
     var parkingName = String()
+    let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 300, height: 80))
 
     enum rangeStrings: String {
         case MF = "Monday - Friday"
@@ -48,10 +49,39 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         self.view.addSubview(label)
         return label
     }()
+    
+    lazy var customView:UIView = {
+        let customView:UIView = UIView(frame: CGRect(x:0, y: barHeight, width: self.view.frame.width, height: 80))
+        customView.backgroundColor = UIColor(patternImage: UIImage(named: "teal-gradient.png")!)
+        textBox.center.x = customView.center.x
+        textBox.text = (nameOfLocation)
+        textBox.textColor = UIColor.black
+        textBox.font = .systemFont(ofSize: 20)
+        textBox.backgroundColor = UIColor.clear
+        // ensure that no one can edit the UITextView
+        textBox.isUserInteractionEnabled = false
+        customView.addSubview(textBox)
+        customView.sizeToFit()
+        customView.addSubview(backButton)
+        return customView
+    }()
+    
+    lazy var backButton:UIButton = {
+        //declaring and adding a back button to the view
+        let backButton = UIButton(frame: CGRect(x: 20, y: 25, width: 30, height: 30))
+        backButton.layer.cornerRadius = 5
+        //backButton.backgroundColor = .blue
+        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+        let backIcon = UIImage(named: "backIconBlack.png")
+        backButton.setImage(backIcon, for: .normal)
+        backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        return backButton
+    }()
 
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         onUserAction(title: parkingName, hours: times)
+        textBox.text = (nameOfLocation)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,21 +107,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
 
-        myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight))
+        myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight - customView.frame.height))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
         self.view.addSubview(myTableView)
-
-        //declaring and adding a back button to the view
-        let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 30, height: 30))
-        backButton.layer.cornerRadius = 5
-        //backButton.backgroundColor = .blue
-        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
-        let backIcon = UIImage(named: "backIconBlack.png")
-        backButton.setImage(backIcon, for: .normal)
-        backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        view.addSubview(backButton)
+        view.addSubview(customView)
 
     }
     
@@ -323,21 +344,9 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     // created with help from: https://stackoverflow.com/questions/38139774/how-to-set-a-custom-cell-as-header-or-footer-of-uitableview
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let customView:UIView = UIView()
-        customView.backgroundColor = UIColor(patternImage: UIImage(named: "teal-gradient.png")!)
-
-        let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 450, height: 70))
-        textBox.text = (nameOfLocation)
-        textBox.textColor = UIColor.black
-        textBox.font = .systemFont(ofSize: 20)
-        textBox.backgroundColor = UIColor.clear
-        // ensure that no one can edit the UITextView
-        textBox.isUserInteractionEnabled = false
-        customView.addSubview(textBox)
-        customView.sizeToFit()
-        return customView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//
+//    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
