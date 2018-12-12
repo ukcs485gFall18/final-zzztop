@@ -12,9 +12,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     private var myTableView: UITableView!
     private var displayStrings = [String]()
     private var nameOfLocation = String()
-    private var sortableStrings = [String: String]() // extracts the pass name and uses it as a key to sort
-    private var sortedStrings = [(key: String, value: String)]() // dictionary of sorted strings for display in table, only use keys of the tuples
-//    private var passImages = [String: UIImage]()
+    private var sortableStrings = [String:String]() //extracts the pass name and uses it as a key to sort
+    private var sortedStrings = [(key:String, value:String)]() //dictionary of sorted strings for display in table, only use keys of the tuples
     var pickedDate: Date?
     var userPasses = [String]()
     var times = [[String: String]: [NSDictionary]]()
@@ -30,8 +29,11 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         case SS = "Saturday - Sunday"
         case MS = "All Week"
     }
-
-    // https://teamtreehouse.com/community/how-do-you-have-an-activity-indicator-show-up-before-your-table-view-loads
+    
+    //----------------------------------
+    //Lazy vars for activity spinner
+    //---------------------------------
+    //https://teamtreehouse.com/community/how-do-you-have-an-activity-indicator-show-up-before-your-table-view-loads
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:100 ,y:200, width:50, height:50)) as UIActivityIndicatorView
         activityIndicatorView.center = self.view.center
@@ -83,7 +85,13 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         onUserAction(title: parkingName, hours: times)
         textBox.text = (nameOfLocation)
     }
-
+    
+    //-----------------------------------------------
+    // viewWillAppear()
+    //-----------------------------------------------
+    // Sets conditions for loading data
+    // Conditions: boolean for animated action
+    //-----------------------------------------------
     override func viewWillAppear(_ animated: Bool) {
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -92,6 +100,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.isHidden = true
     }
     
+    //-----------------------------------------------
+    // viewDidLoad()
+    //-----------------------------------------------
+    // Loads the UI views and links to MapViewController
+    // Conditions: boolean for animated action
+    //-----------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -113,15 +127,20 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.delegate = self
         self.view.addSubview(myTableView)
         view.addSubview(customView)
-
     }
     
+    //--------------------------------
+    // TableView Delegate Functions
+    //--------------------------------
+    
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
-
+    
+    //displays the number of cells required to show all passes for that
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayStrings.count
     }
 
+    //displays the strings of pass information in a table view cell per pass
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         // references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
@@ -304,6 +323,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return cell
     }
 
+    //if the user selects a cell, take them to the UK transportation website
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let parkHere = UIAlertController(title: "Alert", message: "Do you want to learn more?", preferredStyle: .alert)
@@ -313,6 +333,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 // help regarding openURL being depricated in iOS10:
                 // https://useyourloaf.com/blog/openurl-deprecated-in-ios10/
 //                 let urlString = "https://www.uky.edu/transportation/2018_student_commuter"
+                //open the URL in another Safari window
                 let urlString = kPassURLs[self.sortedStrings[indexPath.row].value]
                 if let url = URL(string: urlString!) {
                     if #available(iOS 10, *) {
@@ -336,9 +357,11 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             }}))
 
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        //add the ability to say no and exit
         parkHere.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in parkHere.dismiss(animated: true, completion: nil)
         }))
 
+        //add to screen
         self.present(parkHere, animated: true, completion: nil)
 
     }
@@ -450,6 +473,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
 
 
+    //for each enum return the raw value
     func formatDays(dayRange: String) -> String {
         switch dayRange{
         case "MF":
@@ -467,11 +491,20 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
 
+    //-----------------------------------------------
+    // sortStrings()
+    //-----------------------------------------------
+    // Parses each string in displayStrings array to
+    // get the pass, trim whitespaces, and sort the
+    // strings alphabetically by pass
+    // Conditions: None
+    //-----------------------------------------------
     func sortStrings() {
         for string in displayStrings {
             let parkingInfoArray = string.components(separatedBy: "\n")
             let passInfo = parkingInfoArray[0] //get the first line
             let passNoColonArray = passInfo.components(separatedBy: ": ")
+            //Ensure no trailing whitespaces
             let nameOfPass = passNoColonArray[1].trimmingCharacters(in: .whitespaces)
             sortableStrings[string] = nameOfPass
         }

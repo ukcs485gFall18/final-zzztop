@@ -10,19 +10,24 @@ import UIKit
 
 class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var ticketsArray = [String]()
+    //array of all the tickets in user defaults
     var ticketsArrayRetrieved = [String]()
+    //UI components
     private var myTableView: UITableView!
-    var textField = UITextField()
     let datePicker = UIDatePicker()
-    var didSelectDate: Bool = false
     let defaults = UserDefaults.standard
     
+    //------------------------------
+    //TableView Delegate Functions
+    //------------------------------
+    
+    //Displays the amount of cells corresponding to the amount of tickets in user defaults
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         ticketsArrayRetrieved = defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
         return ticketsArrayRetrieved.count
     }
     
+    //Displays the tickets in user defaults in their individual table view cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         // references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
@@ -32,12 +37,14 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    //sends the user to the approproate UK Transporation website based on pass selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
-        let paidTicket = UIAlertController(title: "Alert", message: "Pay this parking ticket?", preferredStyle: .alert)
-        paidTicket.addAction(UIAlertAction(title: "Pay", style: .default, handler: { action in
+        let paidTicket = UIAlertController(title: "Alert", message: "Have you paid this parking ticket?", preferredStyle: .alert)
+        paidTicket.addAction(UIAlertAction(title: "Paid", style: .default, handler: { action in
             switch action.style {
             case .default:
+                //get the existing tickets and add to them
                 self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
                 self.ticketsArrayRetrieved.remove(at: indexPath.row)
                 self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
@@ -53,6 +60,12 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    //-----------------------------------------------
+    // viewDidLoad()
+    //-----------------------------------------------
+    // A function to load the buttons and tableView
+    // Conditions: none
+    //-----------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,18 +111,30 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.dismiss(animated: true, completion: nil)
     }
     
+    
+    //-----------------------------------------------
+    // createNewTicket()
+    //-----------------------------------------------
+    // A function to create a new parking ticket when
+    // the plus button is tapped, storing it in user
+    // defaults
+    // Conditions: none
+    //-----------------------------------------------
     @objc func createNewTicket(){
+        //put the pickerview in place of the title in the UIView
         let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
         addDueDate.view.addSubview(datePicker)
         datePicker.frame = CGRect(x: 10, y: 0, width: 260, height: 200)
         addDueDate.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             switch action.style{
             case .default:
+                //add the text that will show in the table view cell
                 var newTicket = "Created: "
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "EEEEEEEE LLL d yyyy"
                 newTicket = newTicket + dateFormatter.string(from: Date())
                 newTicket = newTicket+"\nDue: "+dateFormatter.string(from: self.datePicker.date)
+                //add this ticket to the array and store in user defaults
                 self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
                 self.ticketsArrayRetrieved.append(newTicket)
                 self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
@@ -121,6 +146,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }}))
         
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        //allow the user to cancel
         addDueDate.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in addDueDate.dismiss(animated: true, completion: nil)
         }))
         
@@ -134,3 +160,4 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
 // Reference for adding a textfield to an alert:https://stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
 // Reference for user defaults: https://www.hackingwithswift.com/example-code/system/how-to-save-user-settings-using-userdefaults
 // Reference for removing from an array: https://stackoverflow.com/questions/24051633/how-to-remove-an-element-from-an-array-in-swift
+// Reference for using a Date Picker in an Alert: https://gist.github.com/IamAlchemist/c582deb518dfa0535157e1d1f9fe6115
