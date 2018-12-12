@@ -21,28 +21,44 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     var fromAdminPanel: Bool = false
     var settingsViewController: SettingsViewController?
     
+    //-----------------------------------
+    // UI Picker View Delegate Functions
+    //-----------------------------------
+    
+    //only one set of into in the picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    //number of options is equal to the number of hours in the duration array
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return kDurationHours.count
     }
     
+    //fill the table view with the hours in the duration array
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return kDurationHours[row] + " hours"
     }
+    
+    //save the number of hours they selected
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         timePickerTextField.text = kDurationHours[row] + " hours"
         timePicked = Int(kDurationHours[row])!
     }
     
+    //-----------------------------------------------
+    // viewDidLoad()
+    //-----------------------------------------------
+    // A function to load the two pickers and buttons
+    // Conditions: none
+    //-----------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //setting the background of this current view to white
         view.backgroundColor = UIColor.lightGray
         
+        //instructions for the date picker
         let pleaseSelect = UITextView(frame: CGRect(x: 0, y: buttonHeight+60, width: view.frame.width-buttonWidth, height: 65))
         pleaseSelect.text = "Please select the day and time \n you want to park:"
         pleaseSelect.center.x = view.center.x
@@ -56,6 +72,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         pleaseSelect.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
         self.view.addSubview(pleaseSelect)
         
+        //create the text field housing the date picker
         pickerTextField = UITextField(frame: CGRect(x: 0, y: buttonHeight+yPadding+70+70, width: view.frame.width-buttonWidth, height: buttonHeight))
         pickerTextField.center.x = view.center.x
         pickerTextField.textAlignment = NSTextAlignment.center
@@ -65,6 +82,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         pickerTextField.borderStyle = UITextField.BorderStyle.none
         pickerTextField.layer.cornerRadius = 5
         
+        //instructions for the time picker
         let pleaseSelectTime = UITextView(frame: CGRect(x: 0, y: (2*buttonHeight)+(2*yPadding)+100+60, width: view.frame.width-buttonWidth, height: 65))
         pleaseSelectTime.text = "Please select the duration \n you want to park:"
         pleaseSelectTime.center.x = view.center.x
@@ -77,6 +95,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         pleaseSelectTime.frame.size = CGSize(width: max(newSize2.width, fixedWidth2), height: newSize2.height)
         self.view.addSubview(pleaseSelectTime)
         
+        //create the text field housing the time/duration picker
         timePickerTextField = UITextField(frame: CGRect(x: 0, y: (2*buttonHeight)+(2*yPadding)+180+70, width: view.frame.width-buttonWidth, height: buttonHeight))
         timePickerTextField.center.x = view.center.x
         timePickerTextField.textAlignment = NSTextAlignment.center
@@ -86,6 +105,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         timePickerTextField.borderStyle = UITextField.BorderStyle.none
         timePickerTextField.layer.cornerRadius = 5
         
+        //create the date picker view and format the dates
         createPickerView()
         pickedDate = now
         let dateFormatter = DateFormatter()
@@ -118,11 +138,13 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         view.addSubview(pickerTextField)
         view.addSubview(timePickerTextField)
         
+        //for the date picker
         datePicker.datePickerMode = .dateAndTime
         datePicker.addTarget(self, action: #selector(dateSelected(datePicker:)), for: .valueChanged)
         // add the DatePicker to the UITextField
         pickerTextField.inputView = datePicker
         
+        //for the time/duration picker
         timePicker.dataSource = self
         timePicker.delegate = self
         timePickerTextField.inputView = timePicker
@@ -157,6 +179,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
                 vc.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
+        //pass the data selected back to the mapViewController for processing
         self.dismiss(animated: true, completion: {
             var addingHours = DateComponents()
             addingHours.hour = self.timePicked
@@ -179,6 +202,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: datePicker.date)
         
+        //send the formatted date to the mapViewController
         self.mapViewController?.dateSelected(datePicked: datePicker.date)
     }
     
