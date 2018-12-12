@@ -480,7 +480,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         let displayedRange = "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
         
         //if picked date in range and picked date is pertains to the current range add the formatted text that will appear in cell to dictionary
-        if (calendar.component(.weekday, from: time) - 1 == 1 || calendar.component(.weekday, from: time) - 1 == 2 || calendar.component(.weekday, from: time) - 1 == 3 || calendar.component(.weekday, from: time) - 1 == 4 && range == Range.mt.rawValue || range == Range.mf.rawValue || range == Range.ms.rawValue) || (calendar.component(.weekday, from: time) - 1 == 5 && range == Range.f.rawValue || range == Range.ms.rawValue) || (calendar.component(.weekday, from: time) - 1 == 0 ||  calendar.component(.weekday, from: time) - 1 == 6 && range == Range.ss.rawValue || range == Range.ms.rawValue){
+        if ((calendar.component(.weekday, from: time) - 1 == 1 || calendar.component(.weekday, from: time) - 1 == 2 || calendar.component(.weekday, from: time) - 1 == 3 || calendar.component(.weekday, from: time) - 1 == 4) && (range == Range.mt.rawValue || range == Range.mf.rawValue || range == Range.ms.rawValue)) || ((calendar.component(.weekday, from: time) - 1 == 5) && (range == Range.f.rawValue || range == Range.ms.rawValue)) || ((calendar.component(.weekday, from: time) - 1 == 0 ||  calendar.component(.weekday, from: time) - 1 == 6) && (range == Range.ss.rawValue || range == Range.ms.rawValue)){
             if time >= startDate && time <= endDate {
                 availableRangeForSpot[pass] = displayedRange
             }
