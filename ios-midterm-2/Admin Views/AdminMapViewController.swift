@@ -13,7 +13,7 @@ class AdminMapViewController: UIViewController {
     // MARK: - properties
     
     let locationManager = CLLocationManager()
-    var coords = [String:Double]()
+    var coords = [String: Double]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

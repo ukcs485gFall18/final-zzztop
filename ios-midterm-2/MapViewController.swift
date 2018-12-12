@@ -58,6 +58,27 @@ class MapViewController: UIViewController {
         gameDayStuff()
     }
     
+    //-----------------------------------------------
+    // viewDidAppear()
+    //-----------------------------------------------
+    // Upon the view appearing, retrieve passes
+    // selected from UserDefaults and accesses the
+    // data to set pins on the map
+    // Conditions: none
+    //-----------------------------------------------
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaults.standard.array(forKey: "userPasses") != nil {
+            usersPermits = UserDefaults.standard.array(forKey: "userPasses") as! [String]
+        } else {
+            usersPermits = [PassType.noPermitRequired.rawValue]
+        }
+        
+        // place the overlays in the correct places
+        accessDataForOverlays(pickedDate: pickedDate!)
+    }
+    
     func pins() {
         for p in parking! {
             let coords = p["coords"] as! [Double]
@@ -93,27 +114,6 @@ class MapViewController: UIViewController {
             
             self.present(gameDayAlert, animated: true, completion: nil)
         }
-    }
-    
-    //-----------------------------------------------
-    // viewDidAppear()
-    //-----------------------------------------------
-    // Upon the view appearing, retrieve passes
-    // selected from UserDefaults and accesses the
-    // data to set pins on the map
-    // Conditions: none
-    //-----------------------------------------------
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if UserDefaults.standard.array(forKey: "userPasses") != nil {
-            usersPermits = UserDefaults.standard.array(forKey: "userPasses") as! [String]
-        } else {
-            usersPermits = [PassType.noPermitRequired.rawValue]
-        }
-        
-        // place the overlays in the correct places
-        accessDataForOverlays(pickedDate: now)
     }
     
     @objc func openSettingsVC() {
@@ -168,10 +168,9 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     // A function to put the current date in the
     // UI Date picker upon selecting the reset button
-    // Post: Updates the pins on the map
+    // Post: Updates the overlays on the map
     //-----------------------------------------------
     @objc func resetDateTime() {
-        // update map after reset
         pickedDate = now
         checkGameDay(date: pickedDate!)
         DurationViewVC.pickedDate = pickedDate!
@@ -190,7 +189,7 @@ class MapViewController: UIViewController {
     //-----------------------------------------------
     @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
-        accessDataForOverlays(pickedDate: now)
+        accessDataForOverlays(pickedDate: pickedDate!)
     }
     
     //-----------------------------------------------
@@ -228,10 +227,10 @@ class MapViewController: UIViewController {
     // current time
     //-----------------------------------------------
     func accessDataForOverlays(pickedDate: Date) {
+        map.removeOverlays(map.overlays) // remove previous overlays
         parkingNames.removeAll()
         spotsAndTimes.removeAll()
-        map.removeOverlays(map.overlays) // remove previous overlays
-        spots = []
+        spots.removeAll()
         
         // go through each collection in the JSON file
         for p in parking! {
@@ -245,7 +244,7 @@ class MapViewController: UIViewController {
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: date) - 1 // subtract 1 for correct day
             let f = DateFormatter()
-            let weekdaystring = f.weekdaySymbols[weekday]
+            let weekdayString = f.weekdaySymbols[weekday]
             
             // unwrap all of the times
             guard let times = p["times"] as? [Any] else {
@@ -271,12 +270,12 @@ class MapViewController: UIViewController {
                             let fridayChecks = [Range.mf.rawValue, Range.f.rawValue, Range.ms.rawValue]
                             let saturdayChecks = [Range.ss.rawValue, Range.ms.rawValue]
                             
-                            if (weekdaystring == WeekDay.monday.rawValue) ||
-                                (weekdaystring == WeekDay.tuesday.rawValue) ||
-                                (weekdaystring == WeekDay.wednesday.rawValue) ||
-                                (weekdaystring == WeekDay.thursday.rawValue) {
+                            if (weekdayString == WeekDay.monday.rawValue) ||
+                                (weekdayString == WeekDay.tuesday.rawValue) ||
+                                (weekdayString == WeekDay.wednesday.rawValue) ||
+                                (weekdayString == WeekDay.thursday.rawValue) {
                                 rangeLoop(check: mondayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
-                            } else if weekdaystring == WeekDay.friday.rawValue {
+                            } else if weekdayString == WeekDay.friday.rawValue {
                                 rangeLoop(check: fridayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
                             } else {
                                 rangeLoop(check: saturdayChecks, timeDict: timeDict, coords: coords, radius: radius, name: spotName)
@@ -295,10 +294,10 @@ class MapViewController: UIViewController {
     // checks that the given date is within the
     // given date range by calling the function below
     //-----------------------------------------------
-    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int, name:String) {
+    func rangeLoop(check: [String], timeDict: NSDictionary, coords: [Double], radius: Int, name: String) {
         for c in check {
             if let range = timeDict[c] {
-                checkDateRange(open: range as! [String: Any], coords: coords, radius: radius, name: name)
+                checkDateRange(range: range as! [String: Any], coords: coords, radius: radius, name: name)
                 break
             }
         }
@@ -312,15 +311,15 @@ class MapViewController: UIViewController {
     // Pre: Requires the NSDictionary of dates,
     // the cordinates, and the desired circle radius
     //-----------------------------------------------
-    func checkDateRange(open: [String: Any], coords: [Double], radius: Int, name: String) {
-        if let time = pickedDate {
-            let start = open["start"] as! NSDictionary
+    func checkDateRange(range: [String: Any], coords: [Double], radius: Int, name: String) {
+        if var time = pickedDate {
+            let start = range["start"] as! NSDictionary
             let startHour = start["hour"] as! Int
             let startMinute = start["minute"] as! Int
             let startType = start["12hour"] as! String
             let startDate = time.dateAt(hours: startHour, minutes: startMinute)
             
-            let end = open["end"] as! NSDictionary
+            let end = range["end"] as! NSDictionary
             let endHour = end["hour"] as! Int
             let endMinute = end["minute"] as! Int
             let endType = end["12hour"] as! String
@@ -328,7 +327,12 @@ class MapViewController: UIViewController {
             var endDate = Date()
             if startType == "pm" && endType == "am" { // for pm-am (overnight parking)
                 endDate = time.tomorrow(hour: endHour, minute: endMinute)
-            } else { // for am-pm/am-am/pm-pm (same day)
+                if time > time.dateAt(hours: 0, minutes: 0) && time < time.dateAt(hours: endHour, minutes: endMinute) {
+                    let hour = Calendar.current.component(.hour, from: time)
+                    let minute = Calendar.current.component(.minute, from: time)
+                    time = time.tomorrow(hour: hour, minute: minute)
+                }
+            } else { // same day parking
                 endDate = time.dateAt(hours: endHour, minutes: endMinute)
             }
             
@@ -347,7 +351,7 @@ class MapViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         
-        //        guard let pickedDate = pickedDate else { return "" }
+//        guard let pickedDate = pickedDate else { return "" }
         
         let hour = calendar.component(.hour, from: date)
         let min = calendar.component(.minute, from: date)
