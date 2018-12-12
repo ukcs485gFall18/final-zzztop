@@ -21,7 +21,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     let calendar = Calendar.current
     var availableRangeForSpot = [String:Bool]()
     var parkingName = String()
-    let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 275, height: 80))
     
     enum rangeStrings: String {
         case MF = "Monday - Friday"
@@ -41,7 +40,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return activityIndicatorView
     }()
     
-    lazy var activityLabel:UILabel = {
+    lazy var activityLabel :UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: self.view.center.y+15, width: 125, height: 50))
         label.text = "Loading Details"
         label.textColor = .gray
@@ -50,38 +49,9 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return label
     }()
     
-    lazy var customView:UIView = {
-        let customView:UIView = UIView(frame: CGRect(x:0, y: barHeight, width: self.view.frame.width, height: 80))
-        customView.backgroundColor = UIColor(patternImage: UIImage(named: "teal-gradient.png")!)
-        textBox.center.x = customView.center.x
-//        textBox.center.y = customView.center.y
-        textBox.textColor = UIColor.black
-        textBox.font = .systemFont(ofSize: 20)
-        textBox.backgroundColor = UIColor.clear
-        //ensure that no one can edit the UITextView
-        textBox.isUserInteractionEnabled = false
-        customView.addSubview(textBox)
-        customView.sizeToFit()
-//        customView.addSubview(backButton)
-        return customView
-    }()
-    
-    //declaring and adding a back button to the view
-    lazy var backButton: UIButton = {
-        let backButton = UIButton(frame: CGRect(x: 20, y: 25, width: 30, height: 30))
-        backButton.layer.cornerRadius = 5
-        //backButton.backgroundColor = .blue
-        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
-        let backIcon = UIImage(named: "backIconBlack.png")
-        backButton.setImage(backIcon, for: .normal)
-        backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        return backButton
-    }()
-    
     override func viewDidAppear(_ animated: Bool) {
         userPasses = UserDefaults.standard.array(forKey: "userPasses") as! [String]
         onUserAction(title: parkingName, hours: times)
-        textBox.text = (nameOfLocation)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,30 +62,38 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         myTableView.isHidden = true
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //links the Parking Details View Controller to the Map View Controller
-        let vc = MapViewController(nibName: "MapViewController", bundle: nil)
-        vc.detailsVC = self
-        
-        //setting the background of this current view to white
-        view.backgroundColor = .white
-        
-        //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
-        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
-        
-        myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight-customView.frame.height))
-        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
-        myTableView.dataSource = self
-        myTableView.delegate = self
-        self.view.addSubview(myTableView)
-        self.view.addSubview(customView)
-        customView.addSubview(backButton)
-        
-    }
+        override func viewDidLoad() {
+            super.viewDidLoad()
+    
+            //links the Parking Details View Controller to the Map View Controller
+            let vc = MapViewController(nibName: "MapViewController", bundle: nil)
+            vc.detailsVC = self
+    
+            //setting the background of this current view to white
+            view.backgroundColor = .white
+    
+            //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
+            let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+            let displayWidth: CGFloat = self.view.frame.width
+            let displayHeight: CGFloat = self.view.frame.height
+    
+            myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight))
+            myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+            myTableView.dataSource = self
+            myTableView.delegate = self
+            self.view.addSubview(myTableView)
+    
+            //declaring and adding a back button to the view
+            let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 30, height: 30))
+            backButton.layer.cornerRadius = 5
+            //backButton.backgroundColor = .blue
+            //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+            let backIcon = UIImage(named: "backIconBlack.png")
+            backButton.setImage(backIcon, for: .normal)
+            backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+            view.addSubview(backButton)
+    
+        }
     
     //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -150,11 +128,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 for key in availableRangeForSpot.keys {
                     if (sortedStrings[indexPath.row].key.range(of: key) != nil){
                         for c in waitTime! {
+                            let start = c["start"] as! NSDictionary
                             let end = c["end"] as! NSDictionary
                             let endHour = end["hour"] as! Int
                             let endMinute = end["minute"] as! Int
                             var endDate = Date()
-                            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+                            if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
                                 endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
                             } else { // for am-pm/pm-pm (same day)
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
@@ -205,11 +184,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 for key in availableRangeForSpot.keys {
                     if (availableRangeForSpot[key]! && sortedStrings[indexPath.row].key.range(of: key) != nil){
                         for c in waitTime! {
+                            let start = c["start"] as! NSDictionary
                             let end = c["end"] as! NSDictionary
                             let endHour = end["hour"] as! Int
                             let endMinute = end["minute"] as! Int
                             var endDate = Date()
-                            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+                            if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
                                 endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
                             } else { // for am-pm/pm-pm (same day)
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
@@ -256,11 +236,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 for key in availableRangeForSpot.keys {
                     if (sortedStrings[indexPath.row].key.range(of: key) != nil){
                         for c in waitTime! {
+                            let start = c["start"] as! NSDictionary
                             let end = c["end"] as! NSDictionary
                             let endHour = end["hour"] as! Int
                             let endMinute = end["minute"] as! Int
                             var endDate = Date()
-                            if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+                            if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
                                 endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
                             } else { // for am-pm/pm-pm (same day)
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
@@ -302,10 +283,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        print(displayStrings.count)
-        print("Value: \(displayStrings[indexPath.row])")
-        
         //help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let parkHere = UIAlertController(title: "Alert", message: "Do you want to learn more?", preferredStyle: .alert)
         parkHere.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
@@ -332,7 +309,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 }
             case .cancel:
                 print("cancel")
-                
             case .destructive:
                 print("destructive")
             }}))
@@ -346,14 +322,26 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     //created with help from: https://stackoverflow.com/questions/38139774/how-to-set-a-custom-cell-as-header-or-footer-of-uitableview
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let customView:UIView = UIView()
+        customView.backgroundColor = UIColor(patternImage: UIImage(named: "teal-gradient.png")!)
+        
+        let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 450, height: 70))
+        textBox.text = (nameOfLocation)
+        textBox.textColor = UIColor.black
+        textBox.font = .systemFont(ofSize: 20)
+        textBox.backgroundColor = UIColor.clear
+        //ensure that no one can edit the UITextView
+        textBox.isUserInteractionEnabled = false
+        customView.addSubview(textBox)
+        customView.sizeToFit()
+        return customView
+    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
     }
-    
+
     //-----------------------------------------------
     // closeView()
     //-----------------------------------------------
@@ -433,7 +421,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         
         //deals with time frames that are am to pm AND pm to am
         var endDate = Date()
-        if end["12hour"] as! String  == "am" { // for pm-am/am-am (overnight parking)
+        if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
             endDate = time.tomorrow(hour: endHour, minute: endMinute)
         } else { // for am-pm/pm-pm (same day)
             endDate = time.dateAt(hours: endHour, minutes: endMinute)

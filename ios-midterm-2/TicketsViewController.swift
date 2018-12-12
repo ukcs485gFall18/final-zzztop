@@ -99,23 +99,17 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func createNewTicket(){
-        let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
-        addDueDate.addTextField { (textField) in
-            textField.text = "Enter pay by date here"
-        }
+        let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
         addDueDate.view.addSubview(datePicker)
-        //datePicker.center.x = addDueDate.view.center.x
-        //datePicker.top.equalTo(addDueDate.view).offset(8)
+        datePicker.frame = CGRect(x: 10, y: 0, width: 260, height: 200)
         addDueDate.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             switch action.style{
             case .default:
-                self.createPickerView()
                 var newTicket = "Created: "
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "EEEEEEEE LLL d yyyy"
                 newTicket = newTicket + dateFormatter.string(from: Date())
-                self.textField = addDueDate.textFields![0]
-                newTicket = newTicket+"\nDue: "+self.textField.text!
+                newTicket = newTicket+"\nDue: "+dateFormatter.string(from: self.datePicker.date)
                 self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
                 self.ticketsArrayRetrieved.append(newTicket)
                 self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
@@ -132,52 +126,6 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.present(addDueDate, animated: true, completion: nil)
         
-    }
-    
-    //-----------------------------------------------
-    // createPickerView()
-    //-----------------------------------------------
-    // A function to create the UIPickerView and
-    // place it on the view
-    // Conditions: none
-    //-----------------------------------------------
-    func createPickerView() {
-        view.addSubview(textField)
-        
-        datePicker.datePickerMode = .dateAndTime
-        datePicker.addTarget(self, action: #selector(dateSelected(datePicker:)), for: .valueChanged)
-        // add the DatePicker to the UITextField
-        //textField.inputView = datePicker
-        
-        // allow the user to get out of the date picker by tapping
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    //-----------------------------------------------
-    // tapToLeave()
-    //-----------------------------------------------
-    // allows the user to leave the UI picker by
-    // tapping elsewhere
-    // Conditions: none
-    //-----------------------------------------------
-    @objc func tapToLeave(gestureRecognizer: UITapGestureRecognizer){
-        view.endEditing(true)
-        didSelectDate = true
-    }
-    
-    //-----------------------------------------------
-    // dateSelected()
-    //-----------------------------------------------
-    // formats the date selected and places it into
-    // the UI Text Field
-    // Post: accesses the data to set the pins
-    // to match the new date
-    //-----------------------------------------------
-    @objc func dateSelected(datePicker: UIDatePicker){
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
-        //textField.text = dateFormatter.string(from: datePicker.date)
     }
     
 }

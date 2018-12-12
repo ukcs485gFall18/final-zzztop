@@ -102,15 +102,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func setUpViews() {
         view.backgroundColor = UIColor.white
         
+        view.addSubview(logo)
         view.addSubview(usernameTextField)
         view.addSubview(passwordTextField)
         view.addSubview(loginButton)
         view.addSubview(exitButton)
         
+        setUpLogo()
         setUpUsernameTextField()
         setUpPasswordTextField()
         setUpLoginButton()
         setUpExitButton()
+    }
+    
+    lazy var logo: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "logo")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    func setUpLogo() {
+        logo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logo.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
+        logo.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        logo.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     lazy var usernameTextField: UITextField = {
@@ -128,7 +145,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func setUpUsernameTextField() {
         usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        usernameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        usernameTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 50).isActive = true
         usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5).isActive = true
         usernameTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
