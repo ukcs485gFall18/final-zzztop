@@ -39,8 +39,6 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //         UserDefaults.standard.set([], forKey: "coords") // testing
-        
         // check if the user is logged in before allowing the user to make any admin changes
         checkIfUserIsLoggedIn()
         
@@ -114,6 +112,8 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
         ]
     }
     
+    // submit data entered into fields to firebase
+    // uses temporary data for the "times" key
     @objc func submitToFirebase() {
         guard let name = vc.name,
             let radius = vc.radius,
@@ -174,14 +174,19 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
         }
     }
     
+    // logout the user
     @objc func logout() {
+        // reset user defaults
         UserDefaults.standard.set("", forKey: "username")
         UserDefaults.standard.set("", forKey: "password")
+        
+        // present login
         present(LoginViewController(), animated: true, completion: nil)
     }
     
     // MARK: - views
     
+    // designs and positions views
     func setUpViews() {
         let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
         navigationItem.rightBarButtonItem = logoutButton
@@ -229,6 +234,7 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
         setUpSubmitButton()
     }
     
+    // create submit button
     lazy var submitButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -240,6 +246,7 @@ class AddParkingViewController: TableViewController, UITextFieldDelegate {
         return button
     }()
     
+    // position submit button
     func setUpSubmitButton() {
         submitButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         submitButton.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true

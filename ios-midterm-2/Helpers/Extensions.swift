@@ -9,9 +9,9 @@
 import UIKit
 import Static
 
-// for LoginViewController
 extension UITextField {
     
+    // for LoginViewController
     func setBottomBorder(color: UIColor) {
         self.borderStyle = UITextField.BorderStyle.none
         self.backgroundColor = UIColor.clear

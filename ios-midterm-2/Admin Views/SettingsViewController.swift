@@ -36,6 +36,7 @@ class SettingsViewController: TableViewController {
         }
     }
     
+    // set up static table view
     func setUpStatic() {
         title = "Settings"
         

@@ -16,6 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func checkIfLoginCredentialsAreRight() {
+        // checks that username and password are not nil
         guard let username = usernameTextField.text,
             let password = passwordTextField.text else {
                 print("Form is not valid")
@@ -63,7 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // creates bottom border
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        // temporary, keeps adding subviews instead of removing
+        // temporary workaround, keeps adding subviews instead of removing
         activeTextField.setBottomBorder(color: UIColor.white)
         
         activeTextField = textField
@@ -71,7 +72,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        // temporary, need to remove subview
+        // temporary workaround, need to remove subview
         activeTextField.setBottomBorder(color: UIColor.white)
     }
     
@@ -95,6 +96,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - views
     
+    // designs and positions views
     func setUpViews() {
         view.backgroundColor = UIColor.white
         
@@ -111,6 +113,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         setUpExitButton()
     }
     
+    // create logo image view
     lazy var logo: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -119,6 +122,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return imageView
     }()
     
+    // position logo
     func setUpLogo() {
         logo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         logo.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
@@ -126,6 +130,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         logo.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
+    // create username text field
     lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -139,6 +144,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    // position username text field
     func setUpUsernameTextField() {
         usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         usernameTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 50).isActive = true
@@ -146,6 +152,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
+    // create password text field
     lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -160,6 +167,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    // position password text field
     func setUpPasswordTextField() {
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: separation).isActive = true
@@ -167,6 +175,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
+    // create login button
     lazy var loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -180,6 +189,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    // position login button
     func setUpLoginButton() {
         loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: separation).isActive = true
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -187,6 +197,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.heightAnchor.constraint(equalToConstant: tfHeight).isActive = true
     }
     
+    // create exit button
     lazy var exitButton: UIButton = {
         let img = UIImage(named: "exit")
         let button = UIButton()
@@ -196,6 +207,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    // position exit button
     func setUpExitButton() {
         exitButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         exitButton.heightAnchor.constraint(equalToConstant: 30).isActive = true

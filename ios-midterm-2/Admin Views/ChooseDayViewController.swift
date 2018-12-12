@@ -26,10 +26,15 @@ class ChooseDayViewController: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set options to chosen days in previous view
         options = chooseDayVC.options
+        
+        // designs and positions views
         setUpViews()
     }
     
+    // designs and positions views
     func setUpViews() {
         title = "Choose Times for Specified Days"
         
@@ -64,11 +69,13 @@ class ChooseDayViewController: TableViewController {
         setUpUseButton()
     }
     
+    // for updating tags
     func updateTag() {
         count += 1
         tag = count
     }
     
+    // create use button
     lazy var useButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -80,6 +87,7 @@ class ChooseDayViewController: TableViewController {
         return button
     }()
     
+    // position use button
     func setUpUseButton() {
         useButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         useButton.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
@@ -87,6 +95,7 @@ class ChooseDayViewController: TableViewController {
         useButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 300).isActive = true // does not work as expected
     }
     
+    // for later use
     @objc func useThisTime() {
     }
     
