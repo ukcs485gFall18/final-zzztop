@@ -116,8 +116,6 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEEEEEE LLL d h:mm aaa"
         pickerTextField.text = dateFormatter.string(from: pickedDate!)
-//        timePickerTextField.text = "Current times only: 0 hours"
-//        timePickerTextField.text = "Current times only: " + kDurationHours[0] + " hours"
         timePickerTextField.text = "\(kDurationHours[0]) hours"
 
         // declaring and adding a back button to the view
