@@ -107,7 +107,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
 
-        myTableView = UITableView(frame: CGRect(x: 0, y: 90, width: displayWidth, height: displayHeight - barHeight - customView.frame.height))
+        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight + customView.frame.height, width: displayWidth, height: displayHeight - barHeight - customView.frame.height))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
