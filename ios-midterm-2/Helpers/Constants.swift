@@ -162,6 +162,14 @@ enum gameDay: String {
     case none = "None"
 }
 
+enum RangeStrings: String {
+    case MF = "Monday - Friday"
+    case MT = "Monday - Thursday"
+    case F = "Friday"
+    case SS = "Saturday - Sunday"
+    case MS = "All Week"
+}
+
 // colors
 let red = UIColor(red: 250/255, green: 92/255, blue: 71/255, alpha: 1) // matches the logo
 let lightblue = UIColor(red: 196/255, green: 191/255, blue: 227/255, alpha: 1) // matches the logo

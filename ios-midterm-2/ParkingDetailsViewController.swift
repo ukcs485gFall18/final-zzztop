@@ -5,35 +5,30 @@
 //  Created by Kyra Seevers on 10/23/18.
 //  Copyright © 2018 Jordan George. All rights reserved.
 //
+
 import UIKit
 
 class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    // MARK: - properties
+    
     private var myTableView: UITableView!
     private var displayStrings = [String]()
     private var nameOfLocation = String()
-    private var sortableStrings = [String:String]() //extracts the pass name and uses it as a key to sort
-    private var sortedStrings = [(key:String, value:String)]() //dictionary of sorted strings for display in table, only use keys of the tuples
+    private var sortableStrings = [String: String]() // extracts the pass name and uses it as a key to sort
+    private var sortedStrings = [(key: String, value: String)]() // dictionary of sorted strings for display in table, only use keys of the tuples
     var pickedDate: Date?
     var userPasses = [String]()
     var times = [[String: String]: [NSDictionary]]()
     let calendar = Calendar.current
     var availableRangeForSpot = [String: String]()
     var parkingName = String()
-    let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 300, height: 80))
-
-    enum rangeStrings: String {
-        case MF = "Monday - Friday"
-        case MT = "Monday - Thursday"
-        case F = "Friday"
-        case SS = "Saturday - Sunday"
-        case MS = "All Week"
-    }
+    let textBox = UITextView(frame: CGRect(x: 0, y: 0, width: 300, height: 80))
     
     //----------------------------------
-    //Lazy vars for activity spinner
+    // Lazy vars for activity spinner
     //---------------------------------
-    //https://teamtreehouse.com/community/how-do-you-have-an-activity-indicator-show-up-before-your-table-view-loads
+    // https://teamtreehouse.com/community/how-do-you-have-an-activity-indicator-show-up-before-your-table-view-loads
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:100 ,y:200, width:50, height:50)) as UIActivityIndicatorView
         activityIndicatorView.center = self.view.center
@@ -69,11 +64,11 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }()
     
     lazy var backButton:UIButton = {
-        //declaring and adding a back button to the view
+        // declaring and adding a back button to the view
         let backButton = UIButton(frame: CGRect(x: 20, y: 25, width: 30, height: 30))
         backButton.layer.cornerRadius = 5
-        //backButton.backgroundColor = .blue
-        //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+        // backButton.backgroundColor = .blue
+        // Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
         let backIcon = UIImage(named: "backIconBlack.png")
         backButton.setImage(backIcon, for: .normal)
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
@@ -109,14 +104,14 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //links the Parking Details View Controller to the Map View Controller
+        // links the Parking Details View Controller to the Map View Controller
         let vc = MapViewController(nibName: "MapViewController", bundle: nil)
         vc.detailsVC = self
 
-        //setting the background of this current view to white
+        // setting the background of this current view to white
         view.backgroundColor = .white
 
-        //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
+        // Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
@@ -133,14 +128,14 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     // TableView Delegate Functions
     //--------------------------------
     
-    //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
+    // Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
     
-    //displays the number of cells required to show all passes for that
+    // displays the number of cells required to show all passes for that
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayStrings.count
     }
 
-    //displays the strings of pass information in a table view cell per pass
+    // displays the strings of pass information in a table view cell per pass
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         // references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
@@ -155,7 +150,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         cell.imageView?.image = passImage
 
         if userPasses.contains(passString) {
-            if (calendar.component(.weekday, from: pickedDate!) - 1 == 1 || calendar.component(.weekday, from: pickedDate!) - 1 == 2 || calendar.component(.weekday, from: pickedDate!) - 1 == 3 || calendar.component(.weekday, from: pickedDate!) - 1 == 4) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MT.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+            if (calendar.component(.weekday, from: pickedDate!) - 1 == 1 || calendar.component(.weekday, from: pickedDate!) - 1 == 2 || calendar.component(.weekday, from: pickedDate!) - 1 == 3 || calendar.component(.weekday, from: pickedDate!) - 1 == 4) && (sortedStrings[indexPath.row].key.range(of: RangeStrings.MT.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: RangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: RangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
 
                 if times[[passString: "MT"]] != nil {
@@ -209,7 +204,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                         cell.textLabel!.isHighlighted = true
                     }
                 }
-            } else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+            } else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: RangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: RangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: RangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
 
                 if times[[passString:"MF"]] != nil{
@@ -265,7 +260,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                         }
                     }
                 }
-            } else if (calendar.component(.weekday, from: pickedDate!) - 1 == 0 || calendar.component(.weekday, from: pickedDate!) - 1 == 6) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.SS.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+            } else if (calendar.component(.weekday, from: pickedDate!) - 1 == 0 || calendar.component(.weekday, from: pickedDate!) - 1 == 6) && (sortedStrings[indexPath.row].key.range(of: RangeStrings.SS.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: RangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
 
                 if times[[passString:"SS"]] != nil{
@@ -323,17 +318,15 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return cell
     }
 
-    //if the user selects a cell, take them to the UK transportation website
+    // if the user selects a cell, take them to the UK transportation website
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // help from: https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let parkHere = UIAlertController(title: "Alert", message: "Do you want to learn more?", preferredStyle: .alert)
         parkHere.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             switch action.style{
             case .default:
-                // help regarding openURL being depricated in iOS10:
-                // https://useyourloaf.com/blog/openurl-deprecated-in-ios10/
-//                 let urlString = "https://www.uky.edu/transportation/2018_student_commuter"
-                //open the URL in another Safari window
+                // help regarding openURL being depricated in iOS10: https://useyourloaf.com/blog/openurl-deprecated-in-ios10/
+                // open the URL in another Safari window
                 let urlString = kPassURLs[self.sortedStrings[indexPath.row].value]
                 if let url = URL(string: urlString!) {
                     if #available(iOS 10, *) {
@@ -357,19 +350,14 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             }}))
 
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
-        //add the ability to say no and exit
+        // add the ability to say no and exit
         parkHere.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in parkHere.dismiss(animated: true, completion: nil)
         }))
 
-        //add to screen
+        // add to screen
         self.present(parkHere, animated: true, completion: nil)
 
     }
-
-    // created with help from: https://stackoverflow.com/questions/38139774/how-to-set-a-custom-cell-as-header-or-footer-of-uitableview
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
@@ -397,7 +385,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     // Post: Adds parking details to view in UIText
     //-----------------------------------------------
     func onUserAction(title: String, hours: [[String: String]: [NSDictionary]]) {
-        //resetting all of the variables
+        // resetting all of the variables
         times = hours
         parkingName = title
         var textToDisplay = ""
@@ -478,19 +466,19 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
 
 
-    //for each enum return the raw value
+    // for each enum return the raw value
     func formatDays(dayRange: String) -> String {
         switch dayRange{
         case "MF":
-            return rangeStrings.MF.rawValue
+            return RangeStrings.MF.rawValue
         case "MT":
-            return rangeStrings.MT.rawValue
+            return RangeStrings.MT.rawValue
         case "F":
-            return rangeStrings.F.rawValue
+            return RangeStrings.F.rawValue
         case "SS":
-            return rangeStrings.SS.rawValue
+            return RangeStrings.SS.rawValue
         case "MS":
-            return rangeStrings.MS.rawValue
+            return RangeStrings.MS.rawValue
         default:
             return "No date"
         }

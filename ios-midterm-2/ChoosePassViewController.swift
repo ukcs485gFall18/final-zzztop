@@ -8,8 +8,7 @@
 
 import UIKit
 
-
-//view where user selects which passes they have
+// view where user selects which passes they have
 
 class ChoosePassViewController: UIViewController, UITableViewDataSource {
     
@@ -47,14 +46,25 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         displayWidth = self.view.frame.width
         displayHeight = self.view.frame.height
         
-        view.addSubview(tableView)
-        view.addSubview(applyButton)
-        
         let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
         headerView.backgroundColor = .black
         view.addSubview(headerView)
         headerView.addSubview(addPassesLabel)
+        
+        view.addSubview(tableView)
+        view.addSubview(applyButton)
     }
+    
+    // creates add pass label
+    lazy var addPassesLabel: UILabel = {
+        let addPassesLabel = UILabel(frame: CGRect(x: 0, y: ynavPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
+        addPassesLabel.center.x = view.center.x
+        addPassesLabel.text = "Add Passes"
+        addPassesLabel.font = addPassesLabel.font.withSize(headerFontSize)
+        addPassesLabel.textAlignment = NSTextAlignment.center
+        addPassesLabel.textColor = .white
+        return addPassesLabel
+    }()
     
     // creates table view to hold UK pass options user can select from
     lazy var tableView: UITableView = {
@@ -80,21 +90,11 @@ class ChoosePassViewController: UIViewController, UITableViewDataSource {
         return applyButton
     }()
     
-    // creates add pass label
-    lazy var addPassesLabel: UILabel = {
-        let addPassesLabel = UILabel(frame: CGRect(x: 0, y: ynavPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
-        addPassesLabel.center.x = view.center.x
-        addPassesLabel.text = "Add Passes"
-        addPassesLabel.font = addPassesLabel.font.withSize(headerFontSize)
-        addPassesLabel.textAlignment = NSTextAlignment.center
-        addPassesLabel.textColor = .white
-        return addPassesLabel
-    }()
-    
 }
 
 // overrides table view functions
 extension ChoosePassViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kPassTypes.count
     }
@@ -114,8 +114,8 @@ extension ChoosePassViewController: UITableViewDelegate {
         }
         
         let passString = kPassTypes[indexPath.row]
-        //look in the dictionary of pass names and UIImages
-        //put the value into the imageView
+        // look in the dictionary of pass names and UIImages
+        // put the value into the imageView
         let passImage = kPassImages[passString]
         cell.imageView?.image = passImage
         
@@ -134,9 +134,10 @@ extension ChoosePassViewController: UITableViewDelegate {
             // check for special passes
             let firstCharacter = passName[0]
             if firstCharacter == "C" || firstCharacter == "R" {
-                // if k lot is not already in userPasses
                 let kLotNumInArray = 16
                 let kLot = kPassTypes[kLotNumInArray]
+                
+                // if k lot is not already in userPasses
                 if !userPasses.contains(kLot) {
                     // add check mark for k lot cell
                     tableView.cellForRow(at: [0, kLotNumInArray])?.accessoryType = UITableViewCell.AccessoryType.checkmark
@@ -157,12 +158,7 @@ extension ChoosePassViewController: UITableViewDelegate {
         userPasses.remove(at: removeIndex!)
         UserDefaults.standard.set(userPasses, forKey: "userPasses")
     }
-}
-
-extension String {
-    subscript (i: Int) -> Character {
-        return self[index(startIndex, offsetBy: i)]
-    }
+    
 }
 
 // source for getting nth character: https://stackoverflow.com/questions/24092884/get-nth-character-of-a-string-in-swift-programming-language

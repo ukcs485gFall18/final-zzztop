@@ -206,12 +206,10 @@ class MapViewController: UIViewController {
         if checkGameDay(date: pickedDate!) == gameDay.today.rawValue{
             gameDayLabel.text = "Game Day"
             gameDayLabel.isHidden = false
-        }
-        else if checkGameDay(date: pickedDate!) == gameDay.tomorrow.rawValue{
+        } else if checkGameDay(date: pickedDate!) == gameDay.tomorrow.rawValue{
             gameDayLabel.text = "Game Day Tomorrow"
             gameDayLabel.isHidden = false
-        }
-        else{
+        } else{
             gameDayLabel.text = ""
             gameDayLabel.isHidden = true
         }
@@ -351,8 +349,6 @@ class MapViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = format
 
-//        guard let pickedDate = pickedDate else { return "" }
-
         let hour = calendar.component(.hour, from: date)
         let min = calendar.component(.minute, from: date)
 
@@ -457,7 +453,7 @@ class MapViewController: UIViewController {
         }
 
         do {
-            if let file = Bundle.main.url(forResource: "gameday", withExtension: "json") {
+            if let file = Bundle.main.url(forResource: "gameDay", withExtension: "json") {
                 let data = try Data(contentsOf: file)
                 let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 gameday = jsonResult["parking"] as? [NSDictionary]
@@ -469,7 +465,7 @@ class MapViewController: UIViewController {
         }
 
         do {
-            if let file = Bundle.main.url(forResource: "gamedates", withExtension: "json") {
+            if let file = Bundle.main.url(forResource: "gameDates", withExtension: "json") {
                 let data = try Data(contentsOf: file)
                 let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 gamedates = jsonResult as NSDictionary
@@ -686,8 +682,6 @@ class MapViewController: UIViewController {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
-        //        map.isRotateEnabled = false
-        //        map.isPitchEnabled = false
         return map
     }()
 

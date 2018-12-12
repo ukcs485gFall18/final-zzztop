@@ -44,7 +44,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
         return .lightContent
     }
     
-    //adds all of the lazy vars to the view and adds a header
+    // adds all of the lazy vars to the view and adds a header
     func setUpViews() {
         displayWidth = self.view.frame.width
         displayHeight = self.view.frame.height

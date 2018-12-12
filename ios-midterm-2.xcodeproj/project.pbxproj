@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F1D9D9A21B3020300D272E1 /* gameday.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F1D9D9921B3020300D272E1 /* gameday.json */; };
-		0F1D9D9C21B3053700D272E1 /* gamedates.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F1D9D9B21B3053700D272E1 /* gamedates.json */; };
+		0F1D9D9A21B3020300D272E1 /* gameDay.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F1D9D9921B3020300D272E1 /* gameDay.json */; };
+		0F1D9D9C21B3053700D272E1 /* gameDates.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F1D9D9B21B3053700D272E1 /* gameDates.json */; };
 		0FB9F04E217D27CD00752425 /* ChoosePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */; };
 		0FB9F050217D2CE500752425 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9F04F217D2CE500752425 /* Constants.swift */; };
 		0FB9F07D217D531200752425 /* parkingData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0FB9F07C217D531200752425 /* parkingData.json */; };
@@ -34,8 +34,8 @@
 
 /* Begin PBXFileReference section */
 		021579AE8F1BEB12DA4F994D /* Pods_ios_midterm_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_midterm_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0F1D9D9921B3020300D272E1 /* gameday.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameday.json; sourceTree = "<group>"; };
-		0F1D9D9B21B3053700D272E1 /* gamedates.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gamedates.json; sourceTree = "<group>"; };
+		0F1D9D9921B3020300D272E1 /* gameDay.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameDay.json; sourceTree = "<group>"; };
+		0F1D9D9B21B3053700D272E1 /* gameDates.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gameDates.json; sourceTree = "<group>"; };
 		0FB9F04D217D27CD00752425 /* ChoosePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassViewController.swift; sourceTree = "<group>"; };
 		0FB9F04F217D2CE500752425 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0FB9F07C217D531200752425 /* parkingData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parkingData.json; sourceTree = "<group>"; };
@@ -149,8 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				809053C721BC93860077730D /* firebase-test-data-to-import.json */,
-				0F1D9D9B21B3053700D272E1 /* gamedates.json */,
-				0F1D9D9921B3020300D272E1 /* gameday.json */,
+				0F1D9D9B21B3053700D272E1 /* gameDates.json */,
+				0F1D9D9921B3020300D272E1 /* gameDay.json */,
 				0FB9F07C217D531200752425 /* parkingData.json */,
 			);
 			path = data;
@@ -233,10 +233,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F1D9D9A21B3020300D272E1 /* gameday.json in Resources */,
+				0F1D9D9A21B3020300D272E1 /* gameDay.json in Resources */,
 				806A91E321729D3C00EDA648 /* LaunchScreen.storyboard in Resources */,
 				806A91E021729D3C00EDA648 /* Assets.xcassets in Resources */,
-				0F1D9D9C21B3053700D272E1 /* gamedates.json in Resources */,
+				0F1D9D9C21B3053700D272E1 /* gameDates.json in Resources */,
 				0FB9F07D217D531200752425 /* parkingData.json in Resources */,
 				809053C821BC93860077730D /* firebase-test-data-to-import.json in Resources */,
 				80C118F421C08142009EDACC /* GoogleService-Info.plist in Resources */,
