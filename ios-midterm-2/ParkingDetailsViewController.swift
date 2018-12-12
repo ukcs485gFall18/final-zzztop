@@ -72,7 +72,6 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         //declaring and adding a back button to the view
         let backButton = UIButton(frame: CGRect(x: 20, y: 25, width: 30, height: 30))
         backButton.layer.cornerRadius = 5
-        //backButton.backgroundColor = .blue
         //Reference: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
         let backIcon = UIImage(named: "backIconBlack.png")
         backButton.setImage(backIcon, for: .normal)
@@ -95,7 +94,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillAppear(_ animated: Bool) {
         myTableView.delegate = self
         myTableView.dataSource = self
-        activityIndicatorView.startAnimating()
+        //so old data isn't presented to user
+        activityIndicatorView.startAnimating() //show activity spinner until correct data loads in table
         activityLabel.isHidden = false
         myTableView.isHidden = true
     }
@@ -154,10 +154,13 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         let passImage = kPassImages[passString]
         cell.imageView?.image = passImage
 
+        //highlights text different color depending on availability
+        //if pass is a pass the user has
         if userPasses.contains(passString) {
+            //if picked day is M, T, W, TR and text to be displayed in cell contains "Monday-Thursday", "Monday-Friday" or "All Week"
             if (calendar.component(.weekday, from: pickedDate!) - 1 == 1 || calendar.component(.weekday, from: pickedDate!) - 1 == 2 || calendar.component(.weekday, from: pickedDate!) - 1 == 3 || calendar.component(.weekday, from: pickedDate!) - 1 == 4) && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MT.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
-
+                //store start and ending dicts for correct range
                 if times[[passString: "MT"]] != nil {
                     waitTime = times[[passString:"MT"]]!
                 } else if times[[passString: "MF"]] != nil {
@@ -165,9 +168,13 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 } else if times[[passString: "MS"]] != nil {
                     waitTime = times[[passString:"MS"]]!
                 }
-
+                //if there is an available range for this pass
                 if availableRangeForSpot[passString] != nil {
+                    //if the available range is in the text to be displayed
                     if (sortedStrings[indexPath.row].key.range(of: availableRangeForSpot[passString]!) != nil) {
+                        //go through start and end dictionaries
+                        //if picked date about to become unavailable in next hour highlight orange
+                        //otherwise highlight green
                         for c in waitTime! {
                             let start = c["start"] as! NSDictionary
                             let end = c["end"] as! NSDictionary
@@ -176,7 +183,12 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                             var endDate = Date()
                             if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" {
                                 endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
-                            } else {
+                                if pickedDate! > pickedDate!.dateAt(hours: 0, minutes: 0) && pickedDate! < pickedDate!.dateAt(hours: endHour, minutes: endMinute) {
+                                    let hour = Calendar.current.component(.hour, from: pickedDate!)
+                                    let minute = Calendar.current.component(.minute, from: pickedDate!)
+                                    pickedDate! = pickedDate!.tomorrow(hour: hour, minute: minute)
+                                }
+                            } else { // same day parking
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
                             }
                             // https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
@@ -194,6 +206,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                         }
                     }
                 }
+                //if picked time is not in available range, check if it is becoming available in next 3 hours
+                //if so highlight blue
                 for c in waitTime! {
                     let start = c["start"] as! NSDictionary
                     let startHour = start["hour"] as! Int
@@ -209,7 +223,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                         cell.textLabel!.isHighlighted = true
                     }
                 }
-            } else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
+            } // do similarly for friday and weekends
+            else if calendar.component(.weekday, from: pickedDate!) - 1 == 5 && (sortedStrings[indexPath.row].key.range(of: rangeStrings.MF.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.F.rawValue) != nil || sortedStrings[indexPath.row].key.range(of: rangeStrings.MS.rawValue) != nil) {
                 var waitTime: [NSDictionary]?
 
                 if times[[passString:"MF"]] != nil{
@@ -402,6 +417,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         parkingName = title
         var textToDisplay = ""
         var pass = ""
+        var range = ""
         displayStrings = [String]()
         sortableStrings = [String:String]()
         sortedStrings = [(key:String, value:String)]()
@@ -413,6 +429,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 let dayRange = formatDays(dayRange: v)
                 textToDisplay += "Pass: \(k) \nDays: \(dayRange)\n"
                 pass = k
+                range = v
             }
             var counter = 0
             // iterate through each hour set under the designated day and pass
@@ -421,7 +438,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 let start = set.object(forKey: "start") as! NSDictionary
                 let end = set.object(forKey: "end") as! NSDictionary
                 // formatting the date to be user friendly
-                textToDisplay += makeDateFromData(start: start, end: end, pass: pass)
+                textToDisplay += makeDateFromData(start: start, end: end, pass: pass, range:range)
                 displayStrings.append(textToDisplay)
                 counter += 1
                 textToDisplay = ""
@@ -444,22 +461,27 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     // Pre: Recieves the start and end NSDict
     // Post: Returns formatted string
     //-----------------------------------------------
-    func makeDateFromData(start:NSDictionary, end:NSDictionary, pass:String) -> String {
-        let time = pickedDate!
+    func makeDateFromData(start:NSDictionary, end:NSDictionary, pass:String, range:String) -> String {
+        var time = pickedDate!
 
         // accesses the hour and minute for start and end
         let startHour = start["hour"] as! Int
         let startMinute = start["minute"] as! Int
-//        let startType = start["12hour"] as! String
+        let startType = start["12hour"] as! String
         let startDate = time.dateAt(hours: startHour, minutes: startMinute)
 
         let endHour = end["hour"] as! Int
         let endMinute = end["minute"] as! Int
-//        let endType = end["12hour"] as! String
+        let endType = end["12hour"] as! String
         var endDate = Date()
-        if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
+        if startType == "pm" && endType == "am" { // for pm-am (overnight parking)
             endDate = time.tomorrow(hour: endHour, minute: endMinute)
-        } else { // for am-pm/am-am/pm-pm (same day)
+            if time > time.dateAt(hours: 0, minutes: 0) && time < time.dateAt(hours: endHour, minutes: endMinute) {
+                let hour = Calendar.current.component(.hour, from: time)
+                let minute = Calendar.current.component(.minute, from: time)
+                time = time.tomorrow(hour: hour, minute: minute)
+            }
+        } else { // same day parking
             endDate = time.dateAt(hours: endHour, minutes: endMinute)
         }
 
@@ -468,12 +490,18 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         dateFormatter.dateFormat = "h:mm aaa"
 
         let displayedRange = "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
-        if pickedDate! >= startDate && pickedDate! <= endDate {
-            availableRangeForSpot[pass] = displayedRange
+        
+        //if picked date in range and picked date is pertains to the current range add the formatted text that will appear in cell to dictionary
+        if (calendar.component(.weekday, from: time) - 1 == 1 || calendar.component(.weekday, from: time) - 1 == 2 || calendar.component(.weekday, from: time) - 1 == 3 || calendar.component(.weekday, from: time) - 1 == 4 && range == Range.mt.rawValue || range == Range.mf.rawValue || range == Range.ms.rawValue) || (calendar.component(.weekday, from: time) - 1 == 5 && range == Range.f.rawValue || range == Range.ms.rawValue) || (calendar.component(.weekday, from: time) - 1 == 0 ||  calendar.component(.weekday, from: time) - 1 == 6 && range == Range.ss.rawValue || range == Range.ms.rawValue){
+            if time >= startDate && time <= endDate {
+                availableRangeForSpot[pass] = displayedRange
+            }
+            //if not in range and there is something in the dictionary remove it from dictioanry
+            else if availableRangeForSpot[pass] != nil {
+                availableRangeForSpot.removeValue(forKey: pass)
+            }
         }
-        else if availableRangeForSpot[pass] != nil {
-            availableRangeForSpot.removeValue(forKey: pass)
-        }
+        
         return displayedRange
     }
 

@@ -91,6 +91,9 @@ class MapViewController: UIViewController {
         let hour = calendar.component(.hour, from: now)
         let min = calendar.component(.minute, from: now)
 
+        //if a game day is tomorrow present and alert
+        //if user selects available parking it will update map to show parking for game day
+        //same alert for if today is gameDay
         if checkGameDay(date: now) == gameDay.tomorrow.rawValue {
             let gameDayAlert = UIAlertController(title: "Game Day Tomorrow", message: "Remember to move your car for the football game tomorrow", preferredStyle: .alert)
             gameDayAlert.addAction(UIAlertAction(title: "Available Parking", style: .default, handler: { action in
@@ -137,6 +140,7 @@ class MapViewController: UIViewController {
         self.present(choosePassVC, animated: true, completion: nil)
     }
 
+    //present ParkingTableViewController with the parking spots available to the user
     @objc func listViewTouched() {
         parkingTableVC.parkingNames = parkingNames
         parkingTableVC.spotsAndTimes = spotsAndTimes
@@ -173,6 +177,7 @@ class MapViewController: UIViewController {
     @objc func resetDateTime() {
         pickedDate = now
         checkGameDay(date: pickedDate!)
+        //reset durationAndTime view's date and duration pickers
         DurationViewVC.timePicker.selectRow(0, inComponent: 0, animated: true)
         DurationViewVC.timePickerTextField.text = "0 hours"
         DurationViewVC.pickedDate = pickedDate!
@@ -205,6 +210,7 @@ class MapViewController: UIViewController {
     @objc func dateSelected(datePicked: Date) {
         pickedDate = datePicked
 
+        //change game day label if picked date/day after is game day
         if checkGameDay(date: pickedDate!) == gameDay.today.rawValue{
             gameDayLabel.text = "Game Day"
             gameDayLabel.isHidden = false
@@ -352,9 +358,6 @@ class MapViewController: UIViewController {
         let format = "MM/dd/yyyy"
         let formatter = DateFormatter()
         formatter.dateFormat = format
-
-//        guard let pickedDate = pickedDate else { return "" }
-
         let hour = calendar.component(.hour, from: date)
         let min = calendar.component(.minute, from: date)
 
@@ -615,7 +618,7 @@ class MapViewController: UIViewController {
     }()
 
     lazy var gameDayLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: buttonHeight+yPadding*5, width: view.frame.width-buttonWidth, height: buttonHeight))
+        let label = UILabel(frame: CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.height)!+barHeight+yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
         label.center.x = view.center.x
         label.textAlignment = NSTextAlignment.center
         label.backgroundColor = .white

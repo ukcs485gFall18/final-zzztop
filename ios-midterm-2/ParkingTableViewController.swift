@@ -94,6 +94,7 @@ extension ParkingTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         detailsVC.pickedDate = pickedDate
+        //if a parking spot selected, present the details view controller and send it the information for that parking spot to format
         self.present(detailsVC,animated: true, completion: nil)
         if let hours = spotsAndTimes[parkingNames[indexPath.row]] {
             detailsVC.onUserAction(title: parkingNames[indexPath.row], hours: hours)
