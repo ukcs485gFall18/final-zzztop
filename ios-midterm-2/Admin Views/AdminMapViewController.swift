@@ -17,16 +17,22 @@ class AdminMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // creates and positions map
         view.addSubview(map)
         setUpMap()
+        
+        // gets users current location
         configureLocationManager()
         
-        let uilpgr = UILongPressGestureRecognizer(target: self, action: #selector(addpin(gesture:)))
+        // recognize long press
+        let uilpgr = UILongPressGestureRecognizer(target: self, action: #selector(addPin(gesture:)))
         uilpgr.minimumPressDuration = 1.0
         map.addGestureRecognizer(uilpgr)
     }
     
-    @objc func addpin(gesture: UILongPressGestureRecognizer) {
+    // add a pin where the user long pressed
+    @objc func addPin(gesture: UILongPressGestureRecognizer) {
         map.removeAnnotations(map.annotations)
         
         let location = gesture.location(in: map)
@@ -40,6 +46,7 @@ class AdminMapViewController: UIViewController {
         map.addAnnotation(annotation)
     }
     
+    // set coordinates to be added to firebase
     func setCoords(coordinates: CLLocationCoordinate2D) {
         coords = [
             "lat": coordinates.latitude,
@@ -48,6 +55,7 @@ class AdminMapViewController: UIViewController {
         UserDefaults.standard.set(coords, forKey: "coords")
     }
     
+    // for locating the user
     func configureLocationManager() {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -58,12 +66,14 @@ class AdminMapViewController: UIViewController {
     
     // MARK: - views
     
+    // create map
     lazy var map: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         return map
     }()
     
+    // positions map
     func setUpMap() {
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
