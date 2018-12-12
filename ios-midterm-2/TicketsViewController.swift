@@ -25,7 +25,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
-        //references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
+        // references: https://stackoverflow.com/questions/27762236/line-breaks-and-number-of-lines-in-swift-label-programmatically/27762296
         cell.textLabel!.numberOfLines = 0
         cell.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
         cell.textLabel!.text = "\(ticketsArrayRetrieved[indexPath.row])"
@@ -33,10 +33,10 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
         let paidTicket = UIAlertController(title: "Alert", message: "Pay this parking ticket?", preferredStyle: .alert)
         paidTicket.addAction(UIAlertAction(title: "Pay", style: .default, handler: { action in
-            switch action.style{
+            switch action.style {
             case .default:
                 self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
                 self.ticketsArrayRetrieved.remove(at: indexPath.row)
@@ -56,10 +56,10 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //setting the background of this current view to white
+        // setting the background of this current view to white
         view.backgroundColor = .white
         
-        //Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
+        // Created with help from https://stackoverflow.com/questions/40220905/create-uitableview-programmatically-in-swift
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
@@ -70,7 +70,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         myTableView.delegate = self
         self.view.addSubview(myTableView)
         
-        //declaring and adding a back button to the view
+        // declaring and adding a back button to the view
         let backButton = UIButton(frame: CGRect(x: 20, y: 50, width: 30, height: 30))
         backButton.layer.cornerRadius = 5
         let backIcon = UIImage(named: "backIconBlack.png")
@@ -78,7 +78,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         backButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         view.addSubview(backButton)
         
-        //declaring and adding a back button to the view
+        // declaring and adding a back button to the view
         let plusButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width-50, y: 50, width: 30, height: 30))
         plusButton.layer.cornerRadius = 5
         let plusIcon = UIImage(named: "Plus.png")
@@ -120,7 +120,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("destructive")
             }}))
         
-        //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
         addDueDate.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in addDueDate.dismiss(animated: true, completion: nil)
         }))
         
@@ -130,7 +130,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
 }
 
-//Reference for back icon used as button: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
-//Reference for adding a textfield to an alert:https://stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
-//Reference for user defaults: https://www.hackingwithswift.com/example-code/system/how-to-save-user-settings-using-userdefaults
-//Reference for removing from an array: https://stackoverflow.com/questions/24051633/how-to-remove-an-element-from-an-array-in-swift
+// Reference for back icon used as button: https://freakycoder.com/ios-notes-4-how-to-set-background-image-programmatically-b377a8d4b50f
+// Reference for adding a textfield to an alert:https://stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
+// Reference for user defaults: https://www.hackingwithswift.com/example-code/system/how-to-save-user-settings-using-userdefaults
+// Reference for removing from an array: https://stackoverflow.com/questions/24051633/how-to-remove-an-element-from-an-array-in-swift
