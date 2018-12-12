@@ -352,7 +352,7 @@ class MapViewController: UIViewController {
     }
 
     func checkGameDay(date: Date) -> String {
-        var gDay = "None"
+        var gDay = gameDay.none.rawValue
         let format = "MM/dd/yyyy"
         let formatter = DateFormatter()
         formatter.dateFormat = format
@@ -360,6 +360,9 @@ class MapViewController: UIViewController {
         let hour = calendar.component(.hour, from: date)
         let min = calendar.component(.minute, from: date)
 
+        //go through each game date and format it as a date
+        //if that game date is the picked date or day after
+        //return today or tomorrow appropriately and change parking dictioanry for the map
         for g in gameDates {
             let gameDate = formatter.date(from: g)
             if calendar.isDate(date, inSameDayAs: gameDate!) {
@@ -478,7 +481,7 @@ class MapViewController: UIViewController {
                 let jsonResult: NSDictionary = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 gamedates = jsonResult as NSDictionary
                 let year = String(calendar.component(.year, from: pickedDate!))
-                gameDates = gamedates?[year] as! [String]
+                gameDates = gamedates?[year] as! [String] //get the game dates for this year
             } else {
                 print("no json file")
             }
@@ -616,6 +619,7 @@ class MapViewController: UIViewController {
         return button
     }()
 
+    //label for indicating if game day is today or tomorrow from picked date
     lazy var gameDayLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.height)!+barHeight+yPadding, width: view.frame.width-buttonWidth, height: buttonHeight))
         label.center.x = view.center.x
@@ -625,9 +629,9 @@ class MapViewController: UIViewController {
         label.alpha = 0.8
         label.clipsToBounds = true
         label.isHidden = false
-        if checkGameDay(date: pickedDate!) == "Today" {
+        if checkGameDay(date: pickedDate!) == gameDay.today.rawValue {
             label.text = "Game Day"
-        } else if checkGameDay(date: pickedDate!) == "Tomorrow" {
+        } else if checkGameDay(date: pickedDate!) == gameDay.tomorrow.rawValue {
             label.text = "Game Day Tomorrow"
         } else {
             label.text = ""
@@ -748,11 +752,13 @@ extension MapViewController: MKMapViewDelegate {
                 if let hours = spotsAndTimes[pinTitle] {
                     detailsVC.times = hours
                     detailsVC.parkingName = pinTitle
-                    // pass the data to the next view
+                    // pass the data to the next view and present
                     //detailsVC.onUserAction(title: pinTitle, hours: hours)
                     self.present(detailsVC, animated: true, completion: nil)
                 }
                 else {
+                    //if there is no parking information for a spot that means no one can park there at any time so
+                    //display an alert to user
                     let noAvailableParkingAlert = UIAlertController(title: "No Available Parking", message: "You cannot park at this location", preferredStyle: .alert)
 
                     //help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
