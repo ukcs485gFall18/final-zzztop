@@ -180,11 +180,6 @@ class MapViewController: UIViewController {
         dateSelected(datePicked: pickedDate!)
     }
     
-    func createPickerView() {
-        // allow the user to get out of the date picker by tapping
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.tapToLeave(gestureRecognizer:)))
-        view.addGestureRecognizer(tapGesture)
-    }
     
     //-----------------------------------------------
     // tapToLeave()

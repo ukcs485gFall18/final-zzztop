@@ -43,6 +43,12 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         timePickerTextField.text = kDurationHours[row] + " hours"
         timePicked = Int(kDurationHours[row])!
+        //adding the duration to the date
+        var addingHours = DateComponents()
+        addingHours.hour = self.timePicked
+        let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
+        //send the formatted date to the mapViewController
+        self.mapViewController?.dateSelected(datePicked: futureTime!)
     }
     
     //-----------------------------------------------
@@ -177,15 +183,8 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
                 vc.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
-        //pass the data selected back to the mapViewController for processing
-        self.dismiss(animated: true, completion: {
-            var addingHours = DateComponents()
-            addingHours.hour = self.timePicked
-            let futureTime = Calendar.current.date(byAdding: addingHours, to: self.pickedDate!)
-//            self.mapViewController?.accessDataForOverlaysFromFirebase(pickedDate: futureTime!)
-            print(futureTime!)
-            self.mapViewController?.accessDataForOverlays(pickedDate: futureTime!)
-        })
+        //dismiss the view
+        self.dismiss(animated: true, completion: nil)
     }
     
     //-----------------------------------------------
@@ -204,6 +203,7 @@ class TimeAndDurationViewController: UIViewController, UIPickerViewDelegate, UIP
         //send the formatted date to the mapViewController
         self.mapViewController?.dateSelected(datePicked: datePicker.date)
     }
+    
     
     // source for int casting: https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
     // source for adding hours to a date: http://swiftdeveloperblog.com/code-examples/add-days-months-or-years-to-current-date-in-swift/

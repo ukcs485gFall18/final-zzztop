@@ -40,10 +40,11 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //sends the user to the approproate UK Transporation website based on pass selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
-        let paidTicket = UIAlertController(title: "Alert", message: "Pay this parking ticket?", preferredStyle: .alert)
-        paidTicket.addAction(UIAlertAction(title: "Pay", style: .default, handler: { action in
+        let paidTicket = UIAlertController(title: "Alert", message: "Have you paid this parking ticket?", preferredStyle: .alert)
+        paidTicket.addAction(UIAlertAction(title: "Paid", style: .default, handler: { action in
             switch action.style {
             case .default:
+                //get the existing tickets and add to them
                 self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
                 self.ticketsArrayRetrieved.remove(at: indexPath.row)
                 self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
@@ -120,17 +121,20 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     // Conditions: none
     //-----------------------------------------------
     @objc func createNewTicket(){
+        //put the pickerview in place of the title in the UIView
         let addDueDate = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "When is your ticket due?", preferredStyle: .alert)
         addDueDate.view.addSubview(datePicker)
         datePicker.frame = CGRect(x: 10, y: 0, width: 260, height: 200)
         addDueDate.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             switch action.style{
             case .default:
+                //add the text that will show in the table view cell
                 var newTicket = "Created: "
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "EEEEEEEE LLL d yyyy"
                 newTicket = newTicket + dateFormatter.string(from: Date())
                 newTicket = newTicket+"\nDue: "+dateFormatter.string(from: self.datePicker.date)
+                //add this ticket to the array and store in user defaults
                 self.ticketsArrayRetrieved = self.defaults.object(forKey: "TicketsArray") as? [String] ?? [String]()
                 self.ticketsArrayRetrieved.append(newTicket)
                 self.defaults.set(self.ticketsArrayRetrieved, forKey: "TicketsArray")
@@ -142,6 +146,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }}))
         
         // help from: https://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+        //allow the user to cancel
         addDueDate.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in addDueDate.dismiss(animated: true, completion: nil)
         }))
         
