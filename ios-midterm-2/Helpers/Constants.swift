@@ -20,10 +20,10 @@ let kPassTypes = [
 let EPassImage = UIImage(named: "EPass.png")
 let E2PassImage = UIImage(named: "E2.png")
 let E20PassImage = UIImage(named: "E20.png")
+let E25PassImage = UIImage(named: "E25.png")
 let E26PassImage = UIImage(named: "E26.png")
 let E28PassImage = UIImage(named: "E28.png")
 let E27PassImage = UIImage(named: "E27.png")
-let E25PassImage = UIImage(named: "E25.png")
 let R2PassImage = UIImage(named: "R2.png")
 let R7PassImage = UIImage(named: "R7.png")
 let R17PassImage = UIImage(named: "R17.png")
@@ -41,13 +41,58 @@ let AuthorizedPassImage = UIImage(named: "Auth.png")
 let AnyPassImage = UIImage(named: "Any.png")
 let NoPassImage = UIImage(named: "No.png")
 
-let kPassURLs = ["E":"https://www.uky.edu/transportation/parking-permits_employee-permits", "E2":"https://www.uky.edu/transportation/parking-permits_employee-permits", "E20":"https://www.uky.edu/transportation/parking-permits_employee-permits", "E26":"https://www.uky.edu/transportation/parking-permits_employee-permits", "E28":"https://www.uky.edu/transportation/parking-permits_employee-permits", "E27":"https://www.uky.edu/transportation/parking-permits_employee-permits", "E25":"https://www.uky.edu/transportation/parking-permits_employee-permits", "R2":"https://www.uky.edu/transportation/2018_student_residential", "R7":"https://www.uky.edu/transportation/2018_student_residential", "R17":"https://www.uky.edu/transportation/2018_student_residential", "R19":"https://www.uky.edu/transportation/2018_student_remote", "R29":"https://www.uky.edu/transportation/2018_student_residential", "R30":"https://www.uky.edu/transportation/2018_student_residential", "C5":"https://www.uky.edu/transportation/2018_student_commuter", "C9":"https://www.uky.edu/transportation/2018_student_commuter", "C16":"https://www.uky.edu/transportation/2018_student_commuter", "K":"https://www.uky.edu/transportation/2018_student_periphery", "EK":"https://www.uky.edu/transportation/parking-permits_employee-permits", "CK": "https://www.uky.edu/transportation/2018_student_commuter", "X":"https://www.uky.edu/transportation/2018_student_remote", "Authorized parking only":"https://www.uky.edu/transportation/parking-info_parking-regulations#restrictedparking", "Any valid permit":"https://uknow.uky.edu/student-and-academic-life/uk-parking-permit-enforcement-dates", "No permit required":"https://www.uky.edu/transportation/parking-info_visitor-parking"]
+let kPassURLs = [
+    "E": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "E2": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "E20": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "E25": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "E26": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "E28": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "E27": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "R2": "https://www.uky.edu/transportation/2018_student_residential",
+    "R7": "https://www.uky.edu/transportation/2018_student_residential",
+    "R17": "https://www.uky.edu/transportation/2018_student_residential",
+    "R19": "https://www.uky.edu/transportation/2018_student_remote",
+    "R29": "https://www.uky.edu/transportation/2018_student_residential",
+    "R30": "https://www.uky.edu/transportation/2018_student_residential",
+    "C5": "https://www.uky.edu/transportation/2018_student_commuter",
+    "C9": "https://www.uky.edu/transportation/2018_student_commuter",
+    "C16": "https://www.uky.edu/transportation/2018_student_commuter",
+    "K": "https://www.uky.edu/transportation/2018_student_periphery",
+    "EK": "https://www.uky.edu/transportation/parking-permits_employee-permits",
+    "CK": "https://www.uky.edu/transportation/2018_student_commuter",
+    "X": "https://www.uky.edu/transportation/2018_student_remote",
+    "Authorized parking only": "https://www.uky.edu/transportation/parking-info_parking-regulations#restrictedparking",
+    "Any valid permit": "https://uknow.uky.edu/student-and-academic-life/uk-parking-permit-enforcement-dates",
+    "No permit required": "https://www.uky.edu/transportation/parking-info_visitor-parking"
+]
 
 let kPassImages = [
-    "E": EPassImage, "E2": E2PassImage, "E20": E20PassImage, "E26": E26PassImage, "E28": E28PassImage, "E27": E27PassImage, "E25": E25PassImage, "R2": R2PassImage, "R7": R7PassImage, "R17": R17PassImage, "R19": R19PassImage, "R29": R29PassImage, "R30": R30PassImage, "C5": C5PassImage, "C9": C9PassImage, "C16": C16PassImage, "K": KPassImage, "EK": EKPassImage, "CK": CKPassImage, "X": XPassImage, "Authorized parking only": AuthorizedPassImage, "Any valid permit": AnyPassImage, "No permit required": NoPassImage
+    "E": EPassImage,
+    "E2": E2PassImage,
+    "E20": E20PassImage,
+    "E25": E25PassImage,
+    "E26": E26PassImage,
+    "E28": E28PassImage,
+    "E27": E27PassImage,
+    "R2": R2PassImage,
+    "R7": R7PassImage,
+    "R17": R17PassImage,
+    "R19": R19PassImage,
+    "R29": R29PassImage,
+    "R30": R30PassImage,
+    "C5": C5PassImage,
+    "C9": C9PassImage,
+    "C16": C16PassImage,
+    "K": KPassImage,
+    "EK": EKPassImage,
+    "CK": CKPassImage,
+    "X": XPassImage,
+    "Authorized parking only": AuthorizedPassImage,
+    "Any valid permit": AnyPassImage,
+    "No permit required": NoPassImage
     ] as! [String: UIImage]
 
-//let kDurationHours = ["Current times only: 0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
 let kDurationHours = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
 
 let xPadding: CGFloat = 10
