@@ -18,7 +18,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     var userPasses = [String]()
     var times = [[String: String]: [NSDictionary]]()
     let calendar = Calendar.current
-    var availableRangeForSpot = [String: Bool]()
+    var availableRangeForSpot = [String: String]()
     var parkingName = String()
     let textBox =  UITextView(frame: CGRect(x: 0, y: 0, width: 300, height: 80))
 
@@ -166,24 +166,24 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                     waitTime = times[[passString:"MS"]]!
                 }
 
-                for key in availableRangeForSpot.keys {
-                    if (sortedStrings[indexPath.row].key.range(of: key) != nil) {
+                if availableRangeForSpot[passString] != nil {
+                    if (sortedStrings[indexPath.row].key.range(of: availableRangeForSpot[passString]!) != nil) {
                         for c in waitTime! {
                             let start = c["start"] as! NSDictionary
                             let end = c["end"] as! NSDictionary
                             let endHour = end["hour"] as! Int
                             let endMinute = end["minute"] as! Int
                             var endDate = Date()
-                            if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
+                            if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" {
                                 endDate = pickedDate!.tomorrow(hour: endHour, minute: endMinute)
-                            } else { // for am-pm/pm-pm (same day)
+                            } else {
                                 endDate = pickedDate!.dateAt(hours: endHour, minutes: endMinute)
                             }
                             // https://stackoverflow.com/questions/31298395/get-minutes-and-hours-between-two-nsdates?rq=1
                             let expire = endDate.timeIntervalSince(pickedDate!)
                             let formatter = DateComponentsFormatter()
                             formatter.unitsStyle = .abbreviated
-                            if expire <= 3600 {
+                            if expire <= 3600 && expire > 0{
                                 cell.textLabel!.text = cell.textLabel!.text! + "\nUnavailable in: " + formatter.string(from: expire)!
                                 cell.textLabel!.highlightedTextColor = .orange
                                 cell.textLabel!.isHighlighted = true
@@ -220,8 +220,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                     waitTime = times[[passString:"MS"]]!
                 }
 
-                for key in availableRangeForSpot.keys {
-                    if (availableRangeForSpot[key]! && sortedStrings[indexPath.row].key.range(of: key) != nil){
+                if availableRangeForSpot[passString] != nil {
+                    if (sortedStrings[indexPath.row].key.range(of: availableRangeForSpot[passString]!) != nil){
                         for c in waitTime! {
                             let start = c["start"] as! NSDictionary
                             let end = c["end"] as! NSDictionary
@@ -274,8 +274,8 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                     waitTime = times[[passString:"MS"]]!
                 }
 
-                for key in availableRangeForSpot.keys {
-                    if (sortedStrings[indexPath.row].key.range(of: key) != nil) {
+                if availableRangeForSpot[passString] != nil {
+                    if (sortedStrings[indexPath.row].key.range(of: availableRangeForSpot[passString]!) != nil) {
                         for c in waitTime! {
                             let start = c["start"] as! NSDictionary
                             let end = c["end"] as! NSDictionary
@@ -401,6 +401,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
         times = hours
         parkingName = title
         var textToDisplay = ""
+        var pass = ""
         displayStrings = [String]()
         sortableStrings = [String:String]()
         sortedStrings = [(key:String, value:String)]()
@@ -411,6 +412,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
             for (k,v) in key{
                 let dayRange = formatDays(dayRange: v)
                 textToDisplay += "Pass: \(k) \nDays: \(dayRange)\n"
+                pass = k
             }
             var counter = 0
             // iterate through each hour set under the designated day and pass
@@ -419,7 +421,7 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
                 let start = set.object(forKey: "start") as! NSDictionary
                 let end = set.object(forKey: "end") as! NSDictionary
                 // formatting the date to be user friendly
-                textToDisplay += makeDateFromData(start: start, end: end)
+                textToDisplay += makeDateFromData(start: start, end: end, pass: pass)
                 displayStrings.append(textToDisplay)
                 counter += 1
                 textToDisplay = ""
@@ -442,18 +444,18 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
     // Pre: Recieves the start and end NSDict
     // Post: Returns formatted string
     //-----------------------------------------------
-    func makeDateFromData(start:NSDictionary, end:NSDictionary) -> String {
+    func makeDateFromData(start:NSDictionary, end:NSDictionary, pass:String) -> String {
         let time = pickedDate!
 
         // accesses the hour and minute for start and end
         let startHour = start["hour"] as! Int
         let startMinute = start["minute"] as! Int
-        let startType = start["12hour"] as! String
+//        let startType = start["12hour"] as! String
         let startDate = time.dateAt(hours: startHour, minutes: startMinute)
 
         let endHour = end["hour"] as! Int
         let endMinute = end["minute"] as! Int
-        let endType = end["12hour"] as! String
+//        let endType = end["12hour"] as! String
         var endDate = Date()
         if end["12hour"] as! String  == "am" && start["12hour"] as! String == "pm" { // for pm-am/am-am (overnight parking)
             endDate = time.tomorrow(hour: endHour, minute: endMinute)
@@ -467,7 +469,10 @@ class ParkingDetailsViewController: UIViewController, UITableViewDelegate, UITab
 
         let displayedRange = "From \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
         if pickedDate! >= startDate && pickedDate! <= endDate {
-            availableRangeForSpot[displayedRange] = true
+            availableRangeForSpot[pass] = displayedRange
+        }
+        else if availableRangeForSpot[pass] != nil {
+            availableRangeForSpot.removeValue(forKey: pass)
         }
         return displayedRange
     }
