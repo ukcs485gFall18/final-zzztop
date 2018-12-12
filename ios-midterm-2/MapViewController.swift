@@ -328,7 +328,7 @@ class MapViewController: UIViewController {
             let endType = end["12hour"] as! String
             
             var endDate = Date()
-            if startType == "pm" && endType  == "am" { // for pm-am (overnight parking)
+            if startType == "pm" && endType == "am" { // for pm-am (overnight parking)
                 endDate = time.tomorrow(hour: endHour, minute: endMinute)
             } else { // for am-pm/am-am/pm-pm (same day)
                 endDate = time.dateAt(hours: endHour, minutes: endMinute)

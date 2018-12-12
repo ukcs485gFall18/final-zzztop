@@ -88,7 +88,6 @@ class ChooseDayViewController: TableViewController {
     }
     
     @objc func useThisTime() {
-        print(1)
     }
     
 }

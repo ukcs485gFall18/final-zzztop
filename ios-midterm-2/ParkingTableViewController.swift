@@ -16,12 +16,24 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
     var displayHeight = CGFloat()
     let detailsVC = ParkingDetailsViewController()
     var pickedDate = Date()
+    var tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+
+
         // designs and positions views
         setUpViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight))
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier:"parkingCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        view.addSubview(tableView)
     }
     
     // dismisses a view
@@ -40,7 +52,7 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
         displayHeight = self.view.frame.height
         
         view.addSubview(tableView)
-        //        view.addSubview(applyButton)
+//        view.addSubview(applyButton)
         
         let headerView = UIView(frame: CGRect(x:0, y: barHeight, width: displayWidth, height: headerHeight))
         headerView.backgroundColor = .black
@@ -50,13 +62,10 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
     }
     
     // creates table view to hold UK pass options user can select from
-    lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: barHeight+headerHeight, width: displayWidth, height: displayHeight-headerHeight))
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier:"parkingCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
-    }()
+//    lazy var tableView: UITableView = {
+
+//        return tableView
+//    }()
     
     // creates back button
     lazy var backButton: UIButton = {
@@ -82,7 +91,6 @@ class ParkingTableViewController: UIViewController, UITableViewDataSource {
 }
 
 extension ParkingTableViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return parkingNames.count
     }
@@ -96,7 +104,7 @@ extension ParkingTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         detailsVC.pickedDate = pickedDate
         self.present(detailsVC,animated: true, completion: nil)
-        if let hours = spotsAndTimes[parkingNames[indexPath.row]]{
+        if let hours = spotsAndTimes[parkingNames[indexPath.row]] {
             detailsVC.onUserAction(title: parkingNames[indexPath.row], hours: hours)
         }
     }

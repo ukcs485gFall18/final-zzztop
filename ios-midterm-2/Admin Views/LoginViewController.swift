@@ -47,11 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     // FIXME: Views not dismissing correctly; would like to go back to settings view
-    var count = 0
     @objc func closeViews() {
-        count += 1
-        print("in login vc, count==", count)
-        
         self.presentingViewController?.dismiss(animated: true, completion: {
             let secondPresentingVC = self.presentingViewController?.presentingViewController;
             secondPresentingVC?.dismiss(animated: true, completion: {});
